@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	  <title><%= @headers['title'] %></title>
+
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow">
+<!-- style sheet links -->
+<link rel="stylesheet" href="<%= "#{@name}.css" %>" type="text/css" media="projection" id="slideProj">
+<link rel="stylesheet" href="s6/outline.css" type="text/css" media="screen" id="outlineStyle">
+<link rel="stylesheet" href="s6/print.css" type="text/css" media="print" id="slidePrint">
+
+<!-- S6 JS -->
+<script src="s6/jquery.js" type="text/javascript"></script>
+<script src="s6/slides.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div class="layout">
+  
+  <div class="background">  
+    <object data="<%= "#{@name}.svg" %>" width="100%" height="100%">
+		</object>
+  </div>   
+  
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1><%= @headers['footer'] %></h1>
+<h2><%= @headers['subfooter'] %></h2>
+</div>
+
+      <div id='microsoft'>       
+        <p>
+          Microsoft's Internet Explorer browser
+            has no built-in vector graphics machinery
+             required for "loss-free" gradient background themes.
+        </p>        
+        <p>
+          Please upgrade to a better browser
+           such as <a href='http://getfirefox.com'>Firefox</a>, <a href='http://www.opera.com/download'>Opera</a>,
+            <a href='http://google.com/chrome'>Chrome</a>, <a href='http://apple.com/safari/download'>Safari</a> or others
+            with built-in vector graphics machinery and much more.
+          
+          (Learn more or post questions or comments
+              at the <a href='http://slideshow.rubyforge.org'>Slide Show (S9)</a>
+            project site. Thanks!)
+        </p>             
+    </div>
+</div>
+
+<div class="presentation">

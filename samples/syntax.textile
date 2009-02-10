@@ -1,0 +1,216 @@
+title: Slide Show (S9) Code Syntax Highlighting
+code-theme: all-hallows-eve
+
+
+h1. Slide Show (S9) Code Syntax Highlighting
+
+The slideshow (S9) gem now includes the Ultraviolet (Uv) gem that lets you use/turn on
+experimental syntax highlighting in your slides for your code. Add @#!ruby@ after
+the code block. Example: 
+
+{{{{{{
+#!ruby
+puts "Syntaxes:"
+puts Uv.syntaxes.join( ", " )
+
+puts "Themes:"
+puts Uv.themes.join( ", " )
+}}}}}} 
+
+Or use any of the other 40+ languages supported by Ultraviolet. Use headers to select any of the 20+ Ultraviolet syntax highlighting themes[1] and/or turn off line numbering. Example:
+
+{{{
+code-theme: blackboard
+code-line-numbers: false
+}}}
+
+fn1. active4d, all-hallows-eve, amy, blackboard, cobalt, dawn, eiffel, espresso-libre, idle, iplastic, lazy, 
+mac-classic, pastels-on-dark, slush-poppies, spacecadet, sunburst, twilight, zenburnesque
+
+
+h1. Rubyize This: 5th Edition
+
+{{{
+#!ruby
+@wordsToHighlight=["important","monkey","dancing"]
+def highlightText(input)
+  for i in 0..@wordsToHighlight.length-1 do
+    input = input.gsub(@wordsToHighlight[i],"*" + @wordsToHighlight[i] + "*")
+  end
+  return input
+end
+}}}
+
+Source: "Rubyize this: 5th edition":http://www.rubyfleebie.com/rubyize-this-5th-edition by RubyFleebie (Fran&ccedil;ois Lamontagne)
+
+Refactoring:
+
+{{{
+#!ruby
+def highlight_text(input, words_to_highlight=%w(important monkey dancing))
+  input.gsub(/#{words_to_highlight.join('|')}/i, '*\0*')
+end
+
+puts highlight_text("Hey monkey, it's important you start dancing right now!")
+# >> Hey *monkey*, it's *important* you start *dancing* right now!
+}}}
+
+
+Another Refactoring:
+
+
+{{{
+#!ruby
+class String
+  def highlight(words=[])
+    words.empty? ? self : self.gsub(Regexp.union(*words), '*\0*')
+  end
+end
+
+puts "I think it's important to have a dancing monkey in your bedroom.".highlight %w(important monkey dancing)
+# => I think it's *important* to have a *dancing* *monkey* in your bedroom.
+}}}
+
+
+h1. Rubyize This: Vancouver RubyCamp 2008 Edition
+
+{{{
+#!ruby
+
+# create num random numbers between min and max 
+# and print them to a file called file_name, one per line
+
+def create_random_numbers(file_name, min, max, num)
+  file = File.open(file_name, 'w')
+  n = 0
+  while n < num
+    r = rand(max - min) + min
+    file.puts(r)
+    n += 1
+  end
+  file.close   
+end
+
+create_random_numbers('random.txt', 0, 10, 1000)
+}}}
+
+Source: "Rubyize this: Live in Vancouver. Refactoring #1":http://spattendesign.com/2008/1/27/rubyize-this-live-in-vancouver 
+
+Refactoring:
+
+{{{
+#!ruby
+def create_random_numbers(file_name, min, max, num)
+  File.open(file_name, 'w') do |file|
+    num.times {file.puts(rand(max - min) + min)}
+  end
+end
+
+create_random_numbers('random.txt', 0, 10, 1000)
+}}}
+
+Another Refactoring:
+
+{{{
+#!ruby
+class Range
+  def random_member
+    offset = rand(max - min)
+    min + offset
+  end
+end
+
+def create_random_numbers(file_name, range, num)
+  File.open(file_name, 'w') do |file|
+    num.times { file.puts(range.random_member) }
+  end
+end
+
+create_random_numbers('random.txt', (0..10), 1000)
+}}}
+
+
+h1. Hello World - From Ada to CSS
+
+Ada
+
+{{{
+#!ada
+-- Hello World in Ada
+
+with Text_IO;
+procedure Hello_World is
+
+begin
+  Text_IO.Put_Line("Hello World!");
+end Hello_World;
+}}}
+
+
+C
+
+{{{
+#!c
+/* Hello World in C, Ansi-style */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+  puts("Hello World!");
+  return EXIT_SUCCESS;
+}
+}}}
+
+CSS
+
+{{{
+#!css
+/* Hello World in CSS */
+body:before {
+    content: "Hello World";
+}
+}}}
+
+
+h1. Hello World - From Erlang to PHP
+
+Erlang
+
+{{{
+#!erlang
+%% Hello World in Erlang
+
+-module(hello).
+
+-export([hello/0]).
+
+hello() ->
+   io:format("Hello World!~n", []).
+}}}
+
+Java
+
+{{{
+#!java
+// Hello World in Java
+
+class HelloWorld {
+  static public void main( String args[] ) {
+    System.out.println( "Hello World!" );
+  }
+}
+}}}
+
+
+PHP
+
+{{{
+#!php
+<?php
+  // Hello World in PHP
+  echo 'Hello World!';
+?>
+}}}
+

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="red">
+      <stop offset="0%"   style="stop-color: black" />
+      <stop offset="100%" style="stop-color: red" />
+     </radialGradient>
+    <radialGradient id="maroon">
+      <stop offset="0%"   style="stop-color: red" />
+      <stop offset="100%" style="stop-color: maroon" />
+     </radialGradient>
+    <radialGradient id="purple">
+      <stop offset="0%"   style="stop-color: fuchsia" />
+      <stop offset="100%" style="stop-color: purple" />
+     </radialGradient>
+    <radialGradient id="fuchsia">
+      <stop offset="0%"   style="stop-color: white" />
+      <stop offset="100%" style="stop-color: fuchsia" />
+     </radialGradient>
+    <radialGradient id="blue">
+      <stop offset="0%"   style="stop-color: navy" />
+      <stop offset="100%" style="stop-color: blue" />
+     </radialGradient>
+    <radialGradient id="navy">
+      <stop offset="0%"   style="stop-color: black" />
+      <stop offset="100%" style="stop-color: navy" />
+     </radialGradient>
+    <radialGradient id="teal">
+      <stop offset="0%"   style="stop-color: aqua" />
+      <stop offset="100%" style="stop-color: teal" />
+     </radialGradient>
+    <radialGradient id="aqua">
+      <stop offset="0%"   style="stop-color: blue" />
+      <stop offset="100%" style="stop-color: aqua" />
+     </radialGradient>
+    <radialGradient id="green">
+      <stop offset="0%"   style="stop-color: lime" />
+      <stop offset="100%" style="stop-color: green" />
+     </radialGradient>
+    <radialGradient id="lime">
+      <stop offset="0%"   style="stop-color: yellow" />
+      <stop offset="100%" style="stop-color: lime" />
+     </radialGradient>
+    <radialGradient id="olive">
+      <stop offset="0%"   style="stop-color: yellow" />
+      <stop offset="100%" style="stop-color: olive" />
+     </radialGradient>
+    <radialGradient id="yellow">
+      <stop offset="0%"   style="stop-color: white" />
+      <stop offset="100%" style="stop-color: yellow" />
+     </radialGradient>
+    <radialGradient id="black">
+      <stop offset="0%"   style="stop-color: grey" />
+      <stop offset="100%" style="stop-color: black" />
+     </radialGradient>
+    <radialGradient id="grey">
+      <stop offset="0%"   style="stop-color: silver" />
+      <stop offset="100%" style="stop-color: grey" />
+     </radialGradient>
+    <radialGradient id="silver">
+      <stop offset="0%"   style="stop-color: white" />
+      <stop offset="100%" style="stop-color: silver" />
+     </radialGradient>
+    <radialGradient id="white">
+      <stop offset="0%"   style="stop-color: black" />
+      <stop offset="100%" style="stop-color: white" />
+     </radialGradient>
+</defs><rect x='4%' y='4%' width='22%' height='22%' style='fill: url(#red)' /><rect x='27%' y='4%' width='22%' height='22%' style='fill: url(#maroon)' /><rect x='50%' y='4%' width='22%' height='22%' style='fill: url(#purple)' /><rect x='73%' y='4%' width='22%' height='22%' style='fill: url(#fuchsia)' /><rect x='4%' y='27%' width='22%' height='22%' style='fill: url(#blue)' /><rect x='27%' y='27%' width='22%' height='22%' style='fill: url(#navy)' /><rect x='50%' y='27%' width='22%' height='22%' style='fill: url(#teal)' /><rect x='73%' y='27%' width='22%' height='22%' style='fill: url(#aqua)' /><rect x='4%' y='50%' width='22%' height='22%' style='fill: url(#green)' /><rect x='27%' y='50%' width='22%' height='22%' style='fill: url(#lime)' /><rect x='50%' y='50%' width='22%' height='22%' style='fill: url(#olive)' /><rect x='73%' y='50%' width='22%' height='22%' style='fill: url(#yellow)' /><rect x='4%' y='73%' width='22%' height='22%' style='fill: url(#black)' /><rect x='27%' y='73%' width='22%' height='22%' style='fill: url(#grey)' /><rect x='50%' y='73%' width='22%' height='22%' style='fill: url(#silver)' /><rect x='73%' y='73%' width='22%' height='22%' style='fill: url(#white)' /></svg>

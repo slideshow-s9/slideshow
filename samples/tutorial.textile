@@ -1,0 +1,189 @@
+title: Slide Show (S9) 10-Minute Tutorial
+
+
+h1. Slide Show (S9) 10-Minute Tutorial
+
+Agenda
+
+* What's Slide Show (S9)? 
+* Wiki-Style Markup Language - Markdown, Textile
+* How it works - Just press F11! 
+* What's Opera Show? What's FullerScreen?
+* What's S5? What's S6?
+* Gradient Themes Using "Loss-Free" Vector Graphics in S9 
+* Turn Your Online Wiki Pages into Slide Shows - Sputnik Case Study
+
+
+h1. What's Slide Show (S9)?
+
+
+h3. What? 
+
+A Free Web Alternative to PowerPoint and KeyNote in Ruby
+
+
+h3. Getting Started in 1-2-3 Easy Steps
+
+* Step 1: Author your slides in plain text using a wiki-style markup language
+* Step 2: Generate your slide show using the @slideshow@ gem
+* Step 3: Open up your slide show in your browser and hit the space bar to flip through your slides
+* That's it. Showtime!
+
+
+h1. Wiki-Style Markup Language - Markdown, Textile
+
+Lets you create slide shows and author slides in plain text using a wiki-style markup language that's easy-to-write and easy-to-read. Sample:
+
+{{{
+What's Slide Show (S9)?
+=======================
+
+### What? 
+
+A Free Web Alternative to PowerPoint and KeyNote in Ruby
+
+### Getting Started in 1-2-3 Easy Steps
+
+- Step 1: Author your slides in plain text using a wiki-style markup language
+- Step 2: Generate your slide show using the `slideshow` gem
+- Step 3: Open up your slide show in your browser 
+- That's it. Showtime!
+}}}
+
+or
+
+{{{
+h1. What's Slide Show (S9)?
+
+h3. What? 
+
+A Free Web Alternative to PowerPoint and KeyNote in Ruby
+
+h3. Getting Started in 1-2-3 Easy Steps
+
+* Step 1: Author your slides in plain text using a wiki-style markup language
+* Step 2: Generate your slide show using the @slideshow@ gem
+* Step 3: Open up your slide show in your browser
+* That's it. Showtime!
+}}}
+
+
+
+h1. How it works - Just press F11!  
+
+The Slide Show (S9) Ruby gem turns your slides in plain text into a web page 
+that's an all-in-one-page handout and a live slide show all at once.
+
+{{{
+$ slideshow tutorial
+
+=> Preparing slide show 'tutorial.html'...
+=> Done.
+}}}
+
+
+Turn your web page into a slide show and your browser into full screen projection
+with a single push button (F11).  Hit the space bar or the right arrow, down arrow
+  or page down key to flip through your slides.
+ 
+That's all. It's that simple.
+
+
+h1. What's Opera Show? What's FullerScreen?
+
+h3. Opera Show
+
+Opera has been shipping with built-in full screen projection and slide show support for years (since Opera 4)! 
+Pioneered the concept using Cascading Style Sheets (CSS2) that offer/include 
+the @projection@ media type in addition to @screen@, @print@ or @handheld@, for example.
+
+h3. FullerScreen
+
+A free, open source Firefox addon that lets you turn your web page into a 
+slide show and your browser into full screen projection with a single push button (F11).
+
+FullerScreen - More than just full screen projection:
+
+* Built-in slide manager with thumbnails!
+* Use spacebar, arrows, page up/down keys to move between slides/steps
+* Use top and end keys to move to first/last slide
+* Move mouse to the bottom-right screen corner to show joystick
+
+
+h1. What's S5? What's S6?
+
+h3. Simple Standards-based Slide Show System (S5)
+
+Eric Meyer's (of CSS fame) public domain (free, open source) slide show package 
+inspired by Opera Show and others that works in all modern browsers (without any plugin required
+  because it includes its own slide show machinery in JavaScript).
+
+
+h3. S6 - Easier to Understand and Extend S5 Rewrite 
+
+S6 is the rewrite of Eric Meyer's S5 using the jQuery JavaScript library -- offering easier to
+understand and easier to extend code. Add plugins, effects and more. Contributions welcome!
+
+h3. Keyboard Controls
+
+| Action | Key |
+| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
+| Go to previous slide | Left Arrow, Up Arrow, Page Up |
+| Go to first slide | Home |
+| Go to last slide | End |
+| Toggle between slideshow and outline view (&#216;) | T |
+| Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
+
+
+
+h1. Gradient Themes Using "Loss-Free" Vector Graphics in S9 
+
+Firefox and Opera (and Safari too) ship with built-in machinery for
+ theming slide shows using "loss-free" vector  graphics. Offers "Flash/Silverlight-like" functionality out-of-the-box (no plugin download/installation required) using free web standards -
+ a World Wide Web Consortium (W3C) Recommendation known as - surprise, surprise 
+ - Scalable Vector Graphics (SVG).
+
+
+Creating a gradient theme is as easy as:
+
+{{{
+<linearGradient id="top_bottom" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%"   style="stop-color: red" />
+  <stop offset="100%" style="stop-color: black" />
+</linearGradient>
+}}}
+
+Note, S9 ships with nine predefined 
+  gradient styles such as "Diagonal", "Radial Off Center", "Radial Repeat", "Top Bottom"
+ and S9 lets you define your gradient themes in plain text. Example:
+
+{{{
+gradient: top-bottom red black
+}}}
+
+or:
+
+{{{
+gradient-colors: #0e1f5b #3b5998
+}}}
+
+
+h1. Turn Your Online Wiki Pages into Slide Shows - Sputnik Case Study
+
+Inspired by the Slide Show (S9) Ruby gem - Yuri Takhteyev has added S9-style slide shows
+  to "Sputnik":http://sputnik.freewisdom.org/en/Slideshow_Demo - a wiki in Lua.
+
+Lets you author slide shows online in your browser.
+It's - surprise, surpise - a wiki and, thus, lets you
+ work togther with others on a slide show, 
+track changes and versions, link and get linked, and much much more.
+
+
+
+h1. Thanks - Learn More - Questions? Comments?
+
+
+Gerald Bauer designed and developed the Slide Show (S9) Ruby gem. 
+Find out more @ "slideshow.rubyforge.org":http://slideshow.rubyforge.org 
+
+Questions? Comments? Send them along to the "Free Web Slide Show Alternatives - S5, S6, S9 And Friends - Forum/Mailing List. ":http://groups.google.com/group/webslideshow. Thanks!

@@ -1,0 +1,67 @@
+body
+{
+   font-family:  Verdana, Geneva, Arial, Helvetica, sans-serif;
+   margin: 0;
+}
+
+#header {
+   color: white;
+   background: #8b0000;  /* dark red/ruby */
+   font-size: 200%;
+   padding: 0.25em;
+   margin-bottom: 0;
+}
+
+#nav {
+  color: black;
+  font-weight: bold;
+  background: #eeeeee;
+  padding: 0.5em;
+}
+
+a, a:visited {
+  color: #8b0000;  /* dark red/ruby */
+}
+
+#nav a, #nav a:visited {
+   text-decoration: none;
+}
+#nav a:hover {
+  border-bottom: 2px dotted #8b0000;
+}
+
+a:hover { background-color: yellow; }
+
+#content {
+  padding: 0.5em; 
+}
+
+h2
+{
+   padding: 0.2em;
+   background-color: #8b0000;  /* dark red/ruby */
+   color: white;
+   font-weight: bold;
+}
+
+.programlisting
+{
+   color: white;
+   background-color: black;
+   padding: 0.5em;
+}
+
+.toc
+{
+   width: 35%;
+   float: right;
+   border: silver solid 1pt;
+   background-color: #eeeeee;
+   font-size: 80%;
+}
+
+.toc-title
+{
+   text-align: center;
+   font-weight: bold;
+}

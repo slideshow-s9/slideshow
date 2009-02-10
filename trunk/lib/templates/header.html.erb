@@ -1,0 +1,27 @@
+<html>
+  <head>
+
+  <meta name="slideselector" content=".slide">
+  <meta name="titleselector" content="h1">
+  <meta name="stepselector" content=".step">
+
+    <title><%= @headers['title'] %></title>
+
+    <link title="Style" href="<%= "#{@name}.css" %>" type="text/css" rel="STYLESHEET">
+
+  </head>
+  <body>
+
+<div class="layout"> 
+  <div class="background">  
+    <object data="<%= "#{@name}.svg" %>" width="100%" height="100%"></object>
+  </div>    
+</div> 
+
+<div class="banner">
+   Turn this document into a (PowerPoint/KeyNote-style) slide show pressing F11.
+         (Free <a href="https://addons.mozilla.org/en-US/firefox/addon/4650">FullerScreen</a> Firefox addon required).
+         Learn more at the <a href="http://slideshow.rubyforge.org">Slide Show (S9)</a>
+         RubyForge project site.
+</div>
+

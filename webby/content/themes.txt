@@ -1,0 +1,32 @@
+---
+title: Gradient Themes       
+filter:
+  - erb
+  - textileplus
+---
+
+h1. <%= @page.title %>
+
+h2. Browse by Color
+
+<a href="gradient-styles-red.svg" target="gallery">Red</a> | 
+<a href="gradient-styles-blue.svg" target="gallery">Blue</a>
+
+h2. Browse by Style  
+
+<a href="gradient-diagonal.svg" target="gallery">Diagonal</a> | 
+<a href="gradient-top-bottom.svg" target="gallery">Top Bottom</a> | 
+<a href="gradient-left-right.svg" target="gallery">Left Right</a> | 
+<a href="gradient-repeat.svg" target="gallery">Repeat</a> | 
+<a href="gradient-radial.svg" target="gallery">Radial</a> | 
+<a href="gradient-radial-off-center.svg" target="gallery">Radial Off Center</a> | 
+<a href="gradient-radial-repeat.svg" target="gallery">Radial Repeat</a>
+
+h2. Theme Preview
+
+<iframe id="gallery" name="gallery" src="gradient-styles-red.svg" width="100%" height="60%" frameborder="0"></iframe>
+
+h2. How To Use Built-In Gradient Themes?
+
+You can define your gradient theme in plain text in the slide show source in the header using a simple CSS-style name value pair.
+<a href='more.html#themes'>More &raquo;</a>

@@ -1,0 +1,20 @@
+author: Your Name Here
+company: Your Company Here
+title: Your Slide Show Title Here
+subtitle: Your Subtitle Here
+footer: Your Footer Here
+subfooter: Your Subfooter Here
+
+
+h1. Slide Title Here
+
+* Point One Here
+* Point Two Here
+
+h1. Another Slide Title Here
+
+Questions? Comments?
+
+Send them along to the
+"Free Web Slide Show Alternatives (S5, S6, S9 And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow.
+Thanks!

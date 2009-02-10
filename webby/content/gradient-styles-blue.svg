@@ -1,0 +1,83 @@
+
+<svg xmlns="http://www.w3.org/2000/svg">
+  
+  <defs>
+    <linearGradient id="dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" style="stop-color: blue"/>
+      <stop offset="1" style="stop-color: black"/>
+    </linearGradient>
+    
+    <linearGradient id="dark_reverse" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" style="stop-color: black"/>
+      <stop offset="1" style="stop-color: blue"/>
+    </linearGradient>
+    
+     <linearGradient id="light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" style="stop-color: blue"/>
+      <stop offset="1" style="stop-color: lime"/>
+    </linearGradient>
+    
+    <linearGradient id="top_bottom" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="0%"   style="stop-color: blue" />
+       <stop offset="100%" style="stop-color: black" />
+    </linearGradient>
+
+   <linearGradient id="left_right" x1="0" y1="0" x2="1" y2="0">
+     <stop offset="0%"   style="stop-color: blue" />
+     <stop offset="100%" style="stop-color: lime" />
+   </linearGradient>
+
+    <linearGradient id="repeat" x1="0.4" y1="0.4" x2="0.5" y2="0.5"
+         spreadMethod="repeat">
+     <stop offset="0%"   style="stop-color: blue" />
+     <stop offset="50%"  style="stop-color: lime" />
+     <stop offset="100%" style="stop-color: blue" />
+   </linearGradient>
+
+   <radialGradient id="radial">
+    <stop offset="0%"   style="stop-color: black" />
+    <stop offset="100%" style="stop-color: blue" />
+   </radialGradient>
+  
+
+   <radialGradient id="radial_off_center" fx="0.7" fy="0.7" cx="0.5" cy="0.5" r="0.4">
+     <stop offset="0%"   style="stop-color: lime" />
+     <stop offset="100%" style="stop-color: blue" />
+   </radialGradient>
+
+  <radialGradient id="radial_repeat" fx="0.5" fy="0.5" cx="0.6" cy="0.6" r="0.2"
+          spreadMethod="repeat">
+     <stop offset="0%"   style="stop-color: blue" />
+     <stop offset="50%"  style="stop-color: lime" />
+     <stop offset="100%" style="stop-color: blue" />
+  </radialGradient>
+    
+  </defs>
+  
+  <rect x="2%" y="2%" width="30%" height="30%"
+            style="fill: url(#dark) "/>
+            
+  <rect x="34%" y="2%" width="30%" height="30%"
+            style="fill: url(#dark_reverse) "/>
+            
+  <rect x="66%" y="2%" width="30%" height="30%"
+            style="fill: url(#light) "/>
+            
+   <rect x="2%" y="34%" width="30%" height="30%"
+            style="fill: url(#top_bottom) "/>
+            
+    <rect x="34%" y="34%" width="30%" height="30%"
+            style="fill: url(#left_right) "/> 
+            
+     <rect x="66%" y="34%" width="30%" height="30%"
+            style="fill: url(#repeat) "/>
+            
+    <rect x="2%" y="66%" width="30%" height="30%"
+            style="fill: url(#radial) "/>
+            
+    <rect x="34%" y="66%" width="30%" height="30%"
+            style="fill: url(#radial_off_center) "/> 
+            
+     <rect x="66%" y="66%" width="30%" height="30%"
+            style="fill: url(#radial_repeat) "/>            
+</svg>

@@ -1,0 +1,27 @@
+/* don't change this unless you want the layout stuff to show up in the outline view! */
+
+.layout > *, #controls *, #footer *, #navLinks * { display: none; }
+
+#controls, #navLinks, #toggle {
+  display: block; visibility: visible; margin: 0; padding: 0;}
+
+#toggle { position: fixed; top: 0; right: 0; padding: 0.5em; }
+#toggle {border: 1px solid; border-width: 0 0 1px 1px; background: #FFF;}
+
+
+/* making the outline look pretty-ish */
+
+#slide1, #slide1 h1, #slide1 h2, #slide1 h3, #slide1 h4 {border: none; margin: 0;}
+#slide1 h1 {padding-top: 1.5em;}
+
+.slide { margin: 1.5em 0 0; border-top: 1px solid #888; }
+.slide h1 { border-bottom: 1px solid #AAA; }
+
+#microsoft {
+        display: none;
+        border: red solid thick;
+        padding: 1em;
+        font-family: sans-serif;
+        font-weight: bold;
+        margin-bottom: 2em;
+}

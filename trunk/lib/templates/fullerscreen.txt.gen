@@ -1,0 +1,7 @@
+# FullerScreen manifest to generate sample template package from builtin templates
+
+fullerscreen.txt fullerscreen.txt.sample
+header.html.erb
+footer.html.erb
+gradient.svg.erb
+style.css.erb

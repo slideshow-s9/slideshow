@@ -1,0 +1,151 @@
+title: The Truth about JavaScript
+
+
+h1. The Truth about JavaScript
+
+Brendan Eich (Mozilla) @ The Ajax Experience West, July 2007
+
+(Adapted S9 Version From Original S5 Slide Deck)
+
+
+h1. The Big Picture
+
+* Open Web vs. Light-Silver Flashy Stuff
+* News flash from MIX07: C# beats JScript at chess!
+* Do users care? Do developers?
+* How truly "open" is the Open Web?
+* We're finding out right now
+** Web Hypertext Application Technology Working Group (WHATWG)-induced W3C work on HTML 5
+** ECMA TC39 TG1 work on EcmaScript 4 (aka JavaScript 2)
+* Enfranchising Web Developers
+        
+
+h1. JavaScript 2 Update
+
+"The unavoidable price of reliability is simplicity" -- C.A.R. Hoare
+          
+* JavaScript 1 oversimplified => complexity tax on developers
+* JavaScript 2 goal: cut complexity tax
+** Without bloating the core language
+** Or small device implementations!
+* "@http://ecmascript-lang.org@":http://ecmascript-lang.org
+** SML-NJ reference implementation
+** public bug (trac) database
+** public wiki coming soon
+
+h1. New Since Last Year
+        
+* Expression closures: <code>function cube(x) x * x * x</code>
+* Program units
+* Dictionaries
+* ByteArrays, Vectors, Tuples
+* Type system evolution
+
+h1. Program Units
+
+{{{
+use unit acme.widgets "http://acme.com/widgets";
+}}}
+
+{{{
+unit acme.widget {
+   // program unit definition goes here
+   ...
+}
+}}}
+
+* Server preprocessor can expand use to definition
+* Locator could be a p2p hash instead of a URL
+* Open question: Why packages *and* program units?
+
+h1. Dictionaries
+
+* <code>class Dict.<K, V></code> with key, value type params
+* Constructor takes advice to support two styles:
+** OOP style calls <code>k1.equals(k2), k.hashcode()</code>
+** FP style calls <code>k1 === k2, intrinsic::hashcode(k)</code>
+* Converts <code>Object</code> to <code>Dict.<K, *></code> for several key types @K@<br/><code>let d : Dict.<string, int> = {a: 1, b: 2, c: 3};</code>
+* Sensible JSON integration via @toJSONString@
+* Name still in flux (@Hash@? @Dictionary@? @HashMap@? Ugh)
+
+h1. ByteArrays, Vectors, Tuples
+
+* @ByteArray@ class, converts from @Array@
+** @Array.map@ etc. work on it, albeit generically
+* Parameterized type @Vector.<T>@
+** Dense, optionally fixed length
+** <code>Vector.<T>(length : uint = 0, fixed : boolean = false)</code>
+* @ByteArray@ could be subsumed by @Vector.<byte>@
+** If we are willing to add a @byte@ type
+* Structural array <code>type A = [int, string, boolean]</code> is a tuple
+** Not a named @Tuple@ type!
+** Fixed length with type constraints
+** Type-checked compatibility with @Array@
+
+h1. Type System Trade-offs
+
+* We believe untyped objects will abound forever
+* But typed APIs, including structural types, will emerge
+* Nominal (class) hierarchies (DOM, Flex, etc.) likely too
+** But they won't take over the Web
+** So we're not turning JavaScript into Java
+* Most common case: Untyped code calling Typed API
+* Another important case: class matching structural type
+
+h1. Structural Types as Contracts
+
+* Given <code>function f(a : {p: int, q: string}) ...</code>
+** Assume it's a structurally typed API method
+* What does <code>f({p: 42, q: "hi"})</code> check, and when?
+* Use cases want early and deep checking
+** An untyped object could mutate after the check
+** Checking every read too costly, yet still incomplete
+** See MochiKit's @isArrayLike@, @isDateLike@
+* Given a class @C@ with the right instance vars,
+** passing @f(new C(42, "hi"))@ can go fast
+
+h1. Performance Trends
+
+* "Fastest browser on the planet" i-bench bragging
+* Pure JavaScript performance not critical (yet, for common cases)
+* DOM and rendering dominate critical paths, *but*:
+** DOM bindings hide JS dynamic typing costs
+** Developers are pushing hard at the frontiers
+* John Resig wrote and collected some benchmarks
+** "@http://ejohn.org/apps/js-speed/results/@":http://ejohn.org/apps/js-speed/results
+
+h1. New Projects - ActionMonkey
+     
+* "Merge Tamarin and SpiderMonkey":http://wiki.mozilla.org/JavaScript:ActionMonkey
+* Targeting "Mozilla 2":http://wiki.mozilla.org/Mozilla_2 release, beta next year
+* First stage integrates Tamarin's Garbage Collector
+* Later stages include trace-based JITing
+
+h1. New Projects - IronMonkey
+
+* Map IronPython and IronRuby to Tamarin
+** Avoid forking C# source using Mono C# compiler
+** Bytecode translation _a la_ IKVM, JaCIL
+* Led by Seo Sanxiyn of "FePy":http://fepy.sourceforge.net and PyPy fame
+
+h1. New Projects - ScreamingMonkey
+ 
+* Goal: support Tamarin in other browsers
+* Led by Mark Hammond of Windows Python fame
+* First target: IE integration as an ActiveScript engine
+* Handle these RFC 4329 content <code><script> type=</code> values:
+** <code>application/ecmascript;version=4</code>
+** <code>application/javascript;version=2</code>
+* Other browser integrations to follow
+
+h1. The Truth About JavaScript
+
+JavaScript is...
+
+* Occasionally a curse
+* Often a blessing, formerly in disguise
+* Spreading from the browser (Rhino on Rails)
+* Growing muscle and speed
+* Upgradeable in browsers (even in IE)
+* <strike>The 'J' in AJAX</strike> The 'j' in Ajax?
+                    

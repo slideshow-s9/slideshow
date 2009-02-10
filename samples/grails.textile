@@ -1,0 +1,414 @@
+title: Groovin' with Grails
+gradient-colors: navy aqua
+
+
+h1. Groovin' with Grails
+
+How to use your favorite frameworks Rails-style in Java. Really.
+
+(Adapted S9 Version From Original PDF Slide Deck by Ken Rimple, Chariot Solutions)  
+
+
+h1. Agenda
+
+* Why Groovy?
+* DRY Frameworks
+* Grails 10,000 foot view
+* Interactive Demo
+* Going Further...
+
+h1. Why Groovy?
+
+* Dynamically typed language
+* Runs natively on the VM as bytecode
+* @groovyc@ compiler compiles both Java and Groovy in one pass...
+* Uses a superset of Java syntax and dynamic
+language ‘syntactic sugar’
+* Groovy classes can extend Java classes (and vice-versa)
+
+
+h1. Really Groovy Features
+
+Groovy is Java without all that messy typing...
+
+* Closures
+* Dynamic Typing
+* Dynamic Class Redefinition
+* Easy DSL
+* Groovy-izes Java Classes
+* Dirt-simple XML parsing support
+
+
+h1. Java vs Groovy
+
+h3. Java
+
+* POJOs require
+** Explicit Constructors
+** Explicit get/setters
+** @.equals@ and @.hashCode@
+
+* Java is noisy
+** No closures (yet)
+** No dynamic typing
+
+h3. Groovy
+
+* POGOs require
+** Definition of members
+** That’s it!
+
+* Groovy Supports
+** Dynamic typing (@def@)
+** Expanding classes
+** Closures
+** Much more...
+
+h1. Java vs. Groovy - POJOs vs POGOs
+
+@Voter.java@:
+
+{{{
+ 1: public class Voter 
+ 2: {
+ 3:   private String ssn;
+ 4:   private String lastName;
+ 5:   private String firstName;
+ 6:
+ 7:   public Voter(String ssn, String firstName, String lastname) 
+ 8:   {
+ 9:     ...
+10:   }
+11:  
+12:   public void setSsn() { ...}
+13:   public String getSsn() { ...}
+14:  
+15:   etc...
+16: }
+}}}
+
+@Voter.groovy@: 
+
+{{{
+1: class Voter 
+ 2: {
+ 3:   String ssn
+ 4:   String lastName
+ 5:   String firstName
+ 6: }
+}}}
+
+h1. Java vs. Groovy Continued
+
+Java:
+
+{{{
+Voter v = new Voter("123-45-6789", "Jack", "Beanstalk");
+// what if we want one with just the SSN?
+// write a new constructor!
+}}}
+
+Groovy:
+
+{{{
+// Groovy provides constructors for free...
+def v  = new Voter(ssn:"123-45-6789", firstName:"Jack", lastName:"Beanstalk")
+def v2 = new Voter(ssn:"123-45-6789")
+}}}
+
+Java:
+
+{{{
+ArrayList voters = new ArrayList();
+voters.add( new Voter( ... ));
+voters.add( .... );
+}}}
+
+Groovy:
+
+{{{
+// arraylists are simple
+def voters = [
+  new Voter(ssn:"234..."),
+  new Voter(ssn:"235...") ]
+
+voters += new Voter(ssn:"234-333-4444")
+}}}
+
+Java:
+
+{{{
+for( Voter v : voters ) {
+  System.out.println( "Voter: " + v.getSsn() );
+}
+}}}
+
+Groovy:
+
+{{{
+// An example closure...
+voters.each {
+  println( "Voter: ${it.ssn}" )
+}
+}}}
+
+
+h1. Groovy "Is" Java
+
+* Groovy is Java without all the noise and with added flexibility
+* Groovy compiles to byte code
+* Java classes can extend Groovy classes
+* Groovy classes can extend Java classes
+* Do not have to create an interpreter to use a Groovy class (just add the @groovy.jar@)
+
+h1. Groovy has Elvis!
+
+* With Java:
+** <code>int myVal = somevar != null ? somevar : 0;</code>
+
+* The Elvis Operator
+** <code>int myVal = somevar :? 0</code>
+** ELVIS!!!!
+
+* Groovy is Java, saying less...
+
+h1. What is Grails?
+
+* An agile application framework, written in Java and Groovy
+* A rich set of plugins
+* An easy to understand set of components
+* Can be deployed to a web server as a web application
+* Able to execute *any major Java library or service* on the VM natively
+
+h1. Don’t Repeat Yourself!
+
+* Grails is a DRY platform
+* Groovy and Grails aim to remove duplication of effort
+* Grails favors convention over configuration where possible
+
+
+h1. Grails: DRYing out Java
+
+* Code backed by industry standard APIs (Spring, Hibernate, SiteMesh, ACEGI, etc...)
+* However, the configuration handled by convention or by simple DSLs
+* Do the same work without all that messy typing!!!
+* AND, to use any Java library, drop it in @./lib@ and access from Groovy OR Java
+
+h1. Creating a Grails App
+
+* Download Grails from @grails.org@
+* Unzip the files
+* Set the @GRAILS_HOME@ path variable
+* Add @$GRAILS_HOME/bin@ to the path
+* Type: @grails create-app@ and follow the instructions...
+
+h1. Key Grails Classes
+
+* Domain Class - A class representing an object in your domain (database)
+* Controller - A class that operates on URLs submitted to the web site
+* View - A Groovy Server Page (GSP) designed to render the content based on a specific request
+
+
+h1. Domain Class
+
+* Represent data backed by a datastore
+* Backed by Hibernate
+* Validated by Spring Validation
+* Grails will create tables automatically if configured in @DataSource.groovy@
+* Grails uses Domain Class information to build mappings automatically
+* Full Hibernate settings are available if needed using mappings
+
+h1. Sample Domain Class
+
+{{{
+class Party {
+  static constraints = {
+   name(blank:false)
+   description(size:1..5000)
+  }
+  static hasMany = [candidates: Candidate]
+  String name
+  String description
+  String toString() { "Party Name: ${name}" }
+}
+}}}
+
+h1. Controller
+
+* Analogous to a Struts Action
+* Backed by Spring Controllers
+* Each method handled by the Controller is a closure
+
+h1. View
+
+* Represents the data that results from a Controller action
+* Default view name resolution
+** @/grails-app/views/controllername/closure@
+* Written as a Groovy Server Page (gsp)
+* Dirt-simple tag libraries
+
+h1. Creating Grails Classes
+
+Grails has creation scripts to build the base objects (domains, controllers, views, taglibs, tests, services). Example:
+
+{{{
+grails create-domain-class
+grails create-controller
+grails create-view
+}}}
+
+Will prompt for object names if not specified
+
+
+h1. The Scaffold
+
+* Sometimes, you just don’t know what you want yet...
+* Why define a page before you nail down the data model?
+* Just use a Grails Scaffold
+
+{{{
+class VoteController {
+def scaffold = Vote.class
+}
+}}}
+
+
+h1. Grails Live Demo Topics
+
+* Creating a Grails App
+* The Domain Model
+* Controllers and Scaffolding
+* Generating and modifying views
+
+h1. The Generator Script
+
+* Builds code with default behaviors based on other classes
+* Similar to rails' rake task, use the grails generate task to build your elements
+** <code>grails generate-views domain-class</code>
+** <code>grails generate-all domain-class</code>
+* Usually used once the domain model is fleshed out a bit
+
+h1. Grails Workflow - Domain Driven
+
+* Build a domain class for each domain object
+* Build a controller for each domain class, but scaffold it to the domain class itself
+* Model away, making sure the data mappings are complete
+* Finish by generating or coding all views/controllers/tests
+* This helps focus on the data, not the UI, first!
+
+h1. GORM - Grails Object Relational Mapping API
+
+* Uses domain classes written in Groovy
+* Backed by Hibernate and Spring
+* Binds validations to the UI and backend
+* Write Hibernate objects without all of the messy XML!
+
+h1. GORM Benefits
+
+* Write your domain classes as POGOS
+* Define your validation in terms of constraints and get validation for free
+* Define your relationships using constraints and get hibernate mapping for free
+* And...
+
+h1. GORM Dynamic Finders
+
+All GORM objects get a @findAll()@ method, and ability to generate queries on the fly. Just type:
+
+{{{
+def result = domObj.findById(234)</code>
+def results =
+  domObj.findAllByNameOrderByPrice(“name”)
+}}}
+
+You could also use a GORM DSL for the query...
+
+
+h1. GORM DSL
+
+* More direct use of Hibernate Criteria
+* Bring back a list of voters who registered within the last 30 days, and are in the Whig party, ordered by last name.
+
+{{{
+def results =
+  Voter.withCriteria {
+    def now = new Date()
+    between('registrationDate', now-30, now)
+    party {
+      eq(name, ‘Whig’)
+    }
+    order('lastName')
+  }
+}}}
+
+h1. Just Scratching the Surface!
+
+Only so much to cover in one hour...
+
+h1. So, Why Grails?
+
+* Grails is Java App Development on Steroids
+* Grails ORM is the proven Hibernate framework, but much easier to stomach
+* Grails UI is Spring MVC, including WebFlow, but EASY
+* Grails makes writing web pages easier
+* Grails can use any Java framework by dropping it in the lib directory. Done!
+
+
+
+h1. Grails Plugins
+
+Over 56 At Last Count...
+
+* Rich UI: Ajax, GWT, Echo2, YUI, OpenLazlo, DWR, Flex, etc..)
+* Testing: Canoo WebTest, Selenium, Coverage
+* JMS, RSS/Atom feed generators, Searching with Compass/Lucene
+* Performance and Caching Plugins (S3, ehcache, Static Resources Plugin), Scheduling with Quartz
+* Graphing with Google, JFreeChart, OpenFlash Charting
+* Security with ACEGI, JSecurity, capcha plugins, etc...
+* Remoting and Web Service plugins
+* This is an open community: @www.grails.org/plugins@
+
+h1. Grails Applications in Production Today
+
+* Grails is a 1.0.x release, but...
+** Numerous insurance, financial institutions are using Groovy in applications
+** Grails has been used in production applications since version 0.6
+** Sky launched @showbiz.sky.com@ on Grails this year, 186 million hits / month
+* Grails is evolving, but feature rich today
+
+h1. Grails Issues
+
+* Many to Many relationships are not scaffolded today
+** Have to do two many-to-one relationships or customize your GORM models
+* Grails only handles a single datasource for GORM at the moment (but you can use
+Groovy SQL and Hibernate with other datasources)
+* Migrations support is lacking in core product (although plugins exist)
+
+h1. On Deck for Grails 1.1
+
+From Graeme Rocher's talk at G2One
+
+* Potential JPA Support
+* Portlet support
+* Built-in DB Migrations ala Rails
+* Java Content Repository support (map a domain class to a JCR)
+* Vendor API support (to help with IDE tooling)
+
+h1. Books on Groovy and Grails
+
+* Getting Started with Grails (free e-book, Jason Rudolph) -- available at InfoQ
+* Groovy Recipes: Greasing the Wheels of Java (Scott Davis)
+* Programming Groovy (Venkat Subramanium)
+* The Definitive Guide to Grails (Grame Rocher, somewhat out of date, 2nd edition upcoming)
+
+h1. Great Grails Sample App
+
+* Gravl - Glen Smith’s Grails-based Blog
+** @code.google.com/p/gravl@
+
+Excellent example of:
+
+* AJAX
+* Rich UI (tag clouds, date picker, timeline, more)
+* RSS Feed generation
+* Searching with the searchable plugin
+* Yahoo UI page layout

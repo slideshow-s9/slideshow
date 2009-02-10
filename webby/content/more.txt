@@ -1,0 +1,162 @@
+---
+title: Settings, Tips, Tricks and More       
+filter:
+  - erb
+  - textileplus
+---
+
+h1. <%= @page.title %>
+
+<div class="toc">
+
+p(toc-title). Contents:
+   
+* "How To Use Built-In Gradient Themes?":#themes
+* "How To Use Your Own Slide Show Template Packages?":#templates
+* "How To Bundle Up Original S5 Blank Package?":#s5blank
+* "Questions? Comments?":#questions
+
+
+</div>
+
+
+h2(#themes). How To Use Built-In Gradient Themes?
+
+You can define your gradient theme in plain text in the slide show source in the header using
+a simple CSS-style name value pair (if you use the built-in S5, S6 or FullerScreen templates).
+
+*Themes*. The built-in predefined gradient themes include: @diagonal@,
+@top-bottom@, 
+@left-right@, 
+@repeat@,  
+@radial@, 
+@radial-off-center@, 
+@radial-repeat@. See the "Theme Gallery":themes.html for examples.
+
+*Colors*. You can use whatever colors CSS supports e.g. pre-defined colors such as @red@, 
+@maroon@ or self-defined colors such as @#0e1f5b@, @#3b5998@.
+
+
+Example 1: Use @top-bottom@ gradient theme with the colors red and black
+
+{{{
+gradient: top-bottom red black
+}}}
+
+Example 2: Use pre-defined CSS colors (with default @top-bottom@ gradient theme)
+
+{{{
+gradient-colors: green lime         
+}}}
+
+Example 3: Use self-defined colors (with default @top-bottom@ gradient theme)
+
+{{{
+gradient-colors: #0e1f5b #3b5998
+}}}
+
+Example 4: Use @radial@ gradient theme and facebook colors
+
+{{{
+gradient: radial #0e1f5b #3b5998   
+}}}
+
+Example 5: Just change gradient theme and use default colors, that is, @marron@ and @black@
+
+{{{
+gradient-theme: repeat              
+}}}
+
+
+h2(#templates). How To Use Your Own Slide Show Template Packages?
+
+Use the @-g/--generate@ switch to generate a sample template
+package with manifest to get started.
+
+Example: Generate a template package w/ manifest in your working folder (using the s6 package)
+
+{{{
+slideshow -g
+}}}
+
+Example: Same as above but uses built-in s5 template package
+
+{{{
+slideshow -g -s5
+}}}
+
+Note, you can, of course, also create your own template packages with manifest from scratch.
+You can find manifest samples online:
+
+* "@s5.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s5.txt.sample
+* "@s5blank.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s5blank.txt.sample
+* "@s6.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s6.txt.sample
+
+To use your own custom package use the @-t/--template@ switch passing along the manifest. Example:
+
+{{{
+slideshow -t  s6.txt  microformats
+slideshow -t  s6nosvg.txt   microformats
+}}}
+
+Using the package format you're invited to create your own template package
+with manifest that uses your own extended/changed
+JavaScript code and drops the vector graphics background gradient etc. 
+
+h2(#s5blank). How To Bundle Up Original S5 Blank Package?
+
+The slideshow gem includes a sample starter template package to demo how to bundle up the
+original S5 v11 blank package. Type on the command line:
+
+{{{
+slideshow -g -t s5blank.txt
+}}}
+
+This will generate a sample template package with manifest for the S5 v1.1 blank package
+in your working folder. If you want to store it somewhere else
+add the @-o/--output@ switch e.g.
+
+{{{
+slideshow -g -t s5blank.txt -o tpl
+}}}
+
+Note, the sample package also includes a "starter" slide show called
+@blank.textile@. Delete it once you write your own slide shows.
+
+To test and use the generated sample package run:
+
+{{{
+slideshow -t s5blank.txt blank.textile -o o
+}}}
+
+Note, change your output folder using the @-o/--output@ switch
+otherwise you may override your templates. Or if you stored the
+generated template package in the @tpl@ folder run:
+
+{{{
+slideshow -t tpl/s5blank.txt tpl/blank.textile
+}}}
+
+That's it. Open up the generated web page, that is, @blank.html@ or
+@o/blank.html@ depending on your ouput folder settings and enjoy.
+
+*Some more details.* The package is configured to use the following headers in @header.html.erb@:
+
+{{{
+author: Your Name Here
+company: Your Company Here
+title: Your Slide Show Title Here
+subtitle: Your Subtitle Here
+footer: Your Footer Here
+subfooter: Your Subfooter Here
+}}}
+
+Open up the @header.html.erb@ template for details on how to use your own header variables/place holders
+in templates. All other included files get copied verbatim.
+
+
+h2(#questions). Questions? Comments?
+
+Questions? Comments? Send them along to the
+"Free Web Slide Show Alternatives (S5, S6, S9, Slidy And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow.
+Thanks!

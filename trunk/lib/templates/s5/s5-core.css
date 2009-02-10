@@ -1,0 +1,76 @@
+/* Do not edit or override these styles! The system will likely break if you do. */
+
+.slide {position: absolute;}
+html>body div#header, html>body div#footer, 
+  html>body div#controls  {position: fixed;}
+.handout {display: none;}
+.layout {display: block;}
+.slide, .hideme, .incremental {visibility: hidden;}
+#slide0 {visibility: visible;}
+
+
+/*** framing.css - sets basic placement and size of slide components *****/
+
+/* The following styles size, place, and layer the slide components.
+   Edit these if you want to change the overall slide layout.
+   The commented lines can be uncommented (and modified, if necessary) 
+    to help you with the rearrangement process. */
+
+/* target = 1024x768 */
+
+div#header, div#footer, .slide { width: 100%; top: 0; left: 0; }
+div#header { top: 0; height: 0.5em; z-index: 1;}
+div#footer { top: auto; bottom: 0; height: 1em; z-index: 5;}
+div#controls {left: 50%; bottom: 0; width: 50%; z-index: 100;}
+div#controls form {position: absolute; bottom: 0; right: 0; width: 100%;
+  margin: 0;}
+#currentSlide {position: absolute; width: 10%; left: 45%; bottom: 1em; z-index: 10;}
+html>body #currentSlide {position: fixed;}
+
+.presentation { margin: 0; padding: 0; } 
+.slide { margin: 0 0 0 0; height: 96%; }
+.slide { overflow-x: hidden; overflow-y: auto; }
+.slide { top: 0; width: 92%; padding: 2% 4% 0 4%; z-index: 2;  list-style: none;}
+
+
+/* enable svg backgrounds for gradient themes */
+div.background { position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: -1; }
+body { opacity: .99; }
+
+html, body { margin: 0; padding: 0; }
+
+div#footer { font-size: 100%; font-weight: bold; padding: 1em 0;}
+#footer h1 { display: block; margin: 0; padding: 0 1em; font-size: 0.5em; }
+#footer h2 { display: block; margin: 0; padding: 0 1em; font-size: 0.5em; font-style: italic; }
+
+#currentSlide {text-align: center; font-size: 0.5em; }
+
+
+/*
+div#header {background: #FCC;}
+div#footer {background: #CCF;}
+div#controls {background: #BBD;}
+div#currentSlide {background: #FFC;}
+*/
+
+/***** pretty.css - stuff that makes the slides look better than blah ****/
+
+#controls :focus { outline: 1px dotted white;}
+
+div#controls { position: absolute; left: 50%; bottom: 0; width: 50%;
+  text-align: right; font: bold 0.9em Verdana, Helvetica, sans-serif;}
+
+html>body div#controls { position: fixed; padding: 0 0 1em 0; top: auto;}
+div#controls form { position: absolute; bottom: 0; right: 0; width: 100%;
+  margin: 0; padding: 0;}
+#controls #navLinks a { padding: 0; margin: 0 0.5em;
+                         border: none; cursor: pointer;}
+#controls #navLinks :link,
+#controls #navLinks :visited {text-decoration: none; }
+
+#controls #navList {height: 1em;}
+#controls #navList #jumplist {position: absolute; bottom: 0; right: 0; background: white; color: black;}
+
+
+.note { display: none; }
+

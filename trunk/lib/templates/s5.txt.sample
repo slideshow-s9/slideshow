@@ -1,0 +1,15 @@
+# S5 template package manifest sample
+# Change as desired/needed
+#
+# Questions? Comments?
+# Send them along to the Free Web Slide Show Alternatives (S5, S6, S9 And Friends) Forum/Mailing List. 
+# http://groups.google.com/group/webslideshow
+
+__file__.svg    gradient.svg.erb
+__file__.html   header.html.erb + footer.html.erb 
+__file__.css    style.css.erb
+s5/opera.css
+s5/outline.css
+s5/print.css
+s5/s5-core.css
+s5/slides.js

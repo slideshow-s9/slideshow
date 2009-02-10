@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: red" />
+      <stop offset="100%" style="stop-color: black" />
+    </linearGradient>
+    <linearGradient id="maroon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: maroon" />
+      <stop offset="100%" style="stop-color: red" />
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: purple" />
+      <stop offset="100%" style="stop-color: fuchsia" />
+    </linearGradient>
+    <linearGradient id="fuchsia" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: fuchsia" />
+      <stop offset="100%" style="stop-color: white" />
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: blue" />
+      <stop offset="100%" style="stop-color: navy" />
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: navy" />
+      <stop offset="100%" style="stop-color: black" />
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: teal" />
+      <stop offset="100%" style="stop-color: aqua" />
+    </linearGradient>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: aqua" />
+      <stop offset="100%" style="stop-color: blue" />
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: green" />
+      <stop offset="100%" style="stop-color: lime" />
+    </linearGradient>
+    <linearGradient id="lime" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: lime" />
+      <stop offset="100%" style="stop-color: yellow" />
+    </linearGradient>
+    <linearGradient id="olive" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: olive" />
+      <stop offset="100%" style="stop-color: yellow" />
+    </linearGradient>
+    <linearGradient id="yellow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: yellow" />
+      <stop offset="100%" style="stop-color: white" />
+    </linearGradient>
+    <linearGradient id="black" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: black" />
+      <stop offset="100%" style="stop-color: grey" />
+    </linearGradient>
+    <linearGradient id="grey" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: grey" />
+      <stop offset="100%" style="stop-color: silver" />
+    </linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: silver" />
+      <stop offset="100%" style="stop-color: white" />
+    </linearGradient>
+    <linearGradient id="white" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   style="stop-color: white" />
+      <stop offset="100%" style="stop-color: black" />
+    </linearGradient>
+</defs><rect x='4%' y='4%' width='22%' height='22%' style='fill: url(#red)' /><rect x='27%' y='4%' width='22%' height='22%' style='fill: url(#maroon)' /><rect x='50%' y='4%' width='22%' height='22%' style='fill: url(#purple)' /><rect x='73%' y='4%' width='22%' height='22%' style='fill: url(#fuchsia)' /><rect x='4%' y='27%' width='22%' height='22%' style='fill: url(#blue)' /><rect x='27%' y='27%' width='22%' height='22%' style='fill: url(#navy)' /><rect x='50%' y='27%' width='22%' height='22%' style='fill: url(#teal)' /><rect x='73%' y='27%' width='22%' height='22%' style='fill: url(#aqua)' /><rect x='4%' y='50%' width='22%' height='22%' style='fill: url(#green)' /><rect x='27%' y='50%' width='22%' height='22%' style='fill: url(#lime)' /><rect x='50%' y='50%' width='22%' height='22%' style='fill: url(#olive)' /><rect x='73%' y='50%' width='22%' height='22%' style='fill: url(#yellow)' /><rect x='4%' y='73%' width='22%' height='22%' style='fill: url(#black)' /><rect x='27%' y='73%' width='22%' height='22%' style='fill: url(#grey)' /><rect x='50%' y='73%' width='22%' height='22%' style='fill: url(#silver)' /><rect x='73%' y='73%' width='22%' height='22%' style='fill: url(#white)' /></svg>

@@ -1,0 +1,17 @@
+# manifest to generate sample template package using S5 v1.1 blank package
+
+s5blank.txt              s5blank.txt.sample
+blank.textile            s5blank/blank.textile
+header.html.erb          s5blank/header.html.erb
+footer.html.erb          s5blank/footer.html.erb
+ui/default/blank.gif     s5blank/ui/default/blank.gif
+ui/default/bodybg.gif    s5blank/ui/default/bodybg.gif
+ui/default/framing.css   s5blank/ui/default/framing.css
+ui/default/iepngfix.htc  s5blank/ui/default/iepngfix.htc
+ui/default/opera.css     s5blank/ui/default/opera.css
+ui/default/outline.css   s5blank/ui/default/outline.css
+ui/default/pretty.css    s5blank/ui/default/pretty.css
+ui/default/print.css     s5blank/ui/default/print.css
+ui/default/s5-core.css   s5blank/ui/default/s5-core.css
+ui/default/slides.css    s5blank/ui/default/slides.css
+ui/default/slides.js     s5blank/ui/default/slides.js
