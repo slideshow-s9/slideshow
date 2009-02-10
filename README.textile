@@ -1,0 +1,16 @@
+h2. What's Slide Show (S9)?
+
+A Ruby gem that lets you create slide shows and author slides in plain text using
+a wiki-style markup language that's easy-to-write and easy-to-read.
+The Slide Show (S9) project also collects and welcomes themes
+and ships "out-of-the-gem" with built-in support
+for "loss-free" gradient vector graphics themes. More "Slide Show ==(S9)== Project Site &raquo;":http://slideshow.rubyforge.org 
+
+h2. About, License - Questions? Comments?
+
+License. The slide show scripts and templates are dedicated to the <a href='http://creativecommons.org/licenses/publicdomain'>public domain</a>.
+Use it as you please with no restrictions whatsoever.
+
+Questions? Comments? Send them along to the
+"Free Web Slide Show Alternatives (S5, S6, S9, Slidy And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow.
+Thanks!
