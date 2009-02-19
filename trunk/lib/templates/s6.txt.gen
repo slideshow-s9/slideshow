@@ -5,8 +5,9 @@ gradient.svg.erb
 header.html.erb   s6/header.html.erb
 footer.html.erb   s6/footer.html.erb 
 style.css.erb     s6/style.css.erb
-s6/jquery.js
 s6/outline.css
 s6/print.css
 s6/slides.css
+s6/jquery.js
+s6/slides.core.js
 s6/slides.js
