@@ -15,9 +15,9 @@ require 'pp'
 
 module Slideshow
 
-  VERSION = '0.7.5'
+  VERSION = '0.7.6'
 
-class Params 
+class ParamsOldDelete 
   
   def initialize( name, headers )
     @name    =  name
@@ -195,6 +195,8 @@ class Gen
     @opts = Opts.new
   end
 
+  # replace w/ attr_reader :logger, :opts ??
+
   def logger 
     @logger
   end
@@ -203,7 +205,7 @@ class Gen
     @opts
   end
   
-  def check_markdown_libs
+  def load_markdown_libs
     # check for available markdown libs/gems
     # try to require each lib and remove any not installed
     @markdown_libs = []
@@ -288,8 +290,8 @@ class Gen
     return File.read( path )
   end
   
-  def render_template( content, b=TOPLEVEL_BINDING )
-    ERB.new( content ).result( b )
+  def render_template( content, the_binding )
+    ERB.new( content ).result( the_binding )
   end
 
   def load_template_old_delete( name, builtin )
@@ -356,6 +358,15 @@ class Gen
     extname  = File.extname( fn )
     logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
 
+    # shared variables for templates (binding)
+    @content_for = {}  # reset content_for hash
+    @name        = basename
+    @headers     = @opts
+
+    puts "Preparing slideshow '#{basename}'..."
+
+
+
   known_extnames = KNOWN_TEXTILE_EXTNAMES + KNOWN_MARKDOWN_EXTNAMES
                 
   if extname.empty? then
@@ -374,8 +385,20 @@ class Gen
   inname  =  "#{dirname}/#{basename}#{extname}"
 
   logger.debug "inname=#{inname}"
+    
+  source = File.read( inname )
   
-  content = File.read( inname )
+  # ruby note: .*? is non-greedy (shortest-possible) regex match
+  source.gsub!(/__SKIP__.*?__END__/m, '')
+  source.sub!(/__END__.*/m, '')
+  
+  # allow plugins/helpers; process source (including header) using erb
+  
+  # note: include is a ruby keyword; rename to __include__ so we can use it 
+  source.gsub!( /<%=[ \t]*include/, '<%= __include__' )
+  
+  source =  ERB.new( source ).result( binding )
+  
   
   # todo: read headers before command line options (lets you override options using commandline switch)
   
@@ -384,8 +407,10 @@ class Gen
 
   read_headers = true
   content = ""
+  
+   # fix: allow comments in header too (#)
 
-  File.open( inname ).readlines.each do |line|
+  source.each do |line|
     if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
       key = $1.downcase
       value = $2.strip
@@ -411,11 +436,7 @@ class Gen
   content.gsub!( "_S9BEGIN_", "{{{" )
   content.gsub!( "_S9END_", "}}}" )
 
-  opts.set_defaults
-  
-  params = Params.new( basename, opts )
-  
-  puts "Preparing slideshow '#{basename}'..."
+  opts.set_defaults  
 
   # convert light-weight markup to hypertext
   
@@ -495,11 +516,11 @@ class Gen
 
       out = File.new( with_output_path( outname, outpath ), "w+" )
 
-      out << render_template( load_template( entry[1] ), params.params_binding )
+      out << render_template( load_template( entry[1] ), binding )
       
       if entry.size > 2 # more than one source file? assume header and footer with content added inbetween
         out << content2 
-        out << render_template( load_template( entry[2] ), params.params_binding )
+        out << render_template( load_template( entry[2] ), binding )
       end
 
       out.flush
@@ -535,6 +556,27 @@ class Gen
   puts "Done."
 end
 
+def load_plugins
+  
+  # use lib folder unless we're in our very own folder 
+  #  (that use lib for its core functionality), thus, use plugins instead  
+  if( File.expand_path( File.dirname(__FILE__) ) == File.expand_path( 'lib' ) )
+    pattern = 'plugins/**/*.rb'
+  else
+    pattern = 'lib/**/*.rb'
+  end
+  
+  logger.debug "pattern=#{pattern}"
+  
+  Dir.glob( pattern ) do |plugin|
+    begin
+      puts "Loading plugins in '#{plugin}'..."
+      require( plugin )
+    rescue Exception => e
+      puts "** error: failed loading plugins in '#{plugin}': #{e}"
+    end
+  end
+end
 
 def run( args )
 
@@ -601,7 +643,8 @@ def run( args )
   if opts.generate?
     create_slideshow_templates
   else
-    check_markdown_libs
+    load_markdown_libs
+    load_plugins  # check for optional plugins/extension in ./lib folder
     
     args.each { |fn| create_slideshow( fn ) }
   end
@@ -614,5 +657,9 @@ def Slideshow.main
 end
 
 end # module Slideshow
+
+# load built-in helpers/plugins
+require "#{File.dirname(__FILE__)}/helpers/text_helper.rb"
+require "#{File.dirname(__FILE__)}/helpers/capture_helper.rb"
 
 Slideshow.main if __FILE__ == $0
