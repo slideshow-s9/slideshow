@@ -8,27 +8,10 @@ require 'fileutils'
 require 'ftools'
 require 'pp'
 
-# todo: move code highlighting in (optional) plugin/extension
-# require 'hpricot'
-# require 'uv'
-
 
 module Slideshow
 
   VERSION = '0.7.6'
-
-class ParamsOldDelete 
-  
-  def initialize( name, headers )
-    @name    =  name
-    @headers =  headers
-  end
-    
-  def params_binding
-    binding
-  end
-
-end
 
 # todo: split (command line) options and headers?
 # e.g. share (command line) options between slide shows (but not headers?)
@@ -50,10 +33,6 @@ class Opts
     end
   end
   
-  def code_theme=( value )
-    @hash[ :code_theme ] = value.tr( '-', '_' )
-  end
-
   def gradient=( value )
     put_gradient( value, :theme, :color1, :color2 )
   end
@@ -100,14 +79,6 @@ class Opts
   def fullerscreen?
     get_boolean( 'fuller', false ) || get_boolean( 'fullerscreen', false )
   end
-
-  def code_theme
-    get( 'code-theme', DEFAULTS[ :code_theme ] )
-  end  
-  
-  def code_line_numbers?
-    get_boolean( 'code-line-numbers', DEFAULTS[ :code_line_numbers ] )
-  end
   
   def manifest  
     get( 'manifest', 's6.txt' )
@@ -117,6 +88,15 @@ class Opts
     get( 'output', '.' )
   end
 
+  def code_engine
+    get( 'code-engine', DEFAULTS[ :code_engine ] )
+  end
+  
+  def code_txmt
+    get( 'code-txmt', DEFAULTS[ :code_txmt ])
+  end
+
+
   DEFAULTS =
   {
     :title             => 'Untitled Slide Show',
@@ -125,14 +105,19 @@ class Opts
     :gradient_theme    => 'dark',
     :gradient_color1   => 'red',
     :gradient_color2   => 'black',
-    :code_theme        => 'amy',
-    :code_line_numbers => 'true'
+
+    :code_engine       => 'uv',  # ultraviolet (uv) | coderay (cr)
+    :code_txmt         => 'false', # Text Mate Hyperlink for Source?
   }
 
   def set_defaults      
     DEFAULTS.each_pair do | key, value |
       @hash[ key ] = value if @hash[ key ].nil?
     end
+  end
+
+  def get( key, default )
+    @hash.fetch( normalize_key(key), default )
   end
 
 private
@@ -150,10 +135,6 @@ private
     end
   end
   
-  def get( key, default )
-    @hash.fetch( normalize_key(key), default )
-  end
-
   def get_boolean( key, default )
     value = @hash[ normalize_key( key ) ]
     if value.nil?
@@ -169,8 +150,9 @@ end # class Opts
 class Gen
 
   KNOWN_TEXTILE_EXTNAMES  = [ '.textile', '.t' ]
-  KNOWN_MARKDOWN_EXTNAMES = [ '.markdown', '.mark', '.m', '.txt', '.text' ]
-  
+  KNOWN_MARKDOWN_EXTNAMES = [ '.markdown', '.m', '.mark', '.mkdn', '.md', '.txt', '.text' ]
+  KNOWN_EXTNAMES = KNOWN_TEXTILE_EXTNAMES + KNOWN_MARKDOWN_EXTNAMES
+
   # note: only bluecloth is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
   #  if you want to use other markdown libs install the required/desired lib e.g.
   #  use  gem install rdiscount for rdiscount and so on
@@ -205,6 +187,20 @@ class Gen
     @opts
   end
   
+  def headers
+    # give access to helpers to opts with a different name
+    @opts
+  end
+  
+  def session
+    # give helpers/plugins a session-like hash
+    @session
+  end
+  
+  def markup_type
+    @markup_type   # :textile, :markdown
+  end
+  
   def load_markdown_libs
     # check for available markdown libs/gems
     # try to require each lib and remove any not installed
@@ -223,10 +219,29 @@ class Gen
     logger.debug "Using Markdown library #{@markdown_libs.first[0]}."
   end
   
+  # todo: move to filter (for easier reuse)
   def markdown_to_html( content )
     @markdown_libs.first[1].call( content )
   end
 
+  # todo: move to filter (for easier reuse)  
+  def textile_to_html( content )
+    # turn off hard line breaks
+    # turn off span caps (see http://rubybook.ca/2008/08/16/redcloth)
+    red = RedCloth.new( content, [:no_span_caps] )
+    red.hard_breaks = false
+    content = red.to_html
+  end
+  
+  def wrap_markup( text )    
+    if markup_type == :textile
+      # saveguard with notextile wrapper etc./no further processing needed
+      "<notextile>\n#{text}\n</notextile>"
+    else
+      text
+    end
+  end
+    
   def cache_dir
     PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
   end
@@ -358,21 +373,12 @@ class Gen
     extname  = File.extname( fn )
     logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
 
-    # shared variables for templates (binding)
-    @content_for = {}  # reset content_for hash
-    @name        = basename
-    @headers     = @opts
-
     puts "Preparing slideshow '#{basename}'..."
-
-
-
-  known_extnames = KNOWN_TEXTILE_EXTNAMES + KNOWN_MARKDOWN_EXTNAMES
                 
   if extname.empty? then
     extname  = ".textile"   # default to .textile 
     
-    known_extnames.each do |e|
+    KNOWN_EXTNAMES.each do |e|
        logger.debug "File.exists? #{dirname}/#{basename}#{e}"
        if File.exists?( "#{dirname}/#{basename}#{e}" ) then         
           extname = e
@@ -382,27 +388,28 @@ class Gen
     end     
   end
 
+  if KNOWN_MARKDOWN_EXTNAMES.include?( extname )
+    @markup_type = :markdown
+  else
+    @markup_type = :textile
+  end
+  
+  # shared variables for templates (binding)
+  @content_for = {}  # reset content_for hash
+  @name        = basename
+  @headers     = @opts  # deprecate/remove: use headers method in template
+
+  @session     = {}  # reset session hash for plugins/helpers
+
   inname  =  "#{dirname}/#{basename}#{extname}"
 
   logger.debug "inname=#{inname}"
     
-  source = File.read( inname )
+  content_with_headers = File.read( inname )
+
+  # todo: read headers before command line options (lets you override options using commandline switch)?
   
-  # ruby note: .*? is non-greedy (shortest-possible) regex match
-  source.gsub!(/__SKIP__.*?__END__/m, '')
-  source.sub!(/__END__.*/m, '')
-  
-  # allow plugins/helpers; process source (including header) using erb
-  
-  # note: include is a ruby keyword; rename to __include__ so we can use it 
-  source.gsub!( /<%=[ \t]*include/, '<%= __include__' )
-  
-  source =  ERB.new( source ).result( binding )
-  
-  
-  # todo: read headers before command line options (lets you override options using commandline switch)
-  
-  # read source document
+  # read source document; split off optional header from source
   # strip leading optional headers (key/value pairs) including optional empty lines
 
   read_headers = true
@@ -410,7 +417,7 @@ class Gen
   
    # fix: allow comments in header too (#)
 
-  source.each do |line|
+  content_with_headers.each do |line|
     if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
       key = $1.downcase
       value = $2.strip
@@ -425,6 +432,19 @@ class Gen
     end
   end
 
+  opts.set_defaults  
+    
+  # ruby note: .*? is non-greedy (shortest-possible) regex match
+  content.gsub!(/__SKIP__.*?__END__/m, '')
+  content.sub!(/__END__.*/m, '')
+  
+  # allow plugins/helpers; process source (including header) using erb
+  
+  # note: include is a ruby keyword; rename to __include__ so we can use it 
+  content.gsub!( /<%=[ \t]*include/, '<%= __include__' )
+  
+  content =  ERB.new( content ).result( binding )
+  
   # run pre-filters (built-in macros)
   # o replace {{{  w/ <pre class='code'>
   # o replace }}}  w/ </pre>
@@ -436,27 +456,21 @@ class Gen
   content.gsub!( "_S9BEGIN_", "{{{" )
   content.gsub!( "_S9END_", "}}}" )
 
-  opts.set_defaults  
-
   # convert light-weight markup to hypertext
-  
-  if KNOWN_MARKDOWN_EXTNAMES.include?( extname )
-    content = markdown_to_html( content )
-    # old code: content = Maruku.new( content, {:on_error => :raise} ).to_html
-    # old code: content = BlueCloth.new( content ).to_html
-  else
-    # turn off hard line breaks
-    # turn off span caps (see http://rubybook.ca/2008/08/16/redcloth)
-    red = RedCloth.new( content, [:no_span_caps] )
-    red.hard_breaks = false
-    content = red.to_html
-  end
-  
+ 
+  content = case @markup_type
+     when :markdown
+      markdown_to_html( content )
+    when :textile
+      textile_to_html( content )
+  end  
 
   # post-processing
 
   slide_counter = 0
   content2 = ''
+  
+  ## todo: move this to a filter (for easier reuse)
   
   # wrap h1's in slide divs; note use just <h1 since some processors add ids e.g. <h1 id='x'>
   content.each_line do |line|
@@ -468,45 +482,6 @@ class Gen
      content2 << line
   end
   content2 << "\n\n</div>"   if slide_counter > 0
-
-=begin
-  ## todo: run syntax highlighting before markup/textilize? lets us add textile to highlighted code?
-  ##  avoid undoing escaped entities?
-  
-  include_code_stylesheet = false
-  # syntax highlight code
-  # todo: can the code handle escaped entities? e.g. &gt; 
-  doc = Hpricot(content2)
-    doc.search("pre.code, pre > code").each do |e|
-      if e.inner_html =~ /^\s*#!(\w+)/
-        lang = $1.downcase
-        if e.inner_html =~ /^\{\{\{/  # {{{ assumes escape/literal #!lang 
-          # do nothing; next
-          logger.debug "  skipping syntax highlighting using lang=#{lang}; assumimg escaped literal"
-        else         
-          logger.debug "  syntax highlighting using lang=#{lang}"
-          if Uv.syntaxes.include?(lang)
-            code = e.inner_html.sub(/^\s*#!\w+/, '').strip
-            
-            code.gsub!( "&lt;", "<" )
-            code.gsub!( "&gt;", ">" )
-            code.gsub!( "&amp;", "&" )
-            # todo: missing any other entities? use CGI::unescapeHTML?
-            logger.debug "code=>#{code}<"
-            
-            code_highlighted = Uv.parse( code, "xhtml", lang, opts.code_line_numbers?, opts.code_theme )
-            # old code: e.inner_html = code_highlighted
-            # todo: is it ok to replace the pre.code enclosing element to avoid duplicates?
-            e.swap( code_highlighted )
-            include_code_stylesheet = true
-          end
-        end
-      end
-    end
-
-   content2 = doc.to_s
-=end
-   
 
   manifest.each do |entry|
     outname = entry[0]
@@ -534,24 +509,6 @@ class Gen
       File.copy( source, with_output_path( dest, outpath ) )
     end
   end
-
- 
-=begin 
-  if include_code_stylesheet
-     logger.debug "cache_dir=#{cache_dir}"
-
-     FileUtils.mkdir(cache_dir) unless File.exists?(cache_dir) if cache_dir
-     Uv.copy_files "xhtml", cache_dir
-
-     theme = opts.code_theme
-  
-     theme_content = File.read( "#{cache_dir}/css/#{theme}.css" )
-     
-     out << "/* styles for code syntax highlighting theme '#{theme}' */\n"
-     out << "\n"
-     out << theme_content
-  end
-=end
 
   puts "Done."
 end
@@ -658,8 +615,26 @@ end
 
 end # module Slideshow
 
-# load built-in helpers/plugins
+# load built-in (required) helpers/plugins
 require "#{File.dirname(__FILE__)}/helpers/text_helper.rb"
 require "#{File.dirname(__FILE__)}/helpers/capture_helper.rb"
+
+# load built-in (optional) helpers/plugins
+#   If a helper fails to load, simply ingnore it
+#   If you want to use it install missing required gems e.g.:
+#     gem install coderay
+#     gem install ultraviolet etc.
+BUILTIN_OPT_HELPERS = [
+  "#{File.dirname(__FILE__)}/helpers/uv_helper.rb",
+  "#{File.dirname(__FILE__)}/helpers/coderay_helper.rb",
+]
+
+BUILTIN_OPT_HELPERS.each do |helper| 
+  begin
+    require(helper)
+  rescue Exception => e
+    ;
+  end
+end
 
 Slideshow.main if __FILE__ == $0
