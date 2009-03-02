@@ -11,7 +11,7 @@ require 'pp'
 
 module Slideshow
 
-  VERSION = '0.7.6'
+  VERSION = '0.7.7'
 
 # todo: split (command line) options and headers?
 # e.g. share (command line) options between slide shows (but not headers?)
@@ -368,10 +368,22 @@ class Gen
     logger.debug "outpath=#{outpath}"
     File.makedirs( outpath ) unless File.directory? outpath 
 
-    dirname  = File.dirname( fn )
+    dirname  = File.dirname( fn )    
     basename = File.basename( fn, '.*' )
     extname  = File.extname( fn )
     logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
+
+    # change working dir to sourcefile dir
+    # todo: add a -c option to commandline? to let you set cwd?
+    
+    newcwd  = File.expand_path( dirname )
+    oldcwd  = File.expand_path( Dir.pwd )
+    
+    unless newcwd == oldcwd then
+      logger.debug "oldcwd=#{oldcwd}"
+      logger.debug "newcwd=#{newcwd}"
+      Dir.chdir newcwd
+    end  
 
     puts "Preparing slideshow '#{basename}'..."
                 

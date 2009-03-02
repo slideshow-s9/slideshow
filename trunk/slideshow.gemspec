@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name = 'slideshow'
-  spec.version = '0.7.6'
+  spec.version = '0.7.7'
   spec.summary = "Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby"
   spec.homepage = 'http://slideshow.rubyforge.org'
   spec.rubyforge_project = 'slideshow'
