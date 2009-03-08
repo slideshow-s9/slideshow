@@ -1,3 +1,9 @@
+=== 0.7.8 / 2009-03-08
+
+* Using Hoe Rake tasks to manage gem; adding required files and build script
+* Move templates folder to top-level (out of lib/)
+* Minor code clean-up
+
 === 0.7.7	/ 2009-03-02
 
 * Added new helpers for syntax highlighting (using ultraviolet and coderay gems)

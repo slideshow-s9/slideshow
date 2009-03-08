@@ -1,5 +1,0 @@
-# builtin FullerScreen template package manifest
-
-__file__.html  header.html.erb + footer.html.erb
-__file__.svg   gradient.svg.erb
-__file__.css   style.css.erb

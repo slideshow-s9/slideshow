@@ -8,7 +8,7 @@ for "loss-free" gradient vector graphics themes. More "Slide Show ==(S9)== Proje
 
 h2. About, License - Questions? Comments?
 
-License. The slide show scripts and templates are dedicated to the <a href='http://creativecommons.org/licenses/publicdomain'>public domain</a>.
+License. The slide show scripts and templates are dedicated to the "public domain":http://creativecommons.org/licenses/publicdomain.
 Use it as you please with no restrictions whatsoever.
 
 Questions? Comments? Send them along to the

@@ -1,8 +1,8 @@
 # builtin S5 template package manifest
 
-__file__.svg    gradient.svg.erb
 __file__.html   s5/header.html.erb + s5/footer.html.erb 
 __file__.css    s5/style.css.erb
+__file__.svg    gradient.svg.erb
 s5/opera.css
 s5/outline.css
 s5/print.css
