@@ -1,7 +1,7 @@
 $KCODE = 'utf'
 
-LIB_PATH = File.dirname(__FILE__)
-$:.unshift(LIB_PATH) unless $:.include?(LIB_PATH) || $:.include?(File.expand_path(LIB_PATH))
+LIB_PATH = File.expand_path( File.dirname(__FILE__) )
+$:.unshift(LIB_PATH) 
 
 # core and stlibs
 require 'optparse'
@@ -23,7 +23,16 @@ module Slideshow
   VERSION = '0.7.8'
 
   def Slideshow.main
-    Gen.new.run(ARGV)
+    
+    # allow env variable to set RUBYOPT-style default command line options
+    #   e.g. -o slides -t <your_template_manifest_here>
+    slideshowopt = ENV[ 'SLIDESHOWOPT' ]
+    
+    args = []
+    args += slideshowopt.split if slideshowopt
+    args += ARGV.dup
+    
+    Gen.new.run(args)
   end
 
 end # module Slideshow
