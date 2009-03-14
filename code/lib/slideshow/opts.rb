@@ -50,6 +50,18 @@ class Opts
     get_boolean( 'generate', false )
   end
   
+  def list?
+    get_boolean( 'list', false )
+  end
+  
+  def fetch?
+    get( 'fetch_uri', nil ) != nil
+  end
+  
+  def fetch_uri
+    get( 'fetch_uri', '-fetch uri required-' )
+  end
+  
   def has_includes?
     @hash[ :include ]
   end
@@ -69,6 +81,10 @@ class Opts
   
   def manifest  
     get( 'manifest', 's6.txt' )
+  end
+  
+  def config_path
+    get( 'config_path', nil )
   end
   
   def output_path

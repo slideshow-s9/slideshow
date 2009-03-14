@@ -10,6 +10,8 @@ require 'logger'
 require 'fileutils'
 require 'ftools'
 require 'pp'
+require 'uri'
+require 'net/http'
 
 # required gems
 require 'redcloth'
@@ -20,7 +22,7 @@ require 'slideshow/gen'
 
 module Slideshow
 
-  VERSION = '0.7.8'
+  VERSION = '0.8'
 
   def Slideshow.main
     
