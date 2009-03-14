@@ -1,6 +1,13 @@
+=== 0.8 / 2009-03-14
+
+* Added -f/--fetch URI option; lets you fetch templates from the internet
+* Added -l/--list option; list all installed templates
+* Added -c/--config PATH option; lets you set config folder (default is ~/.slideshow)
+* Moved S5 v11 blank package out of core/gem
+
 === 0.7.8 / 2009-03-09
 
-* Adding SLIDESHOWOPT env variable; lets you set default command line options (e.g. -o slides)
+* Added SLIDESHOWOPT env variable; lets you set default command line options (e.g. -o slides)
 * Using Hoe Rake tasks to manage gem; adding required files and build script
 * Move templates folder to top-level (out of lib/)
 * Minor code clean-up

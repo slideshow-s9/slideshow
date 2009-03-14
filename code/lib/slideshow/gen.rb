@@ -193,12 +193,12 @@ class Gen
       "#{config_dir}/templates/*/*.txt"
     ]
     current_patterns = [
-      "#{Dir.getwd}/templates/*.txt",
-      "#{Dir.getwd}/templates/*/*.txt"
+      "templates/*.txt",
+      "templates/*/*.txt"
     ]
     
     patterns = []
-    patterns += current_patterns  unless LIB_PATH == File.expand_path( 'lib' )  # don't include working dir if we test code from repo
+    patterns += current_patterns  unless LIB_PATH == File.expand_path( 'lib' )  # don't include working dir if we test code from repo (don't include slideshow/templates)
     patterns += config_patterns
     patterns += builtin_patterns
  
@@ -277,7 +277,8 @@ class Gen
     logger.debug "fetch_uri=#{opts.fetch_uri}"
     
     # src = opts.fetch_uri 
-    src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
+    # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
+    src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
     uri = URI.parse( src )
   
     logger.debug "host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
@@ -380,7 +381,7 @@ class Gen
     logger.debug "manifest=#{manifest_path_or_name}"
     
     # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
-    if File.exits?( manifest_path_or_name )
+    if File.exists?( manifest_path_or_name )
       manifest = load_manifest( manifest_path_or_name )
     else
       # check for builtin manifests
@@ -559,23 +560,20 @@ class Gen
 end
 
 def load_plugins
+    
+  patterns = []
+  patterns << "#{config_dir}/lib/**/*.rb"
+  patterns << 'lib/**/*.rb' unless LIB_PATH == File.expand_path( 'lib' )  # don't include lib if we are in repo (don't include slideshow/lib)
   
-  # use lib folder unless we're in our very own folder 
-  #  (that already uses lib for its core functionality), thus, use plugins instead  
-  if( LIB_PATH == File.expand_path( 'lib' ) )
-    pattern = 'plugins/**/*.rb'
-  else
-    pattern = 'lib/**/*.rb'
-  end
-  
-  logger.debug "pattern=#{pattern}"
-  
-  Dir.glob( pattern ) do |plugin|
-    begin
-      puts "Loading plugins in '#{plugin}'..."
-      require( plugin )
-    rescue Exception => e
-      puts "** error: failed loading plugins in '#{plugin}': #{e}"
+  patterns.each do |pattern|
+    pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
+    Dir.glob( pattern ) do |plugin|
+      begin
+        puts "Loading plugins in '#{plugin}'..."
+        require( plugin )
+      rescue Exception => e
+        puts "** error: failed loading plugins in '#{plugin}': #{e}"
+      end
     end
   end
 end
