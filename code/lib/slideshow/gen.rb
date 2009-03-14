@@ -276,9 +276,9 @@ class Gen
   def fetch_slideshow_templates
     logger.debug "fetch_uri=#{opts.fetch_uri}"
     
-    # src = opts.fetch_uri 
+    src = opts.fetch_uri 
     # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
-    src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
+    # src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
     uri = URI.parse( src )
   
     logger.debug "host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
