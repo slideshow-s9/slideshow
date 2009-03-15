@@ -1,0 +1,27 @@
+---
+title: Template Gallery       
+filter:
+  - erb
+  - textileplus
+---
+
+h1. <%= @page.title %>
+
+
+h2(#s5blank). S5 Blank
+
+Sample template package using the S5.11 blank package (License: Public Domain, Author: Gerald Bauer) 
+
+Install: "s5blank":http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt 
+
+
+h2(#fetch). How To Fetch New Template Packages?
+
+Using the @-f/--fetch URI@ option lets you fetch (install) new templates.
+<a href='more.html#fetch'>More &raquo;</a>
+
+h2(#add). Got Templates? 
+
+Share your templates. Send a link and announcement to the
+"Free Web Slide Show Alternatives (S5, S6, S9, Slidy And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow
+and get your link added here. Thanks!

@@ -148,6 +148,8 @@ S6 is the rewrite of Eric Meyer's S5 using
 the jQuery JavaScript library - offering easier to understand and easier
 to extend code. Add plugins, effects and more. Contributions welcome!
 
+* "S6 Project Site":http://github.com/geraldb/s6
+
 Keyboard controls:
 
 |_. Action             |_. Key |
@@ -178,9 +180,8 @@ without requiring any plugins (just press F11 to get started and page up/down to
 
 h2(#about). About, License - Questions? Comments?
 
-"Gerald Bauer":http://rubybook.ca designed and developed the @slideshow@ gem.
-Thanks to "zimbatm":http://oree.ch for contributions on fixing the gem exectuable on Unix
-and getting started with code syntax highlighting using the Ultraviolet gem.
+"Gerald Bauer":http://rubybook.ca and contributors designed and developed the @slideshow@ gem.
+See the "change log":http://slideshow.rubyforge.org/doc/History_txt.html for contributions and credits.
 
 License. The slide show scripts and templates are dedicated to the <a href='http://creativecommons.org/licenses/publicdomain'>public domain</a>.
 Use it as you please with no restrictions whatsoever.

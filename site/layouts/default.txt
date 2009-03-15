@@ -26,16 +26,22 @@ pageTracker._trackPageview();
   </div>
 
   <div id="nav">
-    <span style="float: right">
-       <a href="http://rubyforge.org/projects/slideshow">RubyForge</a>
-    </span>
+   <!-- <span style="float: right">
+    </span> -->
     
     <a href="index.html">Home</a> |
     <a href="themes.html">Themes</a> |
     <a href="tutorial.html">10-Minute Quick Start Guide</a> |
     <a href="more.html">Settings, Tips, Tricks and More</a> |
+    <a href="plugins.html">Plugins, Helpers</a> | 
+    <a href="templates.html">Template Gallery</a> | 
     <a href="http://twitter.com/slideshow">What's New</a> |
-    <a href="http://groups.google.com/group/webslideshow">Forum (Questions? Comments?)</a>
+    <a href="http://groups.google.com/group/webslideshow">Forum (Questions? Comments?)</a> |
+ 
+       <a href="http://github.com/geraldb/slideshow">Code</a> | 
+       <a href="http://rubyforge.org/projects/slideshow">RubyForge</a>
+    
+    <a href="http://github.com/geraldb/slideshow"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" ></a>
     
   </div>
     

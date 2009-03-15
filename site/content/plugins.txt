@@ -1,0 +1,149 @@
+---
+title: Plugins, Helpers and Extensions      
+filter:
+  - erb
+  - textileplus
+---
+
+h1. <%= @page.title %>
+
+<div class="toc">
+
+p(toc-title). Contents:
+   
+* "Using Embedded Ruby (ERB) Helpers in Your Slides":#lib
+* "Built-In Helpers":#builtin
+* "Code/Syntax Highlighting Helpers":#code
+* "Questions? Comments?":#questions
+
+</div>
+
+
+
+
+h2(#lib). Using Embedded Ruby (ERB) Helpers in Your Slides
+
+Slide Show (S9) includes support for plugins and helpers
+and lets you use Embedded Ruby (ERB) in your slide source. Example:
+
+{{{
+h1. Today's Date 
+<%%= Time.now %> 
+}}}
+
+If you want to use your own helpers put your code in the @./lib@ 
+folder (or any subfolders) and your code gets loaded on startup. 
+
+h2(#builtin). Built-In Helpers
+
+* @include@     -  Lets you include text. Example:
+
+{{{
+<%%= include 'help.txt' %>
+}}}
+
+* @content_for@  - Lets you add content to your templates from your source a la Rails.
+
+In your slide source use: 
+  
+{{{
+<%% content_for :head do %> 
+  your content here e.g. more meta tags; javascript includes etc. 
+<%% end %> 
+}}}
+
+In your template use: 
+
+{{{
+<%%= content_for :head %>
+}}}
+
+and it will include the marked content from your source.
+Note, you can use @:foo@, @:bar@ or whatever key you 
+want instead of @:head@ and also note a la Rails you can use the same 
+key as many times as you want. The new content just gets added. 
+
+h2(#code). Code/Syntax Highlighting Helpers
+
+The @code@ helper lets you include and syntax highlight code e.g.
+
+{{{
+<%% code do %> 
+  your inline code here 
+<%% end %> 
+}}}
+
+or include code: 
+
+{{{
+<%%= code 'highlight.rb' %> 
+}}}
+
+To select the language (default is @ruby@) use the @:lang@ option e.g.
+
+{{{
+<%%= code 'effects.css', lang: => 'css' %> 
+}}}
+
+Note, you can also include parts of files using "Codex-style markers":http://pragdave.blogs.pragprog.com/pragdave/2008/05/our-take-on-pre.html  
+in your source (e.g. @#START:your_marker_here@ and 
+@#END:your_marker_here@) and you can also pass along an extra CSS class 
+(@large@,@small@,@tiny@,etc.) e.g. this directive in Codex
+
+{{{
+:code code/meta/my_ostruct.rb[impl class=code-small] 
+}}}
+
+becomes in S9: 
+
+{{{
+<%%= code 'code/meta/my_ostruct.rb#impl', class:=>'small' %> 
+}}}
+
+To select the underlying engine for code highlighting use the @:engine@ option e.g.
+
+{{{
+<%%= code 'highlight.rb', :engine => 'coderay' %> 
+}}}
+
+or use a header to set it once e.g:
+
+{{{
+code-engine: uv   # or use your very own code engine here 
+}}}
+
+You can also use the built-in code highlighting engines 
+"stand-alone" without the code "wrapper" helper. 
+To use Ultraviolet use: 
+
+{{{
+<%% uv do %> 
+  your inline code here 
+<%% end %> 
+}}}
+
+To use CodeRay use: 
+
+{{{
+<%% coderay do %> 
+  your inline code here 
+<%% end %> 
+}}} 
+   
+Note, that @uv@ and @coderay@ only support inline code (if you want to 
+include code use a nested include e.g.: 
+
+{{{
+<%% coderay :lang => 'css', :line_numbers => 'off' do %> 
+  <%%= include 'effects.css' %> 
+<%% end %> 
+}}}
+
+For more options or on how to write your own syntax highlighting 
+helpers it might be best to check the source of the helpers.
+
+h2(#questions). Questions? Comments?
+
+Questions? Comments? Send them along to the
+"Free Web Slide Show Alternatives (S5, S6, S9, Slidy And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow.
+Thanks!

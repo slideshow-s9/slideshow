@@ -13,7 +13,11 @@ p(toc-title). Contents:
    
 * "How To Use Built-In Gradient Themes?":#themes
 * "How To Use Your Own Slide Show Template Packages?":#templates
+* "How To Fetch New Template Packages?":#fetch
+* "How To List All Installed Template Packages?":#list
 * "How To Bundle Up Original S5 Blank Package?":#s5blank
+* "How To Set Default Command Line Options?":#slideshowopt
+* "How To Comment Out Content?":#skip
 * "Questions? Comments?":#questions
 
 
@@ -76,69 +80,97 @@ package with manifest to get started.
 Example: Generate a template package w/ manifest in your working folder (using the s6 package)
 
 {{{
-slideshow -g
+$ slideshow -g
 }}}
 
 Example: Same as above but uses built-in s5 template package
 
 {{{
-slideshow -g -s5
+$ slideshow -g --s5
 }}}
 
 Note, you can, of course, also create your own template packages with manifest from scratch.
-You can find manifest samples online:
+See the "Template Gallery":templates.html for more info and examples.
 
-* "@s5.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s5.txt.sample
-* "@s5blank.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s5blank.txt.sample
-* "@s6.txt.sample@":http://slideshow.rubyforge.org/svn/trunk/lib/templates/s6.txt.sample
-
-To use your own custom package use the @-t/--template@ switch passing along the manifest. Example:
+To use your own template package use the @-t/--template MANIFEST@ option 
+passing along the manifest. Example:
 
 {{{
-slideshow -t  s6.txt  microformats
-slideshow -t  s6nosvg.txt   microformats
+$ slideshow -t s6.txt  microformats
+$ slideshow -t s5blank.txt   microformats
 }}}
 
 Using the package format you're invited to create your own template package
 with manifest that uses your own extended/changed
 JavaScript code and drops the vector graphics background gradient etc. 
 
+h2(#fetch). How To Fetch New Template Packages?
+
+Using the @-f/--fetch URI@ option lets you fetch (install) new templates. Example:
+
+{{{
+$ slideshow -f http://github.com/geraldb/sandbox/raw/.../s5blank/s5blank.txt 
+}}}
+
+Resulting in:
+
+{{{
+Fetching template package 's5blank' 
+  : from 'http://github.com:80/geraldb/sandbox/raw/.../s5blank 
+  : saving to '/home/gerald/.slideshow/templates/s5blank' 
+  Downloading manifest 's5blank.txt'... 
+  Downloading template 'header.html.erb'... 
+  ... 
+  Downloading template 'ui/default/slides.js'... 
+Done. 
+}}}
+
+To find more templates browse the "Template Gallery":templates.html.
+Got templates? Send a link and announcement to the
+"Forum/Mailing List":http://groups.google.com/group/webslideshow
+and get your link added to the "Template Gallery":templates.html.
+
+
+h2(#list). How To List All Installed Template Packages?
+
+Using the @-l/--list@ option lets you list all installed templates. Example:
+
+{{{
+$ slideshow -l
+}}}
+
+Resulting in:
+
+{{{
+Installed templates include: 
+  s5blank.txt       (/home/gerald/.slideshow/templates/s5blank/s5blank.txt) 
+  s5.txt            (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/s5.txt) 
+  s6.txt            (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/s6.txt) 
+  fullerscreen.txt  (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/fullerscreen.txt) 
+}}}
+
 h2(#s5blank). How To Bundle Up Original S5 Blank Package?
 
-The slideshow gem includes a sample starter template package to demo how to bundle up the
-original S5 v11 blank package. Type on the command line:
+The slideshow project includes a sample starter template package to demo how to bundle up the
+original S5 v11 blank package. (See the "Template Gallery":templates.html for more info.)
+
+To fetch the sample for the S5 v1.1 blank package with manifest 
+from the source repo and store it in your config folder (default is @~/.slideshow/templates@)
+type on the command line:
 
 {{{
-slideshow -g -t s5blank.txt
+slideshow -f s5blank
 }}}
 
-This will generate a sample template package with manifest for the S5 v1.1 blank package
-in your working folder. If you want to store it somewhere else
-add the @-o/--output@ switch e.g.
+If you want to store it somewhere else use the @-c/--config@ option.
+To test and use the fetched template package use the @-t/--template MANIFEST@ option and
+run:
 
 {{{
-slideshow -g -t s5blank.txt -o tpl
+slideshow -t s5blank.txt blank.textile
 }}}
 
-Note, the sample package also includes a "starter" slide show called
-@blank.textile@. Delete it once you write your own slide shows.
-
-To test and use the generated sample package run:
-
-{{{
-slideshow -t s5blank.txt blank.textile -o o
-}}}
-
-Note, change your output folder using the @-o/--output@ switch
-otherwise you may override your templates. Or if you stored the
-generated template package in the @tpl@ folder run:
-
-{{{
-slideshow -t tpl/s5blank.txt tpl/blank.textile
-}}}
-
-That's it. Open up the generated web page, that is, @blank.html@ or
-@o/blank.html@ depending on your ouput folder settings and enjoy.
+That's it. Open up the generated web page, that is, @blank.html@ and enjoy.
 
 *Some more details.* The package is configured to use the following headers in @header.html.erb@:
 
@@ -154,6 +186,51 @@ subfooter: Your Subfooter Here
 Open up the @header.html.erb@ template for details on how to use your own header variables/place holders
 in templates. All other included files get copied verbatim.
 
+h2(#slideshowopt). How To Set Default Command Line Options?
+
+The @SLIDESHOWOPT@ environment variable lets 
+you set default command line options.
+
+Example: Make @slides@ your default output folder 
+
+{{{
+$ SLIDESHOWOPT=-o slides
+}}}
+
+Example: Make S5-compatible slide show 
+
+{{{
+$ SLIDESHOWOPT=-o slides --s5
+}}}
+
+Example: Make your own template package the default
+
+{{{
+$ SLIDESHOWOPT=-t <your_template_manifest_here>   
+}}}
+
+And than use the gem executable as usual (will use/add your command line 
+options stored in @SLIDESHOWOPT@):
+
+{{{
+$ slideshow microformats
+}}}
+
+
+h2(#skip). How To Comment Out Content?
+
+
+If you want to skip (comment out) content in your source 
+enclose it with  @__SKIP__@/@__END__@. Example:
+
+{{{
+__SKIP__ 
+  not yet ready or private notes/comments 
+__END__ 
+}}}
+
+As a shortcut if you just use @__END__@ (without @__SKIP__@) (Ruby-like) 
+it will skip everything from @__END__@ until the end of the file. 
 
 h2(#questions). Questions? Comments?
 
