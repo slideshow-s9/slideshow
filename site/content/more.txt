@@ -109,7 +109,7 @@ h2(#fetch). How To Fetch New Template Packages?
 Using the @-f/--fetch URI@ option lets you fetch (install) new templates. Example:
 
 {{{
-$ slideshow -f http://github.com/geraldb/sandbox/raw/.../s5blank/s5blank.txt 
+$ slideshow -f http://github.com/geraldb/sandbox/raw/master/s5blank/s5blank.txt 
 }}}
 
 Resulting in:

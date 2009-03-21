@@ -14,7 +14,7 @@ h1. Guiding Principles of Merb Development
 * Know your runtime and how it acts
 
 
-h1. Merb’s Motto
+h1. Merb's Motto
 
 No code is faster than no code.
 
@@ -30,7 +30,7 @@ Just throw more servers at the problem!
 
 Throwing more servers at the problem only goes so far ...
 
-Of course I’m happy to sell you more servers ;) 
+Of course I'm happy to sell you more servers ;) 
 
 h1. Who Cares About Efficiency Continued 
 
@@ -39,7 +39,7 @@ Premature Optimization is the root of blah blah blah...
 *Postmature Optimization* is the root of all hosting bills ;)
 
 
-h1. What’s New?
+h1. What's New?
 
 * merb-core
 ** Rack Webserver Abstraction Layer  
@@ -148,7 +148,7 @@ class Posts < Application
 end
 }}}
 
-h1. merb-more - What’s New?
+h1. merb-more - What's New?
 
 * Code Generators
 * Asset Bundling
@@ -158,7 +158,7 @@ h1. merb-more - What’s New?
 * Caching
 * Other essentials
 
-h1. merb-plugins - What’s New?
+h1. merb-plugins - What's New?
 
 * merb_datamapper
 * merb_activerecord

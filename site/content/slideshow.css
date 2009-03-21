@@ -46,10 +46,20 @@ h2
 
 .programlisting
 {
+  padding: 4px 0 4px 0;
+  border-top: #bbb 1px solid;
+  border-bottom: #bbb 1px solid;
+  background: #f3f3f3;
+}
+
+/*
+.programlisting
+{
    color: white;
    background-color: black;
    padding: 0.5em;
 }
+*/
 
 .toc
 {

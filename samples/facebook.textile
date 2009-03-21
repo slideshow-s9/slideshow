@@ -174,13 +174,13 @@ MySpace, LinkedIn, Orkut, Friendster, OpenSocial
 
 h3. Focus
 
-* Windows SDK à Developers / Developers / Developers!!!
+* Windows SDK Ã  Developers / Developers / Developers!!!
 * 80,000 employees
 * 4+ million 3rd party developers
 
 vs.
 
-* F8 Platform à Developers / Developers / Developers!!!
+* F8 Platform Ã  Developers / Developers / Developers!!!
 * 450 employees
 * 200,000+ 3rd party developers
 

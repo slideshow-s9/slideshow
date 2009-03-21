@@ -142,7 +142,7 @@ Behind the scenes - Geo Microformat Code
 Alternative geo Microformat:
 
     <abbr title="49.205486;-122.892036" class="geo">
-      North Vancouver’s Lynn Canyon
+      North Vancouver's Lynn Canyon
     </abbr>
 
 Yes. That's it. That's all. A real-word geo microformat from Flickr (a Yahoo! service).

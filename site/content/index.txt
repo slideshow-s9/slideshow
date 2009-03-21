@@ -110,14 +110,14 @@ That's it. Voila.
 h3. Bonus: Try some more slide show samples
 
 * "Microformats - Adding Semantics to Your Web Site - Web 3.0 in Action":http://slideshow.rubyforge.org/microformats.html
-(Source: "@microformats.textile@":http://slideshow.rubyforge.org/svn/samples/microformats.textile,
- "@microformats.text@":http://slideshow.rubyforge.org/svn/samples/microformats.text)
+(Source: "@microformats.textile@":http://github.com/geraldb/slideshow/raw/master/samples/microformats.textile,
+ "@microformats.text@":http://github.com/geraldb/slideshow/raw/master/samples/microformats.text)
 * "Why Facebook Matters - Stats, Numbers, Web OS vs. Desktop OS":http://slideshow.rubyforge.org/facebook.html
-(Source: "@facebook.textile@":http://slideshow.rubyforge.org/svn/samples/facebook.textile)
+(Source: "@facebook.textile@":http://github.com/geraldb/slideshow/raw/master/samples/facebook.textile)
 * "Merb - All You Need, None You Don't":http://slideshow.rubyforge.org/merb.html
-(Source: "@merb.textile@":http://slideshow.rubyforge.org/svn/samples/merb.textile)  
+(Source: "@merb.textile@":http://github.com/geraldb/slideshow/raw/master/samples/merb.textile)  
 * "Tagging & Tag Clouds Made Easy":http://slideshow.rubyforge.org/tagging.html
-(Source: "@tagging.textile@":http://slideshow.rubyforge.org/svn/samples/tagging.textile)
+(Source: "@tagging.textile@":http://github.com/geraldb/slideshow/raw/master/samples/tagging.textile)
 
 h2(#textile). What's Textile? What's Markdown?
 

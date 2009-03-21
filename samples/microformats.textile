@@ -129,7 +129,7 @@ Flickr 2.3 million photos geotagged this month
 * Golden Bricks - Fall in Vancouver -> http://flickr.com/photos/januszbc/1776184496/
 * Vancouver Sculpture Biennale -> http://flickr.com/photos/pandoras_box/487848863/
 * New Westminster, SkyTrain Bridge -> http://flickr.com/photos/januszbc/2100964102/
-* North Vancouver’s Lynn Canyon -> http://flickr.com/photos/januszbc/2211044973/
+* North Vancouver's Lynn Canyon -> http://flickr.com/photos/januszbc/2211044973/
 * Last Day in Paris -> http://flickr.com/photos/danorbit/346563918/
 * Grand Canyon -> http://flickr.com/photos/leviathor/220065623/
 
@@ -149,7 +149,7 @@ Alternative geo Microformat:
 
 {{{
 <abbr title="49.205486;-122.892036" class="geo">
-  North Vancouver’s Lynn Canyon
+  North Vancouver's Lynn Canyon
 </abbr>
 }}}
 

@@ -12,7 +12,7 @@ h2(#s5blank). S5 Blank
 
 Sample template package using the S5.11 blank package (License: Public Domain, Author: Gerald Bauer) 
 
-Install: "s5blank":http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt 
+Install: "s5blank":http://github.com/geraldb/sandbox/raw/master/s5blank/s5blank.txt 
 
 
 h2(#fetch). How To Fetch New Template Packages?

@@ -140,7 +140,7 @@ include code use a nested include e.g.:
 }}}
 
 For more options or on how to write your own syntax highlighting 
-helpers it might be best to check the source of the helpers.
+helpers it might be best to check the "source of the helpers":http://github.com/geraldb/slideshow/tree/master/code/lib/slideshow/helpers.
 
 h2(#questions). Questions? Comments?
 
