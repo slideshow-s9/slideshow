@@ -1,18 +1,20 @@
 require 'hoe'
 require './lib/slideshow.rb'
 
-Hoe.new('slideshow', Slideshow::VERSION) do |p|
-
-  p.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
-  p.url     = 'http://slideshow.rubyforge.org'
+Hoe.spec 'slideshow' do
   
-  p.author  = 'Gerald Bauer'
-  p.email   = 'webslideshow@googlegroups.com'
+  self.version = Slideshow::VERSION
   
-  p.extra_deps = [
+  self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
+  self.url     = 'http://slideshow.rubyforge.org'
+  
+  self.author  = 'Gerald Bauer'
+  self.email   = 'webslideshow@googlegroups.com'
+  
+  self.extra_deps = [
     ['RedCloth','>= 4.0.0'],
-    ['kramdown','>= 0.8']
+    ['kramdown','>= 0.8.0']
   ]
   
-  p.remote_rdoc_dir = 'doc' 
+  self.remote_rdoc_dir = 'doc' 
 end
