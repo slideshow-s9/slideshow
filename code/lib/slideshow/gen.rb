@@ -9,17 +9,18 @@ class Gen
   KNOWN_MARKDOWN_EXTNAMES = [ '.markdown', '.m', '.mark', '.mkdn', '.md', '.txt', '.text' ]
   KNOWN_EXTNAMES = KNOWN_TEXTILE_EXTNAMES + KNOWN_MARKDOWN_EXTNAMES
 
-  # note: only bluecloth is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
+  # note: only kramdown is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
   #  if you want to use other markdown libs install the required/desired lib e.g.
   #  use  gem install rdiscount for rdiscount and so on
   #
   # also note for now the first present markdown library gets used
-  #  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth (fallback, always present)
+  #  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
   KNOWN_MARKDOWN_LIBS = [
     [ 'rdiscount',      lambda { |content| RDiscount.new( content ).to_html } ],
     [ 'rpeg-markdown',  lambda { |content| PEGMarkdown.new( content ).to_html } ],
     [ 'maruku',         lambda { |content| Maruku.new( content, {:on_error => :raise} ).to_html }  ],
-    [ 'bluecloth',      lambda { |content| BlueCloth.new( content ).to_html } ]
+    [ 'bluecloth',      lambda { |content| BlueCloth.new( content ).to_html } ],
+    [ 'kramdown',       lambda { |content| Kramdown::Document.new( content ).to_html } ]
   ] 
   
   def initialize
@@ -80,7 +81,7 @@ class Gen
   end
     
   def cache_dir
-    PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
+    RUBY_PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
   end
 
   def win32_cache_dir
@@ -103,7 +104,7 @@ class Gen
       end
     
       # make sure path exists
-      File.makedirs( @config_dir ) unless File.directory? @config_dir
+      FileUtils.makedirs( @config_dir ) unless File.directory? @config_dir
     end
     
     @config_dir
@@ -238,7 +239,7 @@ class Gen
     # make sure dest path exists
     dest_path = File.dirname( dest_full )
     logger.debug "dest_path=#{dest_path}"
-    File.makedirs( dest_path ) unless File.directory? dest_path
+    FileUtils.makedirs( dest_path ) unless File.directory? dest_path
     dest_full
   end
   
@@ -296,7 +297,7 @@ class Gen
     logger.debug "dlpath: #{dlbase}"
     logger.debug "pkgpath: #{pkgpath}"
   
-    File.makedirs( pkgpath ) unless File.directory? pkgpath 
+    FileUtils.makedirs( pkgpath ) unless File.directory? pkgpath 
    
     puts "Fetching template package '#{basename}'"
     puts "  : from '#{dlbase}'"
@@ -319,7 +320,7 @@ class Gen
 
         # make sure path exists
         destpath = File.dirname( dest )
-        File.makedirs( destpath ) unless File.directory? destpath
+        FileUtils.makedirs( destpath ) unless File.directory? destpath
     
         src = "#{dlbase}/#{file}"
     
@@ -351,14 +352,14 @@ class Gen
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
     logger.debug "outpath=#{outpath}"
-    File.makedirs( outpath ) unless File.directory? outpath 
+    FileUtils.makedirs( outpath ) unless File.directory? outpath 
 
     manifest.each do |entry|
       dest   = entry[0]      
       source = entry[1]
                   
       puts "Copying to #{dest} from #{source}..."     
-      File.copy( source, with_output_path( dest, outpath ) )
+      FileUtils.copy( source, with_output_path( dest, outpath ) )
     end
     
     puts "Done."   
@@ -400,7 +401,7 @@ class Gen
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
     logger.debug "outpath=#{outpath}"
-    File.makedirs( outpath ) unless File.directory? outpath 
+    FileUtils.makedirs( outpath ) unless File.directory? outpath 
 
     dirname  = File.dirname( fn )    
     basename = File.basename( fn, '.*' )
@@ -463,7 +464,7 @@ class Gen
   
    # fix: allow comments in header too (#)
 
-  content_with_headers.each do |line|
+  content_with_headers.each_line do |line|
     if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
       key = $1.downcase
       value = $2.strip
@@ -552,7 +553,7 @@ class Gen
       source = entry[1]
             
       puts "Copying to #{dest} from #{source}..."     
-      File.copy( source, with_output_path( dest, outpath ) )
+      FileUtils.copy( source, with_output_path( dest, outpath ) )
     end
   end
 

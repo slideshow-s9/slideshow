@@ -11,7 +11,7 @@ Hoe.new('slideshow', Slideshow::VERSION) do |p|
   
   p.extra_deps = [
     ['RedCloth','>= 4.0.0'],
-    ['BlueCloth','>= 1.0.0']
+    ['kramdown','>= 0.8']
   ]
   
   p.remote_rdoc_dir = 'doc' 
