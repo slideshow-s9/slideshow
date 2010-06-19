@@ -32,7 +32,9 @@ templates/s6.txt
 templates/s6.txt.gen
 templates/s6.txt.sample
 templates/s6/footer.html.erb
+templates/s6/footer.pdf.html.erb
 templates/s6/header.html.erb
+templates/s6/header.pdf.html.erb
 templates/s6/jquery.js
 templates/s6/outline.css
 templates/s6/print.css
@@ -40,5 +42,3 @@ templates/s6/slides.core.js
 templates/s6/slides.css
 templates/s6/slides.js
 templates/s6/style.css.erb
-templates/s6/footer.pdf.html.erb
-templates/s6/header.pdf.html.erb
