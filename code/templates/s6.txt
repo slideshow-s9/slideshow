@@ -9,3 +9,9 @@ s6/slides.css
 s6/jquery.js
 s6/slides.js
 s6/slides.core.js
+
+# template for pdf generation
+# -- use html-to-pdf tool (such as wkhtmltopdf, prince, etc) to generate pdf
+# -- from javascript free web page
+
+__file__.pdf.html  s6/header.pdf.html.erb + s6/footer.pdf.html.erb

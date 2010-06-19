@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title><%= @headers['title'] %></title>
+   
+   <%= content_for :head %>
+
+<style>
+html, body { margin: 0; padding: 0; }
+
+body { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; }
+
+a:link, a:visited { color: black; }
+
+h1 { font-size: 30pt;  }
+h2 { font-size: 28pt;  }
+h3 { font-size: 25pt;  }
+p, li, td, th { font-size: 18pt; }
+
+pre { font-size: 14pt;  }
+
+pre.code {
+        background-color: azure;
+        padding: 5px;
+      }
+     
+ul { list-style-type: square; }    
+     
+.slide { page-break-after: always;
+         min-height: 100mm;
+         padding: 40px;
+         
+         border: 1px dotted black;
+
+/*      
+  background: -moz-linear-gradient( top, maroon, red);
+*/
+       }
+
+<%= content_for :css %>
+
+/*
+for princexml (CSS3 paged media support)
+@page { size: A4 landscape }
+*/
+</style>
+
+</head>
+<body>
+
+<div class="presentation">
+

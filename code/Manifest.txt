@@ -40,3 +40,5 @@ templates/s6/slides.core.js
 templates/s6/slides.css
 templates/s6/slides.js
 templates/s6/style.css.erb
+templates/s6/footer.pdf.html.erb
+templates/s6/header.pdf.html.erb

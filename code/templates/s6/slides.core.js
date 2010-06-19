@@ -1,14 +1,14 @@
    var snum = 1;      /* current slide # (non-zero based index e.g. starting with 1) */
    var smax = 1;      /* max number of slides */
-	 var incpos = 0;    /* current step in slide */ 
+   var incpos = 0;    /* current step in slide */ 
    var s6mode = true; /* are we in slide mode (in contrast to outline mode)? */ 
    var defaultView = 'slideshow'; /* slideshow | outline */
    
 
  function debug( msg )	 
  {
-	 /* uncomment to enable debug messages in console such as Firebug */
-	 /* console.log( '[debug] ' + msg ); */
+	 if( window.console )
+           console.log( '[debug] ' + msg ); 
  }	
 	 
  function showHide(action)
@@ -37,6 +37,9 @@
 
   function updatePermaLink() {
 	   $('#plink').get(0).href = window.location.pathname + '#slide' + snum;
+           
+           /* todo: unify hash marks??; use #1 for div ids instead of #slide1? */
+           window.location.hash = '#'+snum;
   }
 
  function goTo( target ) {
@@ -165,6 +168,7 @@ function toggle() {
   	
       populateJumpList();     
       updateCurrentSlideCounter();
+      updatePermaLink(); 
    }
    
    function addSlideIds() {

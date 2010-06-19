@@ -23,6 +23,14 @@ $(document).ready(function(){
         }
         else
         {
+	  
+	  /* store possible slidenumber from hash */
+	  /* todo: use regex to extract number
+	       might be #slide1 or just #1
+	  */
+	  var gotoSlideNum = parseInt( window.location.hash.substring(1) );
+	  debug( "gotoSlideNum=" + gotoSlideNum );
+	  
          defaultCheck();
          addSlideIds();
          createControls();
@@ -31,11 +39,21 @@ $(document).ready(function(){
          /* if( !$.browser.opera ) */
            notOperaFix();
 					 
-					 steps = collectSteps();
+	  steps = collectSteps();
          
+	  if( !isNaN( gotoSlideNum ))
+          {
+	    debug( "restoring slide on (re)load #: " + gotoSlideNum );
+	    goTo( gotoSlideNum );
+	  }
+	  
+	 
          if( defaultView == 'outline' ) 
 		       toggle();
-           
+          
+	  
+	  
+	   
          document.onkeyup = keys;
         }
      });
