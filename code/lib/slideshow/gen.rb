@@ -3,6 +3,9 @@
 
 module Slideshow
 
+class Slide < Struct.new(:header, :content)
+end
+
 class Gen
 
   KNOWN_TEXTILE_EXTNAMES  = [ '.textile', '.t' ]
@@ -376,6 +379,7 @@ class Gen
     end
   end
 
+
   def create_slideshow( fn )
 
     manifest_path_or_name = opts.manifest
@@ -518,17 +522,53 @@ class Gen
   content2 = ''
   
   ## todo: move this to a filter (for easier reuse)
-  
-  # wrap h1's in slide divs; note use just <h1 since some processors add ids e.g. <h1 id='x'>
+
+  slides       = []
+  slide_source = ""
+     
+  # wrap h1's in slide divs; note: use just <h1 since some processors add ids e.g. <h1 id='x'>
   content.each_line do |line|
      if line.include?( '<h1' ) then
-        content2 << "\n\n</div>"  if slide_counter > 0
-        content2 << "<div class='slide'>\n\n"
+        if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
+          content2 << "</div>\n"       
+          slides   << slide_source  # add slide to slide stack
+          slide_source = ""            # reset slide source buffer
+        end
+        content2 << "<div class='slide'>\n"
         slide_counter += 1
      end
-     content2 << line
+     content2      << line
+     slide_source  << line
   end
-  content2 << "\n\n</div>"   if slide_counter > 0
+  
+  if slide_counter > 0 then
+    content2 << "</div>\n"
+    slides   << slide_source     # add slide to slide stack
+    slide_source = ""            # reset slide source buffer 
+  end
+
+  ## split slide source into header (optional) and content/body
+
+  slides2 = []
+  slides.each do |slide_source|
+    slide = Slide.new
+    if slide_source =~ /^\s*(<h.+?>.*?<\/h\d>)\s+(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+      slide.header  = $1
+      slide.content = $2
+      logger.debug "  adding slide with header:\n#{slide.header}"
+  else
+      slide.content = slide_source
+      logger.debug "  adding slide with *no* header"
+    end
+    slides2 << slide
+  end
+
+  # make content2 and slide2 available to erb template
+  # -- todo: cleanup variable names and use attr_readers for content and slide
+  
+  @slides   = slides2     # strutured content 
+  @content  = content2   # content all-in-one
+
 
   manifest.each do |entry|
     outname = entry[0]
