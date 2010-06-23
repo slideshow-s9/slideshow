@@ -11,6 +11,7 @@ require 'fileutils'
 require 'pp'
 require 'uri'
 require 'net/http'
+require 'ostruct'
 
 # required gems
 require 'redcloth'  # default textile library
@@ -23,7 +24,7 @@ require 'slideshow/gen'
 
 module Slideshow
 
-  VERSION = '0.8.3'
+  VERSION = '0.8.4'
 
   def Slideshow.main
     

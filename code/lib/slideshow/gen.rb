@@ -252,9 +252,30 @@ class Gen
 
     uri = URI.parse( src )
   
-    # todo: add our own agent HTTP header for identification?
-    response = Net::HTTP.get_response( uri )
-
+    # new code: honor proxy env variable HTTP_PROXY
+    proxy = ENV['HTTP_PROXY']
+    proxy = ENV['http_proxy'] if proxy.nil?   # try possible lower/case env variable (for *nix systems) is this necessary??
+    
+    if proxy
+      proxy = URI.parse( proxy )
+      logger.debug "using net http proxy: proxy.host=#{proxy.host}, proxy.port=#{proxy.port}"
+      if proxy.user && proxy.password
+        logger.debug "  using credentials: proxy.user=#{proxy.user}, proxy.password=****"
+      else
+        logger.debug "  using no credentials"
+      end
+    else
+      logger.debug "using direct net http access; no proxy configured"
+      proxy = OpenStruct.new   # all fields return nil (e.g. proxy.host, etc.)
+    end
+    
+    # same as old code w/o proxy:   response = Net::HTTP.get_response( uri )
+    
+    response = Net::HTTP::Proxy(proxy.host,proxy.port,proxy.user,proxy.password).start( uri.host, uri.port ) do |http|
+      return http.request_get(uri.request_uri)
+    end
+  
+  
     unless response.code == '200'   # note: responsoe.code is a string
       msg = "#{response.code} #{response.message}" 
       puts "*** error: #{msg}"

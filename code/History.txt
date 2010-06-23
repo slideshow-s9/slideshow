@@ -1,3 +1,7 @@
+=== 0.8.4  / 2010-06-24
+
+* Added support for proxy via HTTP_PROXY env for fetching templates from the internet
+
 === 0.8.3  / 2010-06-23
 
 * Added support for @slides and @content variables in templates
