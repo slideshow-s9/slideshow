@@ -24,7 +24,7 @@ require 'slideshow/gen'
 
 module Slideshow
 
-  VERSION = '0.8.4'
+  VERSION = '0.8.5'
 
   def Slideshow.main
     

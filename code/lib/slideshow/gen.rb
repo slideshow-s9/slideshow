@@ -67,6 +67,15 @@ class Gen
 
   # todo: move to filter (for easier reuse)  
   def textile_to_html( content )
+    
+    # JRuby workaround for RedCloth 4 multi-byte character bug
+    #  see http://jgarber.lighthouseapp.com/projects/13054/tickets/149-redcloth-4-doesnt-support-multi-bytes-content
+    # basically convert non-ascii chars (>127) to html entities
+    
+    if RedCloth::EXTENSION_LANGUAGE == "Java"
+      content = content.chars.map{ |x| x.size > 1 ? "&##{x.unpack("U*")};" : x }.join 
+    end
+    
     # turn off hard line breaks
     # turn off span caps (see http://rubybook.ca/2008/08/16/redcloth)
     red = RedCloth.new( content, [:no_span_caps] )
@@ -269,12 +278,8 @@ class Gen
       proxy = OpenStruct.new   # all fields return nil (e.g. proxy.host, etc.)
     end
     
-    # same as old code w/o proxy:   response = Net::HTTP.get_response( uri )
-    
-    response = Net::HTTP::Proxy(proxy.host,proxy.port,proxy.user,proxy.password).start( uri.host, uri.port ) do |http|
-      return http.request_get(uri.request_uri)
-    end
-  
+    http = Net::HTTP::Proxy( proxy.host, proxy.port, proxy.user, proxy.password )
+    response = http.get_response( uri )  
   
     unless response.code == '200'   # note: responsoe.code is a string
       msg = "#{response.code} #{response.message}" 
@@ -286,15 +291,15 @@ class Gen
   
     # check for content type; use 'wb' for images
     if response.content_type =~ /image/
-		  logger.debug '  switching to binary'
-		  flags = 'wb'
+      logger.debug '  switching to binary'
+      flags = 'wb'
     else
       flags = 'w'
     end
   
     File.open( dest, flags ) do |f|
-		  f.write( response.body )	
-	  end
+      f.write( response.body )	
+    end
   end
   
   
