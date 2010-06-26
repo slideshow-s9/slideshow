@@ -65,6 +65,30 @@ class Gen
     @markdown_libs.first[1].call( content )
   end
 
+
+  def redcloth4_java_fix_escape_nonascii( txt )
+    txt.chars.map{ |x| x.size > 1 ? "&##{x.unpack("U*")};" : x }.join
+  end
+
+  def redcloth4_java_fix_escape_nonascii_exclude_pre( txt )
+
+    buf  = ""
+    from = 0
+ 
+    while (pos = txt.index( /<pre.*?>.*?<\/pre>/m, from ))
+      # add text before pre block escaped
+      buf << redcloth4_java_fix_escape_nonascii( txt[ from, pos-from] )
+     
+      # add pre block unescaped (otherwise html entities get escaped twice)
+      from = Regexp.last_match.end(0)
+      buf << txt[pos, from-pos]
+    end
+    buf << redcloth4_java_fix_escape_nonascii( txt[from, txt.length-from] )
+   
+    buf
+  end 
+
+
   # todo: move to filter (for easier reuse)  
   def textile_to_html( content )
     
@@ -73,7 +97,7 @@ class Gen
     # basically convert non-ascii chars (>127) to html entities
     
     if RedCloth::EXTENSION_LANGUAGE == "Java"
-      content = content.chars.map{ |x| x.size > 1 ? "&##{x.unpack("U*")};" : x }.join 
+      content = redcloth4_java_fix_escape_nonascii_exclude_pre( content )
     end
     
     # turn off hard line breaks
@@ -97,7 +121,7 @@ class Gen
   end
 
   def win32_cache_dir
-    unless File.exists?(home = ENV['HOMEDRIVE'] + ENV['HOMEPATH'])
+    unless ENV['HOMEDRIVE'] && ENV['HOMEPATH'] && File.exists?(home = ENV['HOMEDRIVE'] + ENV['HOMEPATH'])
       puts "No HOMEDRIVE or HOMEPATH environment variable.  Set one to save a" +
            "local cache of stylesheets for syntax highlighting and more."
       return false
@@ -277,9 +301,14 @@ class Gen
       logger.debug "using direct net http access; no proxy configured"
       proxy = OpenStruct.new   # all fields return nil (e.g. proxy.host, etc.)
     end
+  
+    # same as short-cut: http_proxy.get_respone( uri )
+    # use full code for easier changes
     
-    http = Net::HTTP::Proxy( proxy.host, proxy.port, proxy.user, proxy.password )
-    response = http.get_response( uri )  
+    http_proxy = Net::HTTP::Proxy( proxy.host, proxy.port, proxy.user, proxy.password )
+    http       = http_proxy.new( uri.host, uri.port )
+    request    = Net::HTTP::Get.new( uri.request_uri )
+    response   = http.request( request )  
   
     unless response.code == '200'   # note: responsoe.code is a string
       msg = "#{response.code} #{response.message}" 
@@ -578,9 +607,9 @@ class Gen
   slides2 = []
   slides.each do |slide_source|
     slide = Slide.new
-    if slide_source =~ /^\s*(<h.+?>.*?<\/h\d>)\s+(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+    if slide_source =~ /^\s*(<h.+?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
       slide.header  = $1
-      slide.content = $2
+      slide.content = ($2 ? $2 : "")
       logger.debug "  adding slide with header:\n#{slide.header}"
   else
       slide.content = slide_source
