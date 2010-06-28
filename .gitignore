@@ -1,3 +1,9 @@
-slideshow.kpf
+# ignore komodo project files
+*.kpf
+
+# ignore generated folders 
 pkg/
 doc/
+
+# ignore webby output
+site/output/
