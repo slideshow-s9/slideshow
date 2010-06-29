@@ -11,88 +11,39 @@ h1. <%= @page.title %>
 
 p(toc-title). Contents:
    
-* "How To Use Built-In Gradient Themes?":#themes
+* "How To Use Gradient Themes?":#themes
 * "How To Use Your Own Slide Show Template Packages?":#templates
 * "How To Fetch New Template Packages?":#fetch
 * "How To List All Installed Template Packages?":#list
-* "How To Bundle Up Original S5 Blank Package?":#s5blank
+* "How To Generate PDF Documents from Your Slide Shows?":#pdf
 * "How To Set Default Command Line Options?":#slideshowopt
 * "How To Comment Out Content?":#skip
 * "Questions? Comments?":#questions
 
-
 </div>
 
 
-h2(#themes). How To Use Built-In Gradient Themes?
+h2(#themes). How To Use Gradient Themes for the Built-In S6 Template Pack?
 
-You can define your gradient theme in plain text in the slide show source in the header using
-a simple CSS-style name value pair (if you use the built-in S5, S6 or FullerScreen templates).
-
-*Themes*. The built-in predefined gradient themes include: @diagonal@,
-@top-bottom@, 
-@left-right@, 
-@repeat@,  
-@radial@, 
-@radial-off-center@, 
-@radial-repeat@. See the "Theme Gallery":themes.html for examples.
-
-*Colors*. You can use whatever colors CSS supports e.g. pre-defined colors such as @red@, 
-@maroon@ or self-defined colors such as @#0e1f5b@, @#3b5998@.
-
-
-Example 1: Use @top-bottom@ gradient theme with the colors red and black
-
-{{{
-gradient: top-bottom red black
-}}}
-
-Example 2: Use pre-defined CSS colors (with default @top-bottom@ gradient theme)
-
-{{{
-gradient-colors: green lime         
-}}}
-
-Example 3: Use self-defined colors (with default @top-bottom@ gradient theme)
-
-{{{
-gradient-colors: #0e1f5b #3b5998
-}}}
-
-Example 4: Use @radial@ gradient theme and facebook colors
-
-{{{
-gradient: radial #0e1f5b #3b5998   
-}}}
-
-Example 5: Just change gradient theme and use default colors, that is, @marron@ and @black@
-
-{{{
-gradient-theme: repeat              
-}}}
+You can define your gradient theme in plain text in the slide show source in the header
+using a simple CSS-style name value pair. "More &raquo;":themes.html#use
 
 
 h2(#templates). How To Use Your Own Slide Show Template Packages?
 
 Use the @-g/--generate@ switch to generate a sample template
-package with manifest to get started.
+package with manifest using the built-in S6 machinery.
 
-Example: Generate a template package w/ manifest in your working folder (using the s6 package)
+Example: Generate a template pack w/ manifest in your working folder 
 
 {{{
 $ slideshow -g
 }}}
 
-Example: Same as above but uses built-in s5 template package
+Or fetch a sample template pack from the internet or fork it using @git@ or create it from scratch.
+See the "Template Gallery":templates.html for more info and examples to get started.
 
-{{{
-$ slideshow -g --s5
-}}}
-
-Note, you can, of course, also create your own template packages with manifest from scratch.
-See the "Template Gallery":templates.html for more info and examples.
-
-To use your own template package use the @-t/--template MANIFEST@ option 
+To use your own template pack use the @-t/--template MANIFEST@ option 
 passing along the manifest. Example:
 
 {{{
@@ -100,23 +51,23 @@ $ slideshow -t s6.txt  microformats
 $ slideshow -t s5blank.txt   microformats
 }}}
 
-Using the package format you're invited to create your own template package
-with manifest that uses your own extended/changed
-JavaScript code and drops the vector graphics background gradient etc. 
+Got templates? Send a link and announcement to the
+"Forum/Mailing List":http://groups.google.com/group/webslideshow
+and get your link added to the "Template Gallery":templates.html.
 
 h2(#fetch). How To Fetch New Template Packages?
 
 Using the @-f/--fetch URI@ option lets you fetch (install) new templates. Example:
 
 {{{
-$ slideshow -f http://github.com/geraldb/sandbox/raw/master/s5blank/s5blank.txt 
+$ slideshow -f http://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt 
 }}}
 
 Resulting in:
 
 {{{
 Fetching template package 's5blank' 
-  : from 'http://github.com:80/geraldb/sandbox/raw/.../s5blank 
+  : from 'http://github.com/geraldb/slideshow-s5-blank/raw/master 
   : saving to '/home/gerald/.slideshow/templates/s5blank' 
   Downloading manifest 's5blank.txt'... 
   Downloading template 'header.html.erb'... 
@@ -125,10 +76,29 @@ Fetching template package 's5blank'
 Done. 
 }}}
 
+Note, if you want to store the template pack somewhere else
+use the @-c/--config@ option (defaults to @~/.slideshow@).
+
 To find more templates browse the "Template Gallery":templates.html.
-Got templates? Send a link and announcement to the
-"Forum/Mailing List":http://groups.google.com/group/webslideshow
-and get your link added to the "Template Gallery":templates.html.
+
+*Troubleshooting*.
+
+Trouble downloading? Do you have a direct internet connection?
+If not, configure your proxy using the HTTP_PROXY environment variable. Sample:
+
+{{{
+HTTP_PROXY=http://234.445.454:4341
+}}}
+
+Or with user credentials (that is, login and password):
+
+{{{
+HTTP_PROXY=http://gerald:topsecret@234.445.454:4341
+}}}
+
+If all fails, you can always download the template pack on your own
+(using lets say @git@ itself) and than move the souces into your
+templates folder (that is, @~/.slideshow/templates@).
 
 
 h2(#list). How To List All Installed Template Packages?
@@ -149,42 +119,22 @@ Installed templates include:
   fullerscreen.txt  (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/fullerscreen.txt) 
 }}}
 
-h2(#s5blank). How To Bundle Up Original S5 Blank Package?
 
-The slideshow project includes a sample starter template package to demo how to bundle up the
-original S5 v11 blank package. (See the "Template Gallery":templates.html for more info.)
+h2(#pdf). How To Generate PDF Documents from Your Slide Shows?
 
-To fetch the sample for the S5 v1.1 blank package with manifest 
-from the source repo and store it in your config folder (default is @~/.slideshow/templates@)
-type on the command line:
+When you generate your slide show as usual with the built-in S6 template pack
+you will get an extra @<your_name_here>.pdf.html@ document generated that
+you can use to generate a PDF-version of your slide show
+using lets say the free, open source "@wkhtmltopdf@":http://code.google.com/p/wkhtmltopdf/ tool.
 
-{{{
-slideshow -f s5blank
-}}}
-
-If you want to store it somewhere else use the @-c/--config@ option.
-To test and use the fetched template package use the @-t/--template MANIFEST@ option and
-run:
+Example:
 
 {{{
-slideshow -t s5blank.txt blank.textile
+$ slideshow tutorial
+
+$ wkhtmltopdf --outline --orientation Landscape tutorial.pdf.html tutorial.pdf 
 }}}
 
-That's it. Open up the generated web page, that is, @blank.html@ and enjoy.
-
-*Some more details.* The package is configured to use the following headers in @header.html.erb@:
-
-{{{
-author: Your Name Here
-company: Your Company Here
-title: Your Slide Show Title Here
-subtitle: Your Subtitle Here
-footer: Your Footer Here
-subfooter: Your Subfooter Here
-}}}
-
-Open up the @header.html.erb@ template for details on how to use your own header variables/place holders
-in templates. All other included files get copied verbatim.
 
 h2(#slideshowopt). How To Set Default Command Line Options?
 
@@ -200,7 +150,7 @@ $ SLIDESHOWOPT=-o slides
 Example: Make S5-compatible slide show 
 
 {{{
-$ SLIDESHOWOPT=-o slides --s5
+$ SLIDESHOWOPT=-o slides -t s5blank.txt
 }}}
 
 Example: Make your own template package the default

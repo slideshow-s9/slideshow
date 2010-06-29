@@ -7,6 +7,15 @@ filter:
 
 h1. <%= @page.title %>
 
+<div class="toc">
+
+p(toc-title). Contents:
+
+* "How To Use Gradient Themes for the Built-In S6 Template Pack?":#use   
+* "Questions? Comments?":#questions
+
+</div>
+
 h2. Browse by Color
 
 <a href="gradient-styles-red.svg" target="gallery">Red</a> | 
@@ -26,7 +35,57 @@ h2. Theme Preview
 
 <iframe id="gallery" name="gallery" src="gradient-styles-red.svg" width="100%" height="60%" frameborder="0"></iframe>
 
-h2. How To Use Built-In Gradient Themes?
+h2(#use). How To Use Gradient Themes for the Built-In S6 Template Pack?
 
-You can define your gradient theme in plain text in the slide show source in the header using a simple CSS-style name value pair.
-<a href='more.html#themes'>More &raquo;</a>
+You can define your gradient theme in plain text in the slide show source in the header using
+a simple CSS-style name value pair (if you use the built-in S6 templates).
+
+Example 1: Use @top-bottom@ gradient theme with the colors red and black
+
+{{{
+gradient: top-bottom red black
+}}}
+
+*Themes*. The built-in predefined gradient themes include: @diagonal@,
+@top-bottom@, 
+@left-right@, 
+@repeat@,  
+@radial@, 
+@radial-off-center@, 
+@radial-repeat@. See the
+
+*Colors*. You can use whatever colors CSS supports e.g. pre-defined colors such as @red@, 
+@maroon@ or self-defined colors such as @#0e1f5b@, @#3b5998@.
+
+
+Example 2: Use pre-defined CSS colors (with default @top-bottom@ gradient theme)
+
+{{{
+gradient-colors: green lime         
+}}}
+
+Example 3: Use self-defined colors (with default @top-bottom@ gradient theme)
+
+{{{
+gradient-colors: #0e1f5b #3b5998
+}}}
+
+Example 4: Use @radial@ gradient theme and facebook colors
+
+{{{
+gradient: radial #0e1f5b #3b5998   
+}}}
+
+Example 5: Just change gradient theme and use default colors, that is, @marron@ and @black@
+
+{{{
+gradient-theme: repeat              
+}}}
+
+That's it.
+
+h2(#questions). Questions? Comments?
+
+Questions? Comments? Send them along to the
+"Free Web Slide Show Alternatives (S5, S6, S9, Slidy And Friends) Forum/Mailing List":http://groups.google.com/group/webslideshow.
+Thanks!

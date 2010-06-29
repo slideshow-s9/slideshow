@@ -4,6 +4,12 @@ body
    margin: 0;
 }
 
+ul { list-style-type: square; }
+
+span.highlight { background-color: yellow;
+                 font-weight:bold;
+               }
+
 #header {
    color: white;
    background: #8b0000;  /* dark red/ruby */
