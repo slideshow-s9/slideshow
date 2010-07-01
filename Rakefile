@@ -13,8 +13,12 @@ Hoe.spec 'slideshow' do
   
   self.extra_deps = [
     ['RedCloth','>= 4.0.0'],
-    ['kramdown','>= 0.8.0']
+    ['kramdown','>= 0.9.0']
   ]
   
-  self.remote_rdoc_dir = 'doc' 
+  self.remote_rdoc_dir = 'doc'
+  
+  # switch extension to .rdoc for gihub formatting
+  self.readme_file  = 'README.rdoc'
+  self.history_file = 'History.rdoc'
 end
