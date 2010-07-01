@@ -1,6 +1,4 @@
-= slideshow
-
-Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby
+= Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby
 
 * http://slideshow.rubyforge.org
 
@@ -47,8 +45,9 @@ More examles:
 == REQUIREMENTS:
 
 * RedCloth (Textile Markup)
-* BlueCloth (Markdown Markup)
+* Kramdown (Markdown Markup)
 
+* BlueCloth (Markdown Markup) [Optional]
 * RDiscount (Markdown Markup) [Optional]
 * Coderay (Syntax Highlighting) [Optional]
 * Ultraviolet (Syntax Highlighting) [Optional]
