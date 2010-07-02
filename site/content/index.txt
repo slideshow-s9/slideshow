@@ -207,7 +207,7 @@ without requiring any plugins (just press F11 to get started and page up/down to
 h2(#about). About, License - Questions? Comments?
 
 Gerald Bauer and contributors designed and developed the @slideshow@ gem.
-See the "change log":http://slideshow.rubyforge.org/doc/files/History_txt.html for contributions and credits.
+See the "change log":http://github.com/geraldb/slideshow/blob/master/History.rdoc for contributions and credits.
 
 License. The slide show scripts and templates are dedicated to the <a href='http://creativecommons.org/licenses/publicdomain'>public domain</a>.
 Use it as you please with no restrictions whatsoever.

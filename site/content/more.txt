@@ -81,7 +81,7 @@ use the @-c/--config@ option (defaults to @~/.slideshow@).
 
 To find more templates browse the "Template Gallery":templates.html.
 
-*Troubleshooting*.
+h3. Troubleshooting
 
 Trouble downloading? Do you have a direct internet connection?
 If not, configure your proxy using the HTTP_PROXY environment variable. Sample:

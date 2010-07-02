@@ -1,8 +1,31 @@
+/* todo: use lesser vor color variables such as @ruby
+*/
+
 body
 {
-   font-family:  Verdana, Geneva, Arial, Helvetica, sans-serif;
+   font-family:  Helvetica,Arial,sans-serif; 
    margin: 0;
 }
+
+h1,h2,h3 {
+   /* color: #8b0000;  /* dark red/ruby */
+}
+
+h2
+{
+ /* old-style:
+   padding: 0.2em;
+   background-color: #8b0000;  // dark red/ruby 
+   color: white;
+   font-weight: bold;
+ */
+   border-bottom: 1px solid #bbb;
+ /*
+   background-color: #eeeeee;  
+ */
+   font-weight: bold; 
+}
+
 
 ul { list-style-type: square; }
 
@@ -27,6 +50,12 @@ span.highlight { background-color: yellow;
 
 a, a:visited {
   color: #8b0000;  /* dark red/ruby */
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 2px dotted #8b0000;
+  background-color: yellow;
 }
 
 #nav a, #nav a:visited {
@@ -36,19 +65,11 @@ a, a:visited {
   border-bottom: 2px dotted #8b0000;
 }
 
-a:hover { background-color: yellow; }
 
 #content {
   padding: 0.5em; 
 }
 
-h2
-{
-   padding: 0.2em;
-   background-color: #8b0000;  /* dark red/ruby */
-   color: white;
-   font-weight: bold;
-}
 
 .programlisting
 {
@@ -71,7 +92,8 @@ h2
 {
    width: 35%;
    float: right;
-   border: silver solid 1pt;
+   /* border: silver solid 1pt; */
+   border: #bbb solid 1pt;
    background-color: #eeeeee;
    font-size: 80%;
 }

@@ -52,7 +52,7 @@ gradient: top-bottom red black
 @repeat@,  
 @radial@, 
 @radial-off-center@, 
-@radial-repeat@. See the
+@radial-repeat@. 
 
 *Colors*. You can use whatever colors CSS supports e.g. pre-defined colors such as @red@, 
 @maroon@ or self-defined colors such as @#0e1f5b@, @#3b5998@.
