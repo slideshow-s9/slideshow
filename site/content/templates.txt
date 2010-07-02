@@ -11,7 +11,8 @@ h1. <%= @page.title %>
 "S5 Themes":#s5themes |
 "FullerScreen":#fullerscreen  |
 "Slidy":#slidy  |
-"Google HTML5 Rocks":#g5
+"Google HTML5 Rocks":#g5 |
+"Slippy":#slippy 
 
 
 <div class="toc">
@@ -30,7 +31,7 @@ h2(#s5blank). S5 Blank
 Sample template package using the S5.11 blank package
 <!-- (License: Public Domain, Author: Gerald Bauer)--> 
 
-"Sample":http://slideshow.rubyforge.org/s5/tutorial.html
+"Sample":http://slideshow.rubyforge.org/s5/tutorial.html  &middot;
 "More &raquo;":http://github.com/geraldb/slideshow-s5-blank  
 
 
@@ -38,7 +39,7 @@ h2(#s5themes). S5 Themes (Blue, I18N and Pixel)
 
 Sample template package using the S5.11 package including three themes, that is, Blue, I18N and Pixel.
 
-"Sample":http://slideshow.rubyforge.org/s5/tutorial.pixel.html
+"Sample":http://slideshow.rubyforge.org/s5/tutorial.pixel.html   &middot;
 "More &raquo;":http://github.com/geraldb/slideshow-s5-themes  
 
 
@@ -46,7 +47,7 @@ h2(#fullerscreen). FullerScreen
 
 Sample template package for FullerScreen
 
-"Sample":http://slideshow.rubyforge.org/fullerscreen/tutorial.html
+"Sample":http://slideshow.rubyforge.org/fullerscreen/tutorial.html   &middot;
 "More &raquo;":http://github.com/geraldb/slideshow-fullerscreen  
 
 
@@ -54,7 +55,7 @@ h2(#slidy). Slidy (W3C Blue)
 
 Sample template package using the Slidy machinery
 
-"Sample":http://slideshow.rubyforge.org/slidy/tutorial.html
+"Sample":http://slideshow.rubyforge.org/slidy/tutorial.html    &middot;
 "More &raquo;":http://github.com/geraldb/slideshow-slidy  
 
 
@@ -62,8 +63,16 @@ h2(#g5). Google HTML5 Rocks
 
 Sample template package using Google's html5-slides code
 
-"Sample":http://slideshow.rubyforge.org/tutorial.html5.html
+"Sample":http://slideshow.rubyforge.org/tutorial.html5.html    &middot;
 "More &raquo;":http://github.com/geraldb/slideshow-google-html5-slides  
+
+h2(#slippy). Slippy (Dark)
+
+Sample template package using the Slippy machinery
+
+"Sample":http://slideshow.rubyforge.org/slippy/tutorial.html    &middot;
+"More &raquo;":http://github.com/geraldb/slideshow-slippy  
+
 
 
 h2(#fetch). How To Fetch New Template Packages?
