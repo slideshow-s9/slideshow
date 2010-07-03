@@ -66,7 +66,7 @@ module TextFilter
 
     # replace expressions (support for single lines only)
     #  {{ expr }}  ->  <%= expr %>
-    #  {% stmt %}  ->  <%  stmt %>
+    #  {% stmt %}  ->  <%  stmt %>   !! add in do if missing (for convenience)
 
     erb_expr = 0
     erb_stmt = 0
@@ -78,7 +78,11 @@ module TextFilter
     
     content.gsub!( /\{%([^%\n]+?)%\}/ ) do |match|
       erb_stmt += 1
-      "<% #{$1} %>"
+      if $1.include?('do') || $1.include?('end')
+        "<% #{$1} %>"
+      else
+        "<% #{$1} do %>"
+      end
     end
 
     puts "  Patching embedded Ruby (erb) code Django-style (#{erb_expr} {{-expressions," +
