@@ -29,11 +29,13 @@ require 'slideshow/textile'
 require 'slideshow/markdown'
 
 # load built-in (required) helpers/plugins
-require 'slideshow/helpers/text_helper.rb'
-require 'slideshow/helpers/capture_helper.rb'
+require 'slideshow/helpers/text_helper'
+require 'slideshow/helpers/capture_helper'
+require 'slideshow/helpers/analytics_helper'
+require 'slideshow/helpers/table_helper'
 
 # load built-in filters
-require 'slideshow/filters/text_filter.rb'
+require 'slideshow/filters/text_filter'
 
 
 module Slideshow

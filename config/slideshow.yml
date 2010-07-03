@@ -50,7 +50,7 @@ fetch:
   
 # your google analytics code  
 analytics:
-    google: XXX
+    google: UA-XXX
     
 
 ### markup (textile, markdown) config

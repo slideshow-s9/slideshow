@@ -8,8 +8,13 @@
 
 # text filters
 
-filters: [ skip-end-directive, include-helper-hack, erb, code-block-curly-style ]
-    
+filters:
+  - comments-percent-style
+  - skip-end-directive
+  - include-helper-hack
+  - erb
+  - code-block-curly-style 
+ 
 
 # markup (textile, markdown) config
     
@@ -26,5 +31,10 @@ markdown:
 # also note for now the first present markdown library gets used
 #  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
 
-  libs:  [ rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
-
+  libs:
+    - rdiscount
+    - rpeg-markdown
+    - maruku
+    - bluecloth
+    - kramdown
+    

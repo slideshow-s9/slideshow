@@ -57,7 +57,13 @@ class Gen
     end
     content
   end
-  
+ 
+  def guard_text( text )
+    # todo/fix: remove wrap_markup; replace w/ guard_text
+    #   why: text might be css, js, not just html      
+    wrap_markup( text )
+  end
+   
   def wrap_markup( text )    
     if markup_type == :textile
       # saveguard with notextile wrapper etc./no further processing needed
@@ -482,9 +488,7 @@ class Gen
       opts.put( key, value )
     elsif line =~ /^\s*$/
       content << line  unless read_headers
-    elsif line =~ /^#/ && @markup_type == :textile   #  allow comments in textile using #
-      content << line  unless read_headers
-    elsif line =~ /^%/ && @markup_type == :markdown  #  allow comments in markdown using % (can't allow # sorry)
+    elsif line =~ /^%/  #  allow comments in wiki text using % 
       content << line  unless read_headers
     else
       read_headers = false

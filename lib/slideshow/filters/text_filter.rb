@@ -5,7 +5,21 @@
 
 module TextFilter
 
+  def comments_percent_style( content )
+    # remove comments
+    # % comments
+    # %begin multiline comment
+    # %end multiline comment
+
+    content.gsub!(/^%begin.*?%end/m, '')  # remove multi-line comments
+    content.sub!(/^%end.*/m, '')  # remove everyting starting w/ %end (note, can only be once in file)     
+    content.gsub!(/^%.*/, '' )  # remove single-line comments
+    
+    content    
+  end
+
   def skip_end_directive( content )
+    # codex-style __SKIP__, __END__ directive
     # ruby note: .*? is non-greedy (shortest-possible) regex match
     content.gsub!(/__SKIP__.*?__END__/m, '')
     content.sub!(/__END__.*/m, '')

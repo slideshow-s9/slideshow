@@ -64,7 +64,10 @@ class Config
     @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ]
   end
 
-
+  def google_analytics_code
+    @hash[ 'analytics' ][ 'google' ]
+  end
+  
 private
 
   def normalize_key( key )
