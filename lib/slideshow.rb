@@ -21,10 +21,11 @@ require 'kramdown'  # default markdown library
 # own code
 require 'slideshow/opts'
 require 'slideshow/gen'
+require 'slideshow/slide'
 
 module Slideshow
 
-  VERSION = '0.8.5'
+  VERSION = '0.9'
 
   def Slideshow.main
     
