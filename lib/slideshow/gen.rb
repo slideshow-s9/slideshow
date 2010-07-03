@@ -47,6 +47,16 @@ class Gen
     send mn, content   # call 1st configured markdown engine e.g. kramdown_to_html( content )
   end
 
+  # uses configured markup processor (textile,markdown) to generate html
+  def text_to_html( content )
+    content = case @markup_type
+      when :markdown
+        markdown_to_html( content )
+      when :textile
+        textile_to_html( content )
+    end
+    content
+  end
   
   def wrap_markup( text )    
     if markup_type == :textile
@@ -462,7 +472,6 @@ class Gen
   read_headers = true
   content = ""
   
-   # fix: allow comments in header too (#)
 
   content_with_headers.each_line do |line|
     if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
@@ -472,6 +481,10 @@ class Gen
       logger.debug "  adding option: key=>#{key}< value=>#{value}<"
       opts.put( key, value )
     elsif line =~ /^\s*$/
+      content << line  unless read_headers
+    elsif line =~ /^#/ && @markup_type == :textile   #  allow comments in textile using #
+      content << line  unless read_headers
+    elsif line =~ /^%/ && @markup_type == :markdown  #  allow comments in markdown using % (can't allow # sorry)
       content << line  unless read_headers
     else
       read_headers = false
@@ -505,13 +518,8 @@ class Gen
 
   # convert light-weight markup to hypertext
  
-  content = case @markup_type
-     when :markdown
-      markdown_to_html( content )
-    when :textile
-      textile_to_html( content )
-  end  
-
+  content = text_to_html( content )
+ 
   # post-processing
 
   slide_counter = 0

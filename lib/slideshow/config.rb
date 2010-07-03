@@ -15,16 +15,19 @@ class Config
     value
   end
 
-  def load
-   
+  def load   
     # load builtin config file @  <gem>/config/slideshow.yml
-    config_file = "#{File.dirname( LIB_PATH )}/config/slideshow.yml"
+    config_file         = "#{File.dirname( LIB_PATH )}/config/slideshow.yml"
+    config_builtin_file = "#{File.dirname( LIB_PATH )}/config/slideshow.builtin.yml"
 
     # run through erb        
     config_txt = File.read( config_file )
     config_txt = ERB.new( config_txt ).result( binding() )
     
-    @hash = YAML.load( config_txt )       
+    @hash = YAML.load( config_txt )
+    
+    # for now builtin has no erb processing; add builtin hash to main hash 
+    @hash[ 'builtin' ] = YAML.load_file( config_builtin_file )
   end
 
   
@@ -36,18 +39,18 @@ class Config
     # textile:
     #   extnames:  [ .textile, .t ]
     
-    @hash[ 'textile' ][ 'extnames' ]
+    @hash[ 'textile' ][ 'extnames' ] + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
   end
 
   def known_markdown_extnames
-    @hash[ 'markdown' ][ 'extnames' ]    
+    @hash[ 'markdown' ][ 'extnames' ] + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
   end
   
   def known_markdown_libs
     # returns an array of known markdown engines e.g.
     # [ rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
     
-    @hash[ 'markdown' ][ 'libs' ]
+    @hash[ 'markdown' ][ 'libs' ] + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
   end
 
   def known_extnames
