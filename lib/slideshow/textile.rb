@@ -23,13 +23,15 @@ module TextileEngines
   end 
 
 
-  def textile_to_html( content )
+  def textile_to_html( content )    
+    puts "  Converting Textile-text (#{content.length} bytes) to HTML..."
     
     # JRuby workaround for RedCloth 4 multi-byte character bug
     #  see http://jgarber.lighthouseapp.com/projects/13054/tickets/149-redcloth-4-doesnt-support-multi-bytes-content
     # basically convert non-ascii chars (>127) to html entities
     
     if RedCloth::EXTENSION_LANGUAGE == "Java"
+      puts "  Patching RedCloth for Java; converting non-Ascii/multi-byte chars to HTML-entities..." 
       content = redcloth_java_fix_escape_nonascii_exclude_pre( content )
     end
     

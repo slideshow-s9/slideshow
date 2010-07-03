@@ -33,14 +33,15 @@ class Gen
       end
     end
 
-    puts "  Installed Markdown libraries: #{@markdown_libs.join(', ')}"
-    puts "  Using Markdown library #{@markdown_libs.first}."
+    puts "  Found #{@markdown_libs.length} Markdown libraries: #{@markdown_libs.join(', ')}"
   end
  
   
   def markdown_to_html( content )
     # call markdown filter; turn markdown lib name into method_name (mn)
     # eg. rpeg-markdown =>  rpeg_markdown_to_html
+    
+    puts "  Converting Markdown-text (#{content.length} bytes) to HTML using library '#{@markdown_libs.first}'..."
         
     mn = @markdown_libs.first.downcase.tr( '-', '_' )
     mn = "#{mn}_to_html".to_sym
@@ -468,36 +469,8 @@ class Gen
 
   logger.debug "inname=#{inname}"
     
-  content_with_headers = File.read( inname )
+  content = File.read( inname )
 
-  # todo: read headers before command line options (lets you override options using commandline switch)?
-  
-  # read source document; split off optional header from source
-  # strip leading optional headers (key/value pairs) including optional empty lines
-
-  read_headers = true
-  content = ""
-  
-
-  content_with_headers.each_line do |line|
-    if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
-      key = $1.downcase
-      value = $2.strip
-    
-      logger.debug "  adding option: key=>#{key}< value=>#{value}<"
-      opts.put( key, value )
-    elsif line =~ /^\s*$/
-      content << line  unless read_headers
-    elsif line =~ /^%/  #  allow comments in wiki text using % 
-      content << line  unless read_headers
-    else
-      read_headers = false
-      content << line
-    end
-  end
-
-  opts.set_defaults  
-        
   # run text filters
   
   config.text_filters.each do |filter|

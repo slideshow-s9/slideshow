@@ -10,11 +10,13 @@
 
 filters:
   - comments-percent-style
+  - leading-headers
   - skip-end-directive
+  - erb-django-style
   - include-helper-hack
   - erb
-  - code-block-curly-style 
- 
+  - code-block-curly-style
+
 
 # markup (textile, markdown) config
     

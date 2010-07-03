@@ -61,7 +61,7 @@ class Config
   end
   
   def text_filters
-    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ]
+    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ] 
   end
 
   def google_analytics_code

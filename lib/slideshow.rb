@@ -35,6 +35,7 @@ require 'slideshow/helpers/analytics_helper'
 require 'slideshow/helpers/table_helper'
 
 # load built-in filters
+require 'slideshow/filters/headers_filter'
 require 'slideshow/filters/text_filter'
 
 

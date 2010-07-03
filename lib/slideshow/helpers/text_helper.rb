@@ -6,7 +6,8 @@ def __include__( name, opts = {} )
 end
 
 def help()
-
+  puts "  Adding Slide Show help instructions..."
+    
   text = <<EOS
 *Slide Show Keyboard Controls (Help)*
 
@@ -17,7 +18,13 @@ def help()
 | Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
 EOS
 
- wrap_markup( textile_to_html( text ) )  
+ html = <<EOS
+<!-- begin help -->
+#{textile_to_html( text )}
+<!-- end help -->
+EOS
+
+ guard_text( html )  
 end
 
 
