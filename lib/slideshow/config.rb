@@ -42,6 +42,13 @@ class Config
   def known_markdown_extnames
     @hash[ 'markdown' ][ 'extnames' ]    
   end
+  
+  def known_markdown_libs
+    # returns an array of known markdown engines e.g.
+    # [ rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
+    
+    @hash[ 'markdown' ][ 'libs' ]
+  end
 
   def known_extnames
     # ruby check: is it better self. ?? or more confusing

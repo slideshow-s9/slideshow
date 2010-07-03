@@ -1,20 +1,6 @@
 module Slideshow
 
 class Gen
-
-  # note: only kramdown is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
-  #  if you want to use other markdown libs install the required/desired lib e.g.
-  #  use  gem install rdiscount for rdiscount and so on
-  #
-  # also note for now the first present markdown library gets used
-  #  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
-  KNOWN_MARKDOWN_LIBS = [
-    [ 'rdiscount',      lambda { |content| RDiscount.new( content ).to_html } ],
-    [ 'rpeg-markdown',  lambda { |content| PEGMarkdown.new( content ).to_html } ],
-    [ 'maruku',         lambda { |content| Maruku.new( content, {:on_error => :raise} ).to_html }  ],
-    [ 'bluecloth',      lambda { |content| BlueCloth.new( content ).to_html } ],
-    [ 'kramdown',       lambda { |content| Kramdown::Document.new( content ).to_html } ]
-  ] 
   
   def initialize
     @logger = Logger.new(STDOUT)
@@ -38,65 +24,29 @@ class Gen
     # try to require each lib and remove any not installed
     @markdown_libs = []
 
-    KNOWN_MARKDOWN_LIBS.each do |lib|
+    config.known_markdown_libs.each do |lib|
       begin
-        require lib[0]
+        require lib
         @markdown_libs << lib
       rescue LoadError => ex
-        logger.debug "Markdown library #{lib[0]} not found. Use gem install #{lib[0]} to install."
+        logger.debug "Markdown library #{lib} not found. Use gem install #{lib} to install."
       end
     end
 
-    logger.debug "Installed Markdown libraries: #{@markdown_libs.map{ |lib| lib[0] }.join(', ')}"
-    logger.debug "Using Markdown library #{@markdown_libs.first[0]}."
+    puts "  Installed Markdown libraries: #{@markdown_libs.join(', ')}"
+    puts "  Using Markdown library #{@markdown_libs.first}."
   end
-  
-  # todo: move to filter (for easier reuse)
-  def markdown_to_html( content )
-    @markdown_libs.first[1].call( content )
-  end
-
-
-  def redcloth4_java_fix_escape_nonascii( txt )
-    txt.chars.map{ |x| x.size > 1 ? "&##{x.unpack("U*")};" : x }.join
-  end
-
-  def redcloth4_java_fix_escape_nonascii_exclude_pre( txt )
-
-    buf  = ""
-    from = 0
  
-    while (pos = txt.index( /<pre.*?>.*?<\/pre>/m, from ))
-      # add text before pre block escaped
-      buf << redcloth4_java_fix_escape_nonascii( txt[ from, pos-from] )
-     
-      # add pre block unescaped (otherwise html entities get escaped twice)
-      from = Regexp.last_match.end(0)
-      buf << txt[pos, from-pos]
-    end
-    buf << redcloth4_java_fix_escape_nonascii( txt[from, txt.length-from] )
-   
-    buf
-  end 
-
-
-  # todo: move to filter (for easier reuse)  
-  def textile_to_html( content )
-    
-    # JRuby workaround for RedCloth 4 multi-byte character bug
-    #  see http://jgarber.lighthouseapp.com/projects/13054/tickets/149-redcloth-4-doesnt-support-multi-bytes-content
-    # basically convert non-ascii chars (>127) to html entities
-    
-    if RedCloth::EXTENSION_LANGUAGE == "Java"
-      content = redcloth4_java_fix_escape_nonascii_exclude_pre( content )
-    end
-    
-    # turn off hard line breaks
-    # turn off span caps (see http://rubybook.ca/2008/08/16/redcloth)
-    red = RedCloth.new( content, [:no_span_caps] )
-    red.hard_breaks = false
-    content = red.to_html
+  
+  def markdown_to_html( content )
+    # call markdown filter; turn markdown lib name into method_name (mn)
+    # eg. rpeg-markdown =>  rpeg_markdown_to_html
+        
+    mn = @markdown_libs.first.downcase.tr( '-', '_' )
+    mn = "#{mn}_to_html".to_sym
+    send mn, content   # call 1st configured markdown engine e.g. kramdown_to_html( content )
   end
+
   
   def wrap_markup( text )    
     if markup_type == :textile

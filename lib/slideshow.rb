@@ -20,11 +20,13 @@ require 'redcloth'  # default textile library
 require 'kramdown'  # default markdown library
 
 
-# own code
+# our own code
 require 'slideshow/opts'
 require 'slideshow/config'
 require 'slideshow/gen'
 require 'slideshow/slide'
+require 'slideshow/textile'
+require 'slideshow/markdown'
 
 module Slideshow
 
