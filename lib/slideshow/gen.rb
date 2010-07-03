@@ -2,10 +2,6 @@ module Slideshow
 
 class Gen
 
-  KNOWN_TEXTILE_EXTNAMES  = [ '.textile', '.t' ]
-  KNOWN_MARKDOWN_EXTNAMES = [ '.markdown', '.m', '.mark', '.mkdn', '.md', '.txt', '.text' ]
-  KNOWN_EXTNAMES = KNOWN_TEXTILE_EXTNAMES + KNOWN_MARKDOWN_EXTNAMES
-
   # note: only kramdown is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
   #  if you want to use other markdown libs install the required/desired lib e.g.
   #  use  gem install rdiscount for rdiscount and so on
@@ -23,10 +19,11 @@ class Gen
   def initialize
     @logger = Logger.new(STDOUT)
     @logger.level = Logger::INFO
-    @opts = Opts.new
+    @opts   = Opts.new
+    @config = Config.new
   end
 
-  attr_reader :logger, :opts
+  attr_reader :logger, :opts, :config
   attr_reader :session      # give helpers/plugins a session-like hash
   
   def headers
@@ -478,7 +475,7 @@ class Gen
   if extname.empty? then
     extname  = ".textile"   # default to .textile 
     
-    KNOWN_EXTNAMES.each do |e|
+    config.known_extnames.each do |e|
        logger.debug "File.exists? #{dirname}/#{basename}#{e}"
        if File.exists?( "#{dirname}/#{basename}#{e}" ) then         
           extname = e
@@ -488,7 +485,7 @@ class Gen
     end     
   end
 
-  if KNOWN_MARKDOWN_EXTNAMES.include?( extname )
+  if config.known_markdown_extnames.include?( extname )
     @markup_type = :markdown
   else
     @markup_type = :textile
@@ -739,6 +736,8 @@ def run( args )
   end
 
   opt.parse!( args )
+  
+  config.load
 
   puts "Slide Show (S9) Version: #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
 

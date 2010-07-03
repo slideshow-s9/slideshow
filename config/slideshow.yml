@@ -1,0 +1,68 @@
+# built-in slideshow configuration
+#
+# override settings in:
+#  ~/.slideshow/slideshow.yml
+# or
+#  ./slideshow.yml or ./.slideshow.yml
+
+#lets you define default/fallback headers
+
+headers:
+  generator: <%= Slideshow.generator %> 
+  author:  Your Name Here
+  email:   Your Email Here
+  company: Your Company Here
+  title:   Your Title Here
+  subtitle: Your Subtitle Here
+  footer: Your Footer Here
+  subfooter: Your Subfooter Here 
+  date:  <%= Date.today %>
+
+  # todo: use nested config?? eg.
+  # gradient:
+  #   theme: dark
+  #   color1:
+  gradient-theme:  dark
+  gradient-color1:  red
+  gradient-color2:  black
+
+  # todo: use nested config??
+  #
+  # ultraviolet (uv) | coderay (cr) 
+  code-engine:  uv
+  # Text Mate Hyperlink for Source?
+  code-txmt:  false
+  # todo: add code-linenumbers??
+
+
+
+# shortcuts for fetching template packs
+#   map shortcut to URI
+    
+fetch:
+    s6blank: http://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
+    s5blank: http://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
+    s5themes: http://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt
+    fullerscreen: http://github.com/geraldb/slideshow-fullerscreen/raw/master/fullerscreen.txt
+    slidy: http://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt
+    g5: http://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
+    slippy: http://github.com/geraldb/slideshow-slippy/raw/master/slippy.txt
+  
+# your google analytics code  
+analytics:
+    google: XXX
+    
+
+### markup (textile, markdown) config
+    
+textile:
+  extnames: [ .textile, .t ]
+  
+markdown:
+  extnames: [ .markdown, .m, .mark, .mkdn, .md, .txt, .text ]
+
+
+
+
+    
+    

@@ -1,7 +1,7 @@
 $KCODE = 'utf'
 
 LIB_PATH = File.expand_path( File.dirname(__FILE__) )
-$:.unshift(LIB_PATH) 
+$LOAD_PATH.unshift(LIB_PATH) 
 
 # core and stlibs
 require 'optparse'
@@ -12,6 +12,8 @@ require 'pp'
 require 'uri'
 require 'net/http'
 require 'ostruct'
+require 'date'
+require 'yaml'
 
 # required gems
 require 'redcloth'  # default textile library
@@ -20,12 +22,18 @@ require 'kramdown'  # default markdown library
 
 # own code
 require 'slideshow/opts'
+require 'slideshow/config'
 require 'slideshow/gen'
 require 'slideshow/slide'
 
 module Slideshow
 
   VERSION = '0.9'
+
+  # version string for generator meta tag (includes ruby version)
+  def Slideshow.generator
+    "Slide Show (S9) #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+  end
 
   def Slideshow.main
     
