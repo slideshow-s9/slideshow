@@ -54,6 +54,9 @@ analytics:
     
 
 ### markup (textile, markdown) config
+
+# filters to run before markup processing
+filters: []
     
 textile:
   extnames: []  
@@ -61,7 +64,4 @@ textile:
 markdown:
   extnames: []
   libs:     []
-
-
-    
-    
+  

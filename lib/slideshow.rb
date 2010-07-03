@@ -28,6 +28,14 @@ require 'slideshow/slide'
 require 'slideshow/textile'
 require 'slideshow/markdown'
 
+# load built-in (required) helpers/plugins
+require 'slideshow/helpers/text_helper.rb'
+require 'slideshow/helpers/capture_helper.rb'
+
+# load built-in filters
+require 'slideshow/filters/text_filter.rb'
+
+
 module Slideshow
 
   VERSION = '0.9'
@@ -51,10 +59,6 @@ module Slideshow
   end
 
 end # module Slideshow
-
-# load built-in (required) helpers/plugins
-require 'slideshow/helpers/text_helper.rb'
-require 'slideshow/helpers/capture_helper.rb'
 
 # load built-in (optional) helpers/plugins
 #   If a helper fails to load, simply ingnore it

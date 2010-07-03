@@ -493,28 +493,13 @@ class Gen
   end
 
   opts.set_defaults  
-    
-  # ruby note: .*? is non-greedy (shortest-possible) regex match
-  content.gsub!(/__SKIP__.*?__END__/m, '')
-  content.sub!(/__END__.*/m, '')
+        
+  # run text filters
   
-  # allow plugins/helpers; process source (including header) using erb
-  
-  # note: include is a ruby keyword; rename to __include__ so we can use it 
-  content.gsub!( /<%=[ \t]*include/, '<%= __include__' )
-  
-  content =  ERB.new( content ).result( binding )
-  
-  # run pre-filters (built-in macros)
-  # o replace {{{  w/ <pre class='code'>
-  # o replace }}}  w/ </pre>
-  content.gsub!( "{{{{{{", "<pre class='code'>_S9BEGIN_" )
-  content.gsub!( "}}}}}}", "_S9END_</pre>" )  
-  content.gsub!( "{{{", "<pre class='code'>" )
-  content.gsub!( "}}}", "</pre>" )
-  # restore escaped {{{}}} I'm sure there's a better way! Rubyize this! Anyone?
-  content.gsub!( "_S9BEGIN_", "{{{" )
-  content.gsub!( "_S9END_", "}}}" )
+  config.text_filters.each do |filter|
+    mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
+    content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
+  end
 
   # convert light-weight markup to hypertext
  

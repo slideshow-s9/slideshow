@@ -59,6 +59,10 @@ class Config
     
     known_textile_extnames + known_markdown_extnames
   end
+  
+  def text_filters
+    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ]
+  end
 
 
 private

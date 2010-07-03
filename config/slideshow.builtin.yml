@@ -6,6 +6,11 @@
 #        libs: [ whatever ]
 
 
+# text filters
+
+filters: [ skip-end-directive, include-helper-hack, erb, code-block-curly-style ]
+    
+
 # markup (textile, markdown) config
     
 textile:
