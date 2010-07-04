@@ -293,7 +293,21 @@ class Gen
   def fetch_slideshow_templates
     logger.debug "fetch_uri=#{opts.fetch_uri}"
     
-    src = opts.fetch_uri 
+    src = opts.fetch_uri
+    
+    ## check for builtin shortcut (assume no / or \) 
+    if src.index( '/' ).nil? && src.index( '\\' ).nil?
+      shortcut = src.clone
+      src = config.map_fetch_shortcut( src )
+      
+      if src.nil?
+        puts "** Error: No mapping found for fetch shortcut '#{shortcut}'."
+        return
+      end
+      puts "  Mapping fetch shortcut '#{shortcut}' to: #{src}"
+    end
+    
+    
     # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
     # src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
     uri = URI.parse( src )
@@ -396,6 +410,11 @@ class Gen
   def create_slideshow( fn )
 
     manifest_path_or_name = opts.manifest
+    
+    # add .txt file extension if missing (for convenience)
+    manifest_path_or_name << ".txt"   if File.extname( manifest_path_or_name ).empty?
+
+  
     logger.debug "manifest=#{manifest_path_or_name}"
     
     # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 

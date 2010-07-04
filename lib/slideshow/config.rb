@@ -68,6 +68,10 @@ class Config
     @hash[ 'analytics' ][ 'google' ]
   end
   
+  def map_fetch_shortcut( key )
+    @hash[ 'fetch' ][ key ]
+  end
+  
 private
 
   def normalize_key( key )
