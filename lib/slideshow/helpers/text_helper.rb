@@ -6,7 +6,7 @@ def __include__( name, opts = {} )
 end
 
 def help()
-  puts "  Adding Slide Show help instructions..."
+  puts "  Adding HTML for Slide Show help instructions..."
     
   text = <<EOS
 *Slide Show Keyboard Controls (Help)*

@@ -50,7 +50,16 @@ module TextFilter
   
   def include_helper_hack( content )
     # note: include is a ruby keyword; rename to __include__ so we can use it 
-    content.gsub!( /<%=[ \t]*include/, '<%= __include__' )
+    
+    include_counter = 0
+    
+    content.gsub!( /<%=[ \t]*include/ ) do |match|
+      include_counter += 1
+      '<%= __include__' 
+    end
+
+    puts "  Patching embedded Ruby (erb) code aliases (#{include_counter} include)..."
+
     content
   end
   
@@ -69,16 +78,22 @@ module TextFilter
     #  {% stmt %}  ->  <%  stmt %>   !! add in do if missing (for convenience)
 
     erb_expr = 0
-    erb_stmt = 0
+    erb_stmt_beg = 0
+    erb_stmt_end = 0
 
     content.gsub!( /\{\{([^{}\n]+?)\}\}/ ) do |match|
       erb_expr += 1
       "<%= #{$1} %>"
     end
-    
+
+    content.gsub!( /\{%[ \t]*end[ \t]*%\}/ ) do |match|
+      erb_stmt_end += 1
+      "<% end %>"
+    end
+
     content.gsub!( /\{%([^%\n]+?)%\}/ ) do |match|
-      erb_stmt += 1
-      if $1.include?('do') || $1.include?('end')
+      erb_stmt_beg += 1
+      if $1.include?('do') 
         "<% #{$1} %>"
       else
         "<% #{$1} do %>"
@@ -86,7 +101,7 @@ module TextFilter
     end
 
     puts "  Patching embedded Ruby (erb) code Django-style (#{erb_expr} {{-expressions," +
-       " #{erb_stmt} {%-statements)..."
+       " #{erb_stmt_beg}/#{erb_stmt_end} {%-statements)..."
          
     content        
   end
@@ -116,8 +131,7 @@ module TextFilter
     content.gsub!( "_S9BEGIN_", "{{{" )
     content.gsub!( "_S9END_", "}}}" )
     
-    puts "  Patching code blocks (#{code_begin} {{{-lines, " +
-      "#{code_end} }}}-lines)..."    
+    puts "  Patching code blocks (#{code_begin}/#{code_end} {{{/}}}-lines)..."    
     
     content
   end

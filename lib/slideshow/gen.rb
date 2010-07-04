@@ -471,12 +471,31 @@ class Gen
     
   content = File.read( inname )
 
+  # fix: add to comment text filter as first rule!!
+  # check for !SLIDE alias %slide (needs to get coverted to ! otherwise
+  #   it gets removed as a comment)
+  content.gsub!(/^%slide/, '!SLIDE' )
+
   # run text filters
   
   config.text_filters.each do |filter|
     mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
     content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
+
+  # check for !SLIDE markers; change to HTML comments
+  
+  # -- slide marker stats
+  slide_markers = 0
+  
+  ## todo: use html processing instruction <?s9 slide ?>
+  content.gsub!(/^!SLIDE(.*)/ ) do |match|
+    slide_markers += 1
+    "<!-- _S9SLIDE_ #{$1} -->"
+  end
+  
+  puts "  Processing directives (#{slide_markers} !SLIDE-directives)..."
+
 
   # convert light-weight markup to hypertext
  
@@ -485,50 +504,59 @@ class Gen
   # post-processing
 
   slide_counter = 0
-  content2 = ''
-  
-  ## todo: move this to a filter (for easier reuse)
 
   slides       = []
   slide_source = ""
      
   # wrap h1's in slide divs; note: use just <h1 since some processors add ids e.g. <h1 id='x'>
   content.each_line do |line|
-     if line.include?( '<h1' ) then
+     if line.include?( '<h1' ) || line.include?( '<!-- _S9SLIDE_' )  then
         if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
-          content2 << "</div>\n"       
           slides   << slide_source  # add slide to slide stack
-          slide_source = ""            # reset slide source buffer
+          slide_source = ""         # reset slide source buffer
         end
-        content2 << "<div class='slide'>\n"
         slide_counter += 1
      end
-     content2      << line
      slide_source  << line
   end
   
   if slide_counter > 0 then
-    content2 << "</div>\n"
     slides   << slide_source     # add slide to slide stack
     slide_source = ""            # reset slide source buffer 
   end
 
   ## split slide source into header (optional) and content/body
+  ## plus check for classes
 
   slides2 = []
   slides.each do |slide_source|
     slide = Slide.new
-    if slide_source =~ /^\s*(<h.+?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+    
+    ## check for css style class
+    if slide_source =~ /<!-- _S9SLIDE_(.*?)-->/
+      slide.classes = $1.strip
+      logger.debug "  adding css classes: #{slide.classes}"
+    end
+       
+    if slide_source =~ /^\s*(<h1.+?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
       slide.header  = $1
       slide.content = ($2 ? $2 : "")
       logger.debug "  adding slide with header:\n#{slide.header}"
-  else
+    else
       slide.content = slide_source
       logger.debug "  adding slide with *no* header"
     end
     slides2 << slide
   end
 
+   # for convenience create a string w/ all in-one-html
+   #  no need to wrap slides in divs etc.
+   
+   content2 = ""
+   slides2.each do |slide|         
+      content2 << slide.to_classic_html
+   end
+   
   # make content2 and slide2 available to erb template
   # -- todo: cleanup variable names and use attr_readers for content and slide
   

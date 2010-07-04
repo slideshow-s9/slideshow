@@ -7,7 +7,7 @@ def google_analytics( opts = {} )
   #   code from *.yml settings
   code = opts.fetch( :code, config.google_analytics_code ) 
 
-  puts "  Adding Google Analytics tracker (#{code})..."
+  puts "  Adding JavaScript for Google Analytics tracker (#{code})..."
 
   text = <<EOS
 <!-- begin google-analytics #{opts.inspect} -->
