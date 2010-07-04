@@ -647,12 +647,6 @@ def run( args )
       opts.put( 'manifest', t )
     end
 
-    # shortcut: same as -t s5.txt
-    cmd.on( '--s5', 'S5-Compatible Slide Show (same as -t s5.txt)' ) { opts.put( 's5', true ); opts.put( 'manifest', 's5.txt' ) }
-    
-    # shortcut: same as -t fullerscreen.txt
-    cmd.on( '--fullerscreen', 'FullerScreen-Compatible Slide Show (same as -t fullerscreen.txt)' ) { opts.put( 'fuller', true ); opts.put( 'manifest', 'fullerscreen.txt' ) }
-
     # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
     # ?? opts.on( "--version", "Show version" )  {}
         
@@ -682,19 +676,16 @@ def run( args )
          puts
          puts "Examples:"
          puts "  slideshow microformats"
-         puts "  slideshow microformats.textile"
+         puts "  slideshow microformats.textile"        # Process slides using Textile
+         puts "  slideshow microformats.text"           # Process slides using Markdown
          puts "  slideshow -o slides microformats       # Output slideshow to slides folder"
-         puts "  slideshow --s5 microformats            # Use S5-compatible slide show templates"
-         puts "  slideshow --fullerscreen microformats  # Use FullerScreen-compatible slide show templates"
          puts
          puts "More examles:"
-         puts "  slideshow -g                           # Generate slide show templates"
-         puts "  slideshow -g --s5                      # Generate S5 compatible slide show templates"
-         puts "  slideshow -g --fullerscreen            # Generate FullerScreen compatible slide show templates"
+         puts "  slideshow -g                           # Generate slide show templates using built-in S6 pack"
          puts
          puts "  slideshow -l                           # List installed slide show templates"
          puts "  slideshow -f s5blank                   # Fetch (install) S5 blank starter template from internet"
-         puts "  slideshow -t s5blank.txt microformats  # Use your own slide show templates (e.g. s5blank.txt)"
+         puts "  slideshow -t s5blank microformats      # Use your own slide show templates (e.g. s5blank)"
          puts
          puts "Further information:"
          puts "  http://slideshow.rubyforge.org" 

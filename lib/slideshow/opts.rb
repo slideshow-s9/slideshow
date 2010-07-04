@@ -70,15 +70,7 @@ class Opts
     # fix: use os-agnostic delimiter (use : for Mac/Unix?)
     has_includes? ? @hash[ :include ].split( ';' ) : []
   end
-  
-  def s5?  
-    get_boolean( 's5', false )
-  end
-  
-  def fullerscreen?
-    get_boolean( 'fuller', false ) || get_boolean( 'fullerscreen', false )
-  end
-  
+    
   def manifest  
     get( 'manifest', 's6.txt' )
   end

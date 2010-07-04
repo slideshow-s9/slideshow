@@ -13,10 +13,8 @@ The Slide Show (S9) project also collects and welcomes themes and ships
 
   Usage: slideshow [options] name
     -o, --output PATH                Output Path
-    -g, --generate                   Generate Slide Show Templates
+    -g, --generate                   Generate Slide Show Templates (Using Built-In S6 Pack)
     -t, --template MANIFEST          Template Manifest
-        --s5                         S5-Compatible Slide Show (same as -t s5.txt)
-        --fullerscreen               FullerScreen-Compatible Slide Show (same as -t fullerscreen.txt)
     -f, --fetch URI                  Fetch Templates
     -c, --config PATH                Configuration Path (default is ~/.slideshow)
     -l, --list                       List Installed Templates
@@ -25,21 +23,19 @@ The Slide Show (S9) project also collects and welcomes themes and ships
 
 Examples:
 
-  slideshow microformats
-  slideshow microformats.textile
+  slideshow microformats                
+  slideshow microformats.textile         # Process slides using Textile
+  slideshow microformats.text            # Process slides using Markdown
+
   slideshow -o slides microformats       # Output slideshow to slides folder
-  slideshow --s5 microformats            # Use S5-compatible slide show templates
-  slideshow --fullerscreen microformats  # Use FullerScreen-compatible slide show templates
 
 More examles:
 
-  slideshow -g                           # Generate slide show templates
-  slideshow -g --s5                      # Generate S5 compatible slide show templates
-  slideshow -g --fullerscreen            # Generate FullerScreen compatible slide show templates
+  slideshow -g                           # Generate slide show templates using built-in S6 pack
 
   slideshow -l                           # List installed slide show templates
   slideshow -f s5blank                   # Fetch (install) S5 blank starter template from internet
-  slideshow -t s5blank.txt microformats  # Use your own slide show templates (e.g. s5blank.txt)
+  slideshow -t s5blank.txt microformats  # Use your own slide show templates (e.g. s5blank)
 
 
 == REQUIREMENTS:
