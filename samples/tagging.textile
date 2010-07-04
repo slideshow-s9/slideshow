@@ -1,4 +1,10 @@
+%%%%%%%
+% Slide Show Headers
+
 title: Tagging & Tag Clouds Made Easy
+
+%%%%%%%%%%%%%
+% Slides Start Here
 
 h1. Tagging & Tag Clouds Made Easy
 
@@ -209,10 +215,10 @@ end
 @app/views/tags/index.rhtml@:
 
 {{{
-<% tag_cloud @tags do |name, css_class|  %>
-      <%= link_to name, {:action => :tag, :id => name},
+<%% tag_cloud @tags do |name, css_class|  %>
+      <%%= link_to name, {:action => :tag, :id => name},
             :class => css_class %>
-<% end %>
+<%% end %>
 }}}
 
 
@@ -251,12 +257,7 @@ h1. Free Online Articles and Chapters About Tagging
 * Oracle Tech Net Article: "Tagging with Oracle and Ruby on Rails":http://www.oracle.com/technology/pub/articles/kern-rails-tagging.html by Matt Kern (June 2007)
 * Practical Rails Social Networking Sites Book by Alan Bradburne (June 2007): Free Sample Chapter 10 - "Adding Tags to the Photo Gallery":http://www.apress.com/book/view/1590598415
 
-h1. That's it - Thanks! Questions? Comments?
+h1. That's it - Thanks!
 
-More User Groups/Sites
-
-* "Vancouver Ajax/Web 2.0 Developer Group":http://vanajax.com
-* "Vancouver Groovy/Grails User Group":http://groovyvan.com
-* "Vancouver Ruby/Rails Central Site":http://vanrb.com - One Stop Source for Ruby/Rails News, Events & Jobs
-
+{{ google_analytics :code => 'UA-397343-10' }}
 

@@ -8,16 +8,10 @@ h1. Going Camping - A Web Microframework in 4k Ruby
 
 Adapted S6/S9[1] Version from "Original PDF Slide Deck":http://www.jeremymcanally.com/going_camping.pdf
 
-<hr>
+---
 fn1. ("Source":http://slideshow.rubyforge.org/svn/samples/camping.textile)
 
-*Slide Show Keyboard Controls (Help)*
-
-| Action | Key |
-| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
-| Go to previous slide | Left Arrow, Up Arrow, Page Up |
-| Toggle between slideshow and outline view (&#216;) | T |
-| Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
+{{help}}
 
 
 h1. About Jeremy McAnally
@@ -34,7 +28,7 @@ h1. What is Camping?
 * Written by _why the lucky stiff
 
 p{font-size: 10px; color: white; background-color: black; padding: 5px; border: silver thick groove; -moz-border-radius: 11px;}. <code>
-%w[rubygems active_record markaby metaid ostruct].each {|lib| require lib}
+ %w[rubygems active_record markaby metaid ostruct].each {|lib| require lib}
  module Camping;C=self;module Models;end;Models::Base=ActiveRecord::Base
  module Helpers;def R c,*args;p=/\(.+?\)/;args.inject(c.urls.detect{|x|x.
  scan(p).size==args.size}.dup){|str,a|str.gsub(p,(a.method(a.class.primary_key
@@ -99,7 +93,7 @@ h1. When to use it
 
 * When Rails is too fat
 * Right tool for the right job
-* You ain’t gonna need it!
+* You ain't gonna need it!
 
 h1. Controlling Camping
 
@@ -142,7 +136,7 @@ No more ERb!
 {{{
 <p>Hello, world!</p>
 <div id="example">
-  This is a <%= word %>!
+  This is a <%%= word %>!
 </div>
 }}}
 
@@ -366,4 +360,5 @@ h1. Kindling
 ** Static file download/upload
 ** Easy addition of template handlers, with default support for ERb
 
+{{ google_analytics :code => 'UA-397343-10' }}
 

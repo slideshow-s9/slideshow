@@ -1,4 +1,10 @@
+%%%%%%%
+% Slide Show Headers
+
 title: Ruby 1.9: What to Expect
+
+%%%%%%%%%%%%%
+% Slides Start Here
 
 h1. Ruby 1.9: What to Expect
 
@@ -6,16 +12,11 @@ Sam Ruby @ OSCON 2008, Portland, Oregon, July 2008
 
 Adapted S6/S9[1] Version from "Original Slide Deck":http://intertwingly.net/slides/2008/oscon/ruby19/1
 
-<hr>
+---
 fn1. ("Source":http://slideshow.rubyforge.org/svn/samples/ruby19.textile)
 
-*Slide Show Keyboard Controls (Help)*
+{{help}}
 
-| Action | Key |
-| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
-| Go to previous slide | Left Arrow, Up Arrow, Page Up |
-| Toggle between slideshow and outline view (&#216;) | T |
-| Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
 
 h1. About Sam Ruby
 
@@ -40,7 +41,7 @@ h1. Agenda
 h1. What is Ruby?
 
 * MRI (Matz' Ruby Interpreter)
-* Rubinius — RubySpec
+* Rubinius - RubySpec
 * JRuby
 * IronRuby
 * Ruby.NET
@@ -669,5 +670,5 @@ h1. Questions
 * "Programming Ruby 3":http://www.pragprog.com/titles/ruby3/programming-ruby-3
 * Thanks for coming!
 
-
+{{ google_analytics :code => 'UA-397343-10' }}
 

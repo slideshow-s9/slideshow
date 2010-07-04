@@ -1,6 +1,11 @@
+%%%%%%%
+% Slide Show Headers
+
 title: Groovy - Java for the 21st Century - Do More With Less (Code) 
 gradient-colors: blue aqua
 
+%%%%%%%%%%%%%
+% Slides Start Here
 
 h1. What is Groovy?
 
@@ -1115,4 +1120,4 @@ $ groovy Hello.groovy
 
 h1. The End - Q&A - Thanks
 
-Join the Vancouver Groovy/Grails User Group - Visit us @ "GroovyVan.com":http://groovyvan.com
+{{ google_analytics :code => 'UA-397343-10' }}

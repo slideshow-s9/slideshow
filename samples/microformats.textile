@@ -264,4 +264,4 @@ JavaScript API - Intro @ developer.mozilla.org/en/docs/Using_microformats
 
 h1. That's it - Thanks - Questions?
 
-Join us for the upcoming "SemanticCamp Vancouver":http://semanticcamp.wordpress.com
+{{ google_analytics :code => 'UA-397343-10' }}

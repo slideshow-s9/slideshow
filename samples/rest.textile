@@ -78,3 +78,5 @@ h1. Architecture Astronaut REST Speak
 * REST-RPC-Hybrid (Three Web Service Architectures - 1) REST, 2) REST-RPC Hybrid, 3) RPC[1] )
 
 fn1. RPC -> Remote Procedure Call
+
+{{ google_analytics :code => 'UA-397343-10' }}

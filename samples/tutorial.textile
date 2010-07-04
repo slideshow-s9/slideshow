@@ -187,3 +187,5 @@ Gerald Bauer designed and developed the Slide Show (S9) Ruby gem.
 Find out more @ "slideshow.rubyforge.org":http://slideshow.rubyforge.org 
 
 Questions? Comments? Send them along to the "Free Web Slide Show Alternatives - S5, S6, S9 And Friends - Forum/Mailing List":http://groups.google.com/group/webslideshow. Thanks!
+
+{{ google_analytics :code => 'UA-397343-10' }}

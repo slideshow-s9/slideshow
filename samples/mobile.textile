@@ -1,20 +1,21 @@
+%%%%%%%
+% Slide Show Headers
+
 title: Create Mobile Web Apps with the iUI JavaScript Library
 gradient: top_bottom blue navy
+
+
+%%%%%%%%%%%%%
+% Slides Start Here
 
 h1. Create Mobile Web Apps with the iUI JavaScript Library 
 
 "Gerald Bauer":http://geraldbauer.ca @ "MobileCampVancouver2":http://barcamp.org/MobileCampVancouver2, Vancouver, British Columbia, September 2008
 
-<hr>
+---
 ("Source":http://slideshow.rubyforge.org/svn/samples/mobile.textile)
 
-*Slide Show Keyboard Controls (Help)*
-
-| Action | Key |
-| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
-| Go to previous slide | Left Arrow, Up Arrow, Page Up |
-| Toggle between slideshow and outline view (&#216;) | T |
-| Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
+{{help}}
 
 
 h1. What's the Mobile Web?
@@ -204,11 +205,11 @@ h1. iUI - Forms
 <fieldset>
   <div class="row">
     <label>Name</label>
-    <input type="text" name="login" value="<%= params[:login] %>" >
+    <input type="text" name="login" value="<%%= params[:login] %>" >
   </div>
   <div class="row">
     <label>Password</label>
-    <input type="password" name="password" value="<%= params[:password] %>" >
+    <input type="password" name="password" value="<%%= params[:password] %>" >
   </div>
 </fieldset>
 <a class="whiteButton" type="submit" href="#">Login</a>
@@ -236,7 +237,7 @@ h1. All Together Now
       <a class="button" href="#searchForm">Search</a>
     </div>
 
-    <%= yield %>
+    <%%= yield %>
 
   </body>
 </html>
@@ -254,11 +255,11 @@ h1. iUI - Lists and Ruby
 
 {{{
 <ul title="Neighbourhoods">               
-  <% for hood in @neighbourhoods do %>
-    <li><%= link_to hood.name, hood %>
-     <span class='small'> <%= hood.area %></span>
+  <%% for hood in @neighbourhoods do %>
+    <li><%%= link_to hood.name, hood %>
+     <span class='small'> <%%= hood.area %></span>
     </li>                 
-  <% end %>
+  <%% end %>
 </ul>
 }}}
 
@@ -360,5 +361,4 @@ h1. More Mobile Web Links
 
 h1. That's It. Thank You.
 
-Questions? Comments?
-Send them along to the "Vancouver Ajax, Web 2.0, Mobile Web forum/mailing list":http://forum.vanajax.com. Thanks!
+{{ google_analytics :code => 'UA-397343-10' }}

@@ -7,3 +7,8 @@ doc/
 
 # ignore webby output
 site/output/
+
+# ignore samples output
+samples/o/
+
+
