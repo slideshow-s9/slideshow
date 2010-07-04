@@ -14,7 +14,7 @@ def left( opts={}, &blk )
       
   before  = "<!-- begin left #{opts.inspect} -->\n"
   before << "<div class='#{clazz}'>\n"  if clazz  
-  before << "<table width='100%'><tr><td width='#{width}'>\n"
+  before << "<table width='100%'><tr><td width='#{width}' markdown='block' style='vertical-align: top;'>\n"
     
   after   = "</td>\n"  
   after  << "<!-- end left -->\n"
@@ -38,7 +38,7 @@ def right( opts={}, &blk )
   text = capture_erb(&blk)
     
   before  = "<!-- begin right #{opts.inspect} -->\n" 
-  before << "<td width='#{width}'>\n"  
+  before << "<td width='#{width}' markdown='block' style='vertical-align: top;'>\n"  
     
   after   = "</td></tr></table>\n"
   after  << "</div>\n"  if clazz    
