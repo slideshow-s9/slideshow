@@ -640,7 +640,7 @@ def run( args )
     
     cmd.on( '-o', '--output PATH', 'Output Path' ) { |s| opts.put( 'output', s ) }
 
-    cmd.on( '-g', '--generate',  'Generate Slide Show Templates' ) { opts.put( 'generate', true ) }
+    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.put( 'generate', true ) }
     
     cmd.on( "-t", "--template MANIFEST", "Template Manifest" ) do |t|
       # todo: do some checks on passed in template argument
@@ -676,8 +676,8 @@ def run( args )
          puts
          puts "Examples:"
          puts "  slideshow microformats"
-         puts "  slideshow microformats.textile"        # Process slides using Textile
-         puts "  slideshow microformats.text"           # Process slides using Markdown
+         puts "  slideshow microformats.textile         # Process slides using Textile"
+         puts "  slideshow microformats.text            # Process slides using Markdown"
          puts "  slideshow -o slides microformats       # Output slideshow to slides folder"
          puts
          puts "More examles:"

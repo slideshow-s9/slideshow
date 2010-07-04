@@ -1,3 +1,15 @@
+=== 0.9  / 2010-07-04
+
+* Added support for !SLIDE (and alternative syntax %slide)
+* Added support for comments using %, %begin/%end and %end
+* Added more helpers (step, google_analytics, left/right for two-column layouts)
+* Added support for Django-style expressions and statements as an alternative to <% %>
+* Added support for configuring text filters in slideshow.yml
+* Added support for configuring Markdown engines in slideshow.yml
+* Added fetch shortcuts (configure in slideshow.yml)
+* Added support for template manifests w/o .txt extensions 
+* Removed old options -s5,--fullerscreen (use -t s5blank or -t fullerscreen instead) 
+
 === 0.8.5  / 2010-06-25
 
 * Added workaround for RedCloth 4 (Java-only) multi-byte character bug 
