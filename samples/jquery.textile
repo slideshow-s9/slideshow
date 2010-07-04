@@ -278,6 +278,7 @@ h1. Resources
 | Effects   | "@script.aculo.us@":http://script.aculo.us | "@interface.eyecon.ro@":http://interface.eyecon.ro  |
 
 
+{{ google_analytics :code => 'UA-397343-10' }}
  
  
 

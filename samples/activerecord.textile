@@ -8,8 +8,10 @@ Using ActiveRecord right the first time
 
 Rowan Hick @ Toronto Rails Project Nite, February 2008
 
-(Adapted S9 Version from "Original PDF Slide Deck":http://work.rowanhick.com/2008/02/12/how-to-avoid-hanging-yourself-with-rails)
+Adapted S6/S9 Version from "Original PDF Slide Deck":http://work.rowanhick.com/2008/02/12/how-to-avoid-hanging-yourself-with-rails
 
+---
+{{help}}
 
 h1. Discussion tonight
 
@@ -138,7 +140,7 @@ v/  order.customer order.customer.country order.order_lines
 
 h1. Improvement
 
-Let’s start optimising ...
+Let's start optimising ...
 
 {{{
 @orders = Order.find( :all, :include => {:customers => :country} )
@@ -237,7 +239,7 @@ WHERE (order_statuses.id IN (10))
 
 h1. But I want more
 
-* Okay, this still isn’t blazing fast. I'm building the next killr web2.0 app
+* Okay, this still isn't blazing fast. I'm building the next killr web2.0 app
 * Forgetabout associations, just load it via SQL, depending on application, makes a
 huge difference
 * Concentrate on commonly used pages
@@ -321,6 +323,6 @@ h1. For the speed freaks
 * Nearly identical code
 * Blazingly fast
 
-
+{{ google_analytics :code => 'UA-397343-10' }}
 
 
