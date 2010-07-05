@@ -234,7 +234,7 @@ $ slideshow microformats
 }}}
 
 
-h2(#skip). How To Comment Out Content?
+h2(#comments). How To Comment Out Content?
 
 Use @%@ for comments anywhere (including headers) and @%begin@/@%end@
 for multi-line comments and @%end@ to skip everything until the end.

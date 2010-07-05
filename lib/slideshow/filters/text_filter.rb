@@ -5,7 +5,8 @@
 
 module TextFilter
 
-  def comments_percent_style( content )
+  def comments_percent_style( content )    
+    
     # remove comments
     # % comments
     # %begin multiline comment
@@ -28,8 +29,17 @@ module TextFilter
       ""
     end
 
+    # hack/note: 
+    #  note multi-line erb expressions/stmts might cause trouble
+    #  
+    #  %> gets escaped as special case (not treated as comment)
+    # <%
+    #   whatever
+    # %> <!-- trouble here; would get removed as comment!
+    #  todo: issue warning?
+    
     # remove single-line comments    
-    content.gsub!(/^%.*/ ) do |match|
+    content.gsub!(/(^%$)|(^%[^>].*)/ ) do |match|
       comments_single += 1
       ""
     end

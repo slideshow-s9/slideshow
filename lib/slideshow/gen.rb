@@ -557,13 +557,13 @@ class Gen
       logger.debug "  adding css classes: #{slide.classes}"
     end
        
-    if slide_source =~ /^\s*(<h1.+?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+    if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
       slide.header  = $1
       slide.content = ($2 ? $2 : "")
       logger.debug "  adding slide with header:\n#{slide.header}"
     else
       slide.content = slide_source
-      logger.debug "  adding slide with *no* header"
+      logger.debug "  adding slide with *no* header:\n#{slide.content}"
     end
     slides2 << slide
   end
