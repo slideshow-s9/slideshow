@@ -507,7 +507,7 @@ class Gen
   # -- slide marker stats
   slide_markers = 0
   
-  ## todo: use html processing instruction <?s9 slide ?>
+  ## todo: use html processing instruction <?s9 slide ?> ????
   content.gsub!(/^!SLIDE(.*)/ ) do |match|
     slide_markers += 1
     "<!-- _S9SLIDE_ #{$1} -->"
@@ -545,16 +545,24 @@ class Gen
   end
 
   ## split slide source into header (optional) and content/body
-  ## plus check for classes
+  ## plus check for (css style) classes
 
   slides2 = []
   slides.each do |slide_source|
     slide = Slide.new
-    
-    ## check for css style class
-    if slide_source =~ /<!-- _S9SLIDE_(.*?)-->/
-      slide.classes = $1.strip
-      logger.debug "  adding css classes: #{slide.classes}"
+
+    ## check for css style classes    
+    from = 0
+    while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
+      logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
+
+      if slide.classes.nil?
+        slide.classes = $2.strip
+      else
+        slide.classes << " #{$2.strip}"
+      end
+      
+      from = Regexp.last_match.end(0)
     end
        
     if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com

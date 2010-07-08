@@ -34,6 +34,7 @@ require 'slideshow/helpers/capture_helper'
 require 'slideshow/helpers/analytics_helper'
 require 'slideshow/helpers/table_helper'
 require 'slideshow/helpers/step_helper'
+require 'slideshow/helpers/background_helper'
 
 # load built-in filters
 require 'slideshow/filters/headers_filter'
@@ -42,7 +43,7 @@ require 'slideshow/filters/text_filter'
 
 module Slideshow
 
-  VERSION = '0.9.1'
+  VERSION = '0.9.2'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator
