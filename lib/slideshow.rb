@@ -35,6 +35,8 @@ require 'slideshow/helpers/analytics_helper'
 require 'slideshow/helpers/table_helper'
 require 'slideshow/helpers/step_helper'
 require 'slideshow/helpers/background_helper'
+require 'slideshow/helpers/source_helper'
+require 'slideshow/helpers/directive_helper'
 
 # load built-in filters
 require 'slideshow/filters/headers_filter'

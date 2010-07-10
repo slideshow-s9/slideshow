@@ -5,7 +5,88 @@
 
 module TextFilter
 
-  def comments_percent_style( content )    
+def directives_bang_style_to_percent_style( content )
+
+  # for compatibility allow !SLIDE/!STYLE as an alternative to %slide/%style-directive
+  
+  bang_count = 0
+  
+  content.gsub!(/^!(SLIDE|STYLE)/) do |match|
+    bang_count += 1
+    "%#{$1.downcase}"
+  end
+
+  puts "  Patching !-directives (#{bang_count} slide/style-directives)..."
+
+  content
+end
+
+def directives_percent_style( content )
+
+  directive_single    = 0
+  directive_block_beg = 0
+  directive_block_end = 0
+
+  # 1) process known single line directives (e.g. slide, style)
+
+  content.gsub!(/^%([a-zA-Z][a-zA-Z0-9_]*)(.*)/) do |match| 
+    directive = $1.downcase
+    params    = $2
+    if [ 'slide', 'style' ].include?( directive )  
+      directive_single += 1
+      "<!-- _S9#{directive.upcase}_ #{params} -->"         
+    else
+      "%#{directive} #{params ? params : ''}"  # skip block or unknown directives
+    end
+  end
+
+
+  # 2) process block directives (plus skip %begin/%end comment-blocks)
+
+  inside_block  = false
+  inside_helper = false
+  
+  content2 = ""
+  
+  content.each_line do |line|
+    if line =~ /^%([a-zA-Z][a-zA-Z0-9_]*)(.*)/
+      directive = $1.downcase
+      params    = $2
+
+      logger.debug "processing %-directive: #{directive}"
+
+      if inside_helper && directive == 'end'
+        inside_helper = false
+        directive_block_end += 1
+        content2 << "%>"        
+      elsif inside_block && directive == 'end'
+        inside_block = false
+        directive_block_end += 1
+        content2 << "<% end %>"
+      elsif [ 'comment', 'comments', 'begin', 'end' ].include?( directive )  # skip begin/end comment blocks
+        content2 << line
+      elsif [ 'helper', 'helpers' ].include?( directive )
+        inside_helper = true
+        directive_block_beg += 1
+        content2 << "<%"
+      else
+        inside_block = true
+        directive_block_beg += 1
+        content2 << "<% #{directive} #{params ? params:''} do %>"
+      end
+    else
+      content2 << line
+    end
+  end  
+    
+  puts "  Preparing %-directives (#{directive_single} slide/style-directives, #{directive_block_beg}/#{directive_block_end} block-directives)..."
+
+  content2
+end
+
+
+
+def comments_percent_style( content )    
     
     # remove comments
     # % comments
@@ -18,7 +99,7 @@ module TextFilter
     comments_end    = 0
 
     # remove multi-line comments
-    content.gsub!(/^%begin.*?%end/m) do |match|
+    content.gsub!(/^%(begin|comment|comments).*?%end/m) do |match|
       comments_multi += 1
       ""
     end
@@ -44,8 +125,8 @@ module TextFilter
       ""
     end
     
-    puts "  Removing comments (#{comments_single} %-lines, " +
-       "#{comments_multi} %begin/%end-blocks, #{comments_end} %end-blocks)..."
+    puts "  Removing %-comments (#{comments_single} lines, " +
+       "#{comments_multi} begin/end-blocks, #{comments_end} end-blocks)..."
     
     content    
   end
@@ -146,7 +227,7 @@ module TextFilter
     content
   end
 
-end
+end # module TextFilter
 
 class Slideshow::Gen
   include TextFilter

@@ -40,6 +40,7 @@ headers:
 #   map shortcut to URI
     
 fetch:
+    s6syntax: http://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
     s6blank: http://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
     s5blank: http://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
     s5themes: http://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt

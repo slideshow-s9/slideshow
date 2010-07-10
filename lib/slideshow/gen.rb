@@ -490,31 +490,12 @@ class Gen
     
   content = File.read( inname )
 
-  # fix: add to comment text filter as first rule!!
-  # check for !SLIDE alias %slide (needs to get coverted to ! otherwise
-  #   it gets removed as a comment)
-  content.gsub!(/^%slide/, '!SLIDE' )
-
   # run text filters
   
   config.text_filters.each do |filter|
     mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
     content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
-
-  # check for !SLIDE markers; change to HTML comments
-  
-  # -- slide marker stats
-  slide_markers = 0
-  
-  ## todo: use html processing instruction <?s9 slide ?> ????
-  content.gsub!(/^!SLIDE(.*)/ ) do |match|
-    slide_markers += 1
-    "<!-- _S9SLIDE_ #{$1} -->"
-  end
-  
-  puts "  Processing directives (#{slide_markers} !SLIDE-directives)..."
-
 
   # convert light-weight markup to hypertext
  
