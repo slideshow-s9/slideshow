@@ -10,38 +10,28 @@ def directives_bang_style_to_percent_style( content )
   # for compatibility allow !SLIDE/!STYLE as an alternative to %slide/%style-directive
   
   bang_count = 0
+
+  # get unparsed helpers e.g. SLIDE|STYLE  
+  unparsed = config.helper_unparsed.map { |item| item.upcase }.join( '|' )                                                                   
   
-  content.gsub!(/^!(SLIDE|STYLE)/) do |match|
+  content.gsub!(/^!(#{unparsed})/) do |match|
     bang_count += 1
     "%#{$1.downcase}"
   end
 
-  puts "  Patching !-directives (#{bang_count} slide/style-directives)..."
+  puts "  Patching !-directives (#{bang_count} #{config.helper_unparsed.join('/')}-directives)..."
 
   content
 end
 
 def directives_percent_style( content )
 
-  directive_single    = 0
+  directive_unparsed  = 0
+  directive_expr      = 0
   directive_block_beg = 0
   directive_block_end = 0
 
-  # 1) process known single line directives (e.g. slide, style)
-
-  content.gsub!(/^%([a-zA-Z][a-zA-Z0-9_]*)(.*)/) do |match| 
-    directive = $1.downcase
-    params    = $2
-    if [ 'slide', 'style' ].include?( directive )  
-      directive_single += 1
-      "<!-- _S9#{directive.upcase}_ #{params ? params : ''} -->"         
-    else
-      Regexp.last_match( 0 ) # skip block or unknown directives
-    end
-  end
-
-
-  # 2) process block directives (plus skip %begin/%end comment-blocks)
+  # process directives (plus skip %begin/%end comment-blocks)
 
   inside_block  = false
   inside_helper = false
@@ -55,7 +45,14 @@ def directives_percent_style( content )
 
       logger.debug "processing %-directive: #{directive}"
 
-      if inside_helper && directive == 'end'
+      # slide, style
+      if config.helper_unparsed.include?( directive )
+        directive_unparsed += 1
+        content2 << "<%= #{directive} '#{params ? params : ''}' %>"
+      elsif config.helper_exprs.include?( directive )
+        directive_expr += 1
+        content2 << "<%= #{directive} #{params ? erb_simple_params(directive,params) : ''} %>"        
+      elsif inside_helper && directive == 'end'
         inside_helper = false
         directive_block_end += 1
         content2 << "%>"        
@@ -79,7 +76,10 @@ def directives_percent_style( content )
     end
   end  
     
-  puts "  Preparing %-directives (#{directive_single} slide/style-directives, #{directive_block_beg}/#{directive_block_end} block-directives)..."
+  puts "  Preparing %-directives (" +
+      "#{directive_unparsed} #{config.helper_unparsed.join('/')} directives, " +
+      "#{directive_expr} #{config.helper_exprs.join('/')} expr-directives, " +
+      "#{directive_block_beg}/#{directive_block_end} block-directives)..."
 
   content2
 end
@@ -139,17 +139,21 @@ def comments_percent_style( content )
     content
   end
   
-  def include_helper_hack( content )
-    # note: include is a ruby keyword; rename to __include__ so we can use it 
+  def erb_rename_helper_hack( content )
+    # note: include is a ruby keyword; rename to s9_include so we can use it 
     
-    include_counter = 0
+    rename_counter = 0
     
-    content.gsub!( /<%=[ \t]*include/ ) do |match|
-      include_counter += 1
-      '<%= __include__' 
+    # turn renames into something like:
+    #   include|class   etc.
+    renames = config.helper_renames.join( '|' )
+    
+    content.gsub!( /<%=[ \t]*(#{renames})/ ) do |match|
+      rename_counter += 1
+      "<%= s9_#{$1}" 
     end
 
-    puts "  Patching embedded Ruby (erb) code aliases (#{include_counter} include)..."
+    puts "  Patching embedded Ruby (erb) code for aliases (#{rename_counter} #{config.helper_renames.join('/')}-aliases)..."
 
     content
   end

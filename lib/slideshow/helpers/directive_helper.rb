@@ -20,6 +20,15 @@ def css( &block )
   content_for( :css, nil, &block )
 end
     
+def slide( params )
+  "<!-- _S9SLIDE_ #{params ? params : ''} -->"         
+end
+
+def style( params )
+  "<!-- _S9STYLE_ #{params ? params : ''} -->"         
+end
+    
+    
   
 end # module DirectiveHelper
 

@@ -39,18 +39,18 @@ class Config
     # textile:
     #   extnames:  [ .textile, .t ]
     
-    @hash[ 'textile' ][ 'extnames' ] + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
+    (@hash[ 'textile' ][ 'extnames' ] || []) + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
   end
 
   def known_markdown_extnames
-    @hash[ 'markdown' ][ 'extnames' ] + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
+    (@hash[ 'markdown' ][ 'extnames' ] || []) + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
   end
   
   def known_markdown_libs
     # returns an array of known markdown engines e.g.
     # [ rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
     
-    @hash[ 'markdown' ][ 'libs' ] + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
+    (@hash[ 'markdown' ][ 'libs' ] || []) + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
   end
 
   def known_extnames
@@ -61,7 +61,22 @@ class Config
   end
   
   def text_filters
-    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ] 
+    @hash[ 'builtin' ][ 'filters' ] + ( @hash[ 'filters' ] || [] ) 
+  end
+  
+  def helper_renames
+     @hash[ 'builtin' ][ 'helper' ][ 'renames' ] + ( @hash[ 'helper' ][ 'renames' ] || [] )
+  end
+
+  def helper_unparsed
+    # use unparsed params (passed along a single string)
+    @hash[ 'builtin' ][ 'helper' ][ 'unparsed' ]
+  end
+  
+  def helper_exprs
+    # allow expression as directives (no need for %end block)
+    # by default directives are assumed statements (e.g. %mydir  %end)
+    @hash[ 'builtin' ][ 'helper' ][ 'exprs' ] + ( @hash[ 'helper' ][ 'exprs' ] || [] )
   end
 
   def google_analytics_code

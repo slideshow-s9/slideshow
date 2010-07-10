@@ -54,6 +54,10 @@ analytics:
     google: UA-XXX
     
 
+helper:
+  renames: []
+  exprs: []
+
 ### markup (textile, markdown) config
 
 # filters to run before markup processing

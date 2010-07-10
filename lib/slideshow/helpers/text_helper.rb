@@ -1,6 +1,6 @@
 module TextHelper
   
-def __include__( name, opts = {} )
+def s9_include( name, opts = {} )
   puts "  Including '#{name}'..." 
   content = File.read( name )
 end

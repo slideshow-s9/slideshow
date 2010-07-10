@@ -6,8 +6,12 @@
 #        libs: [ whatever ]
 
 
-# text filters
+helper:
+  unparsed: [ slide, style ]
+  renames: [ include, class ]
+  exprs: [ class, clear ]
 
+# text filters  
 filters:
   - skip-end-directive
   - directives_bang_style_to_percent_style
@@ -15,7 +19,7 @@ filters:
   - comments-percent-style
   - leading-headers
   - erb-django-style
-  - include-helper-hack
+  - erb-rename-helper-hack
   - erb
   - code-block-curly-style
 
