@@ -72,7 +72,7 @@ def directives_percent_style( content )
       else
         inside_block = true
         directive_block_beg += 1
-        content2 << "<% #{directive} #{params ? erb_simple_params(directive,params):''} do %>"
+        content2 << "<% #{directive} #{params ? erb_simple_params(directive,params) : ''} do %>"
       end
     else
       content2 << line
@@ -203,8 +203,8 @@ def comments_percent_style( content )
     end
     
     # 4) separate w/ commas
-    params.gsub!( /(:\w+)=>/) do |match|
-      ", #{Regexp.last_match( 0 )}"
+    params.gsub!( /[ \t]*(:\w+)=>/) do |match|
+      ", #{$1}=>"
     end
     # remove possible leading comma
     params.sub!( /^[ \t]*,/, '' )
