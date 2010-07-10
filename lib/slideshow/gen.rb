@@ -479,7 +479,10 @@ class Gen
   
   # shared variables for templates (binding)
   @content_for = {}  # reset content_for hash
+
   @name        = basename
+  @extname     = extname
+
   @headers     = @opts  # deprecate/remove: use headers method in template
 
   @session     = {}  # reset session hash for plugins/helpers
