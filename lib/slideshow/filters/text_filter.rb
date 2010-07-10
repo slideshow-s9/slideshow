@@ -72,7 +72,7 @@ def directives_percent_style( content )
       else
         inside_block = true
         directive_block_beg += 1
-        content2 << "<% #{directive} #{params ? params:''} do %>"
+        content2 << "<% #{directive} #{params ? erb_simple_params(directive,params):''} do %>"
       end
     else
       content2 << line
@@ -162,6 +162,74 @@ def comments_percent_style( content )
     content
   end
 
+  def erb_simple_params( method, params )
+    
+    # replace params to support html like attributes e.g.
+    #  plus add comma separator
+    #
+    #  class=part       -> :class => 'part'   
+    #  3rd/tutorial     -> '3rd/tutorial'
+    #  :css             -> :css
+    
+    return params   if params.nil? || params.strip.empty?
+
+    params.strip!    
+    ## todo: add ' and " for check??
+    if params.include?( '=>' )
+      puts "** warning: skipping patching of params for helper '#{method}'; already includes '=>':"
+      puts "  #{params}"
+      
+      return params
+    end
+    
+    before = params.clone
+    
+    # 1) string-ify values and keys (that is, wrap in '')
+    params.gsub!( /[:a-zA-Z0-9][\w\/\-\.]*/) do |match|
+      symbol = ( Regexp.last_match( 0 ).include?(':') )
+      if symbol  # return symbols as is
+        Regexp.last_match( 0 )
+      else
+        "'#{Regexp.last_match( 0 )}'"
+      end
+    end
+    
+    # 2) change = to =>
+    params.gsub!( /[ \t]*=[ \t]*/, '=>' )
+    
+    # 3) symbol-ize hash keys 
+    params.gsub!( /'(\w+)'=>/ ) do |match|
+      ":#{$1}=>"
+    end
+    
+    # 4) separate w/ commas
+    params.gsub!( /(:\w+)=>/) do |match|
+      ", #{Regexp.last_match( 0 )}"
+    end
+    # remove possible leading comma
+    params.sub!( /^[ \t]*,/, '' )
+  
+    puts "    Patching params for helper '#{method}' from '#{before}' to:"
+    puts "      #{params}"  
+       
+    params    
+  end
+
+
+  def erb_django_simple_params( code )
+    
+    # split into method/directive and parms plus convert params
+    code.sub!( /^[ \t]([\w.]+)(.*)/ ) do |match|
+      directive = $1
+      params    = $2
+      
+      "#{directive} #{params ? erb_simple_params(directive,params) : ''}"     
+    end
+    
+    code
+  end
+
+
   def erb_django_style( content )
 
     # replace expressions (support for single lines only)
@@ -174,7 +242,7 @@ def comments_percent_style( content )
 
     content.gsub!( /\{\{([^{}\n]+?)\}\}/ ) do |match|
       erb_expr += 1
-      "<%= #{$1} %>"
+      "<%= #{erb_django_simple_params($1)} %>"
     end
 
     content.gsub!( /\{%[ \t]*end[ \t]*%\}/ ) do |match|
@@ -184,11 +252,7 @@ def comments_percent_style( content )
 
     content.gsub!( /\{%([^%\n]+?)%\}/ ) do |match|
       erb_stmt_beg += 1
-      if $1.include?('do') 
-        "<% #{$1} %>"
-      else
-        "<% #{$1} do %>"
-      end
+      "<% #{erb_django_simple_params($1)} do %>"
     end
 
     puts "  Patching embedded Ruby (erb) code Django-style (#{erb_expr} {{-expressions," +

@@ -3,6 +3,9 @@ module BackgroundHelper
 
 def background( *args  )
   
+ # make everyting optional; use it like: 
+ #   background( code, opts={} )
+  
   # check for optional hash for options
   opts = args.last.kind_of?(Hash) ? args.pop : {}
 
