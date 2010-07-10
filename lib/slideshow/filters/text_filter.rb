@@ -3,7 +3,8 @@
 #
 # use web filters for processing html/hypertext
 
-module TextFilter
+module Slideshow
+  module TextFilter
 
 def directives_bang_style_to_percent_style( content )
 
@@ -33,7 +34,7 @@ def directives_percent_style( content )
 
   # process directives (plus skip %begin/%end comment-blocks)
 
-  inside_block  = false
+  inside_block  = 0
   inside_helper = false
   
   content2 = ""
@@ -56,8 +57,8 @@ def directives_percent_style( content )
         inside_helper = false
         directive_block_end += 1
         content2 << "%>"        
-      elsif inside_block && directive == 'end'
-        inside_block = false
+      elsif inside_block > 0 && directive == 'end'
+        inside_block -= 1
         directive_block_end += 1
         content2 << "<% end %>"
       elsif [ 'comment', 'comments', 'begin', 'end' ].include?( directive )  # skip begin/end comment blocks
@@ -67,7 +68,7 @@ def directives_percent_style( content )
         directive_block_beg += 1
         content2 << "<%"
       else
-        inside_block = true
+        inside_block += 1
         directive_block_beg += 1
         content2 << "<% #{directive} #{params ? erb_simple_params(directive,params) : ''} do %>"
       end
@@ -305,8 +306,9 @@ def comments_percent_style( content )
     content
   end
 
-end # module TextFilter
+end   # module TextFilter
+end  # module Slideshow
 
 class Slideshow::Gen
-  include TextFilter
+  include Slideshow::TextFilter
 end

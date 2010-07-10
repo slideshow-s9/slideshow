@@ -1,4 +1,5 @@
-module StepHelper
+module Slideshow
+  module StepHelper
 
   
 def step( opts={}, &blk )
@@ -24,8 +25,9 @@ end
   
   
 end # module StepHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include StepHelper
+  include Slideshow::StepHelper
 end
 

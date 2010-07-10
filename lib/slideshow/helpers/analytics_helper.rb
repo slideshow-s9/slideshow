@@ -1,4 +1,5 @@
-module AnalyticsHelper
+module Slideshow
+  module AnalyticsHelper
   
   
 def google_analytics( opts = {} )
@@ -31,9 +32,11 @@ EOS
 end
   
   
-end # module AnalyticsHelper
+end #   module AnalyticsHelper
+end # module Slideshow
+
 
 class Slideshow::Gen
-  include AnalyticsHelper
+  include Slideshow::AnalyticsHelper
 end
 

@@ -1,4 +1,5 @@
-module TextHelper
+module Slideshow
+  module TextHelper
   
 def s9_include( name, opts = {} )
   puts "  Including '#{name}'..." 
@@ -146,5 +147,6 @@ end
 
 
 end # module TextHelper
+end # module Slideshow
 
-Slideshow::Gen.__send__( :include, TextHelper )
+Slideshow::Gen.__send__( :include, Slideshow::TextHelper )

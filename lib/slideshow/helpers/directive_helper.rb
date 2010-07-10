@@ -1,4 +1,5 @@
-module DirectiveHelper
+module Slideshow
+  module DirectiveHelper
 
 # css directive:
 #
@@ -31,9 +32,10 @@ end
     
   
 end # module DirectiveHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include DirectiveHelper
+  include Slideshow::DirectiveHelper
 end
 
 

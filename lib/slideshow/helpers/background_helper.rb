@@ -1,4 +1,5 @@
-module BackgroundHelper
+module Slideshow
+  module BackgroundHelper
 
 
 def background( *args  )
@@ -33,7 +34,8 @@ end
     
   
 end # module BackgroundHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include BackgroundHelper
+  include Slideshow::BackgroundHelper
 end

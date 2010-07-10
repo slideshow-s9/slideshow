@@ -1,4 +1,5 @@
-module MarkdownHelper
+module Slideshow
+  module MarkdownHelper
 
 def s9_class( clazz )
   "{: .#{clazz.strip}}"
@@ -10,7 +11,8 @@ end
 
 
 end # module MarkdownHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include MarkdownHelper
+  include Slideshow::MarkdownHelper
 end

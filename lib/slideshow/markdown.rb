@@ -1,4 +1,5 @@
-module MarkdownEngines
+module Slideshow
+  module MarkdownEngines
 
   def rdiscount_to_html( content )
     RDiscount.new( content ).to_html
@@ -21,7 +22,8 @@ module MarkdownEngines
   end
 
 end   # module MarkdownEngines
+end # module Slideshow
 
 class Slideshow::Gen
-  include MarkdownEngines
+  include Slideshow::MarkdownEngines
 end

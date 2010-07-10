@@ -1,4 +1,5 @@
-module SourceHelper
+module Slideshow
+  module SourceHelper
 
 
 def source( *args )
@@ -31,7 +32,8 @@ end
     
   
 end # module SourceHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include SourceHelper
+  include Slideshow::SourceHelper
 end

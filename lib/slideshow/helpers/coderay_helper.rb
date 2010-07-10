@@ -1,6 +1,7 @@
 require 'coderay'
 
-module CodeRayHelper
+module Slideshow
+  module CodeRayHelper
 
   # coderay option defaults
   CR_LANG         = 'ruby'
@@ -74,5 +75,6 @@ def coderay( *args, &blk )
 end
 
 end # module CodeRayHelper
+end # module Slideshow
 
-Slideshow::Gen.__send__( :include, CodeRayHelper )
+Slideshow::Gen.__send__( :include, Slideshow::CodeRayHelper )

@@ -1,4 +1,5 @@
-module TableHelper
+module Slideshow
+  module TableHelper
 
 # todo: add center, plus generic col helper
 
@@ -55,7 +56,8 @@ end
   
   
 end # module TableHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include TableHelper
+  include Slideshow::TableHelper
 end
