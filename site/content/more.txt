@@ -254,7 +254,7 @@ author: Jim Weirich
 Jim Weirich
 }}}
 
-See "10 Things Every Java Programmer Should Know About Ruby":http://github.com/geraldb/slideshow/blob/master/samples/10things.text
+See "10 Things Every Java Programmer Should Know About Ruby":http://github.com/geraldb/slideshow/blob/master/samples/3rd/10things.text
 sample.
 
 Note, as an alternative syntax to skip (comment out)
