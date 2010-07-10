@@ -50,10 +50,10 @@ h2(#builtin). Built-In Helpers
 <table width="100%">
 <tr>
   <td width="50%" style="vertical-align: top;">
-Djanjo-style helper syntax:
+Django-style helper syntax:
 
 {{{
-{{ include 'help.txt' }}
+{{ include help.txt }}
 }}}
 </td>
 <td style="vertical-align: top;">
@@ -70,10 +70,10 @@ Classic helper syntax:
 <table width="100%">
 <tr>
   <td width="50%" style="vertical-align: top;">
-Djanjo-style:
+Django-style:
 
 {{{
-{{ google_analytics :code => 'UA-YOUR-CODE-HERE' }}
+{{ google_analytics code=UA-YOUR-CODE-HERE }}
 }}}
 </td>
 <td style="vertical-align: top;">
@@ -90,7 +90,7 @@ Classic:
 <table width="100%">
 <tr>
   <td width="50%" style="vertical-align: top;">
-Djanjo-style:
+Django-style:
 
 {{{
 {{ help }}
@@ -109,7 +109,7 @@ Classic:
 <table width="100%">
 <tr>
   <td width="50%" style="vertical-align: top;">
-Djanjo-style:
+Django-style:
 
 {{{
 {% left %}
@@ -168,7 +168,7 @@ typed.
 <table width="100%">
 <tr>
   <td width="50%" style="vertical-align: top;">
-Djanjo-style:
+Django-style:
 
 {{{
 {% step %}
@@ -342,7 +342,7 @@ slides. Example:
 Or Django-style:
 
 {{{
-{{ image 'friendsbadge.png' }}
+{{ image friendsbadge.png }}
 }}}
 
 That's it. For more samples, check the
