@@ -3,27 +3,18 @@
 
 body
 {
-   font-family:  Helvetica,Arial,sans-serif; 
-   margin: 0;
+  font-family:  Helvetica,Arial,sans-serif; 
 }
 
-h1,h2,h3 {
-   /* color: #8b0000;  /* dark red/ruby */
+h1
+{
+  border-bottom: 1px solid black;   
 }
 
 h2
 {
- /* old-style:
-   padding: 0.2em;
-   background-color: #8b0000;  // dark red/ruby 
-   color: white;
-   font-weight: bold;
- */
-   border-bottom: 1px solid #bbb;
- /*
-   background-color: #eeeeee;  
- */
-   font-weight: bold; 
+  border-bottom: 1px solid black;
+  font-weight: bold; 
 }
 
 
@@ -34,17 +25,24 @@ span.highlight { background-color: yellow;
                }
 
 #header {
-   color: white;
-   background: #8b0000;  /* dark red/ruby */
-   font-size: 200%;
    padding: 0.25em;
-   margin-bottom: 0;
 }
 
-#nav {
-  color: black;
+#header .small
+{
+  font-size: 120%;
+  color: gray;
+  padding-left: 15px;
+}
+
+#header .big
+{
+  font-size: 200%;
   font-weight: bold;
-  background: #eeeeee;
+}
+
+
+#nav {
   padding: 0.5em;
 }
 
