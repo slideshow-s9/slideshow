@@ -1,7 +1,33 @@
-title: Web Services REST-Style: Universal Identifiers, Formats & Protocols
+%%%%%%%%%%%%%%%%%%
+%% Some Headers
 
+Title: Web Services REST-Style: Universal Identifiers, Formats & Protocols
 
-h1. Web Services REST-Style: Universal Identifiers, Formats & Protocols
+%%%%%%%%%%%%%%%%%%%%%
+%% Some Extra CSS 
+
+%css 
+  
+h1  { text-align: center; }
+
+table { width: 100%; }
+th    { text-align: left; }
+
+table#restspeak th:nth-child(1) { width: 20%; }
+table#restspeak th:nth-child(2) { width: 20%; }
+table#restspeak th:nth-child(3) { width: 60%; }
+
+table#restspeak2 th:nth-child(1) { width: 20%; }
+table#restspeak2 th:nth-child(2) { width: 80%; }
+
+%end
+
+%%%%%%%%%%%%%%
+%% Let's go.
+
+{{ gradient blue aqua blue aqua  }}
+
+h1. Web Services REST-Style<br>Universal Identifiers, Formats & Protocols
 
 Agenda
 
@@ -11,63 +37,121 @@ Agenda
 * REST Design Principles 
 * Architecture Astronaut REST Speak
 
+---
+<sup>1</sup> {{ source }}
+
+{{ help }}
 
 h1. What's REST?
 
+{{ gradient yellow orange yellow orange }}
+
 Representational State Transfer (REST) - Meaningless Acronym? Wordplay?
 
-rest - n. - peace, ease, or refreshment resulting from the insight that the web works
+bq. rest - n. - peace, ease, or refreshment resulting from the insight that the web works
 
 No matter what vendors tell you - no need to "Light Up the Web" - relax - built on an *open architecture using universal identifiers, formats & protocols and _evolving_ open standards* - no need to reinvent the wheel and sign-up for single-vendor offerings.
 
-h3. Broad Definition
 
-* Best Practices for Designing Web Services for a Unified Human and Programable Web
+h1. What's REST? (Cont'd)
+
+{{ gradient red orange red orange }}
+
+{% left %}
 
 h3. Narrow Definition
 
-* Alternative to BigCo Web Services (SOAP, WS-STAR) and RPC-Style Web Services (XML-RPC)
+Alternative to BigCo Web Services:
+
+* SOAP(Simple Object Access Protocol)
+* WS(Web Service Specs)-*)[1] and
+* RPC(Remote Procedure Call)-Style Web Services (XML(Extensible Markup Language)-RPC(Remote Procedure Call))
+
+{% end %}
+
+{% right %}
+
+h3. Broad Definition
+
+Best Practices for Designing Web Services for a Unified Human and Programable Web
+
+{% end %}
+
+fn1. WS-* =  Web Service Specs including WS-Transfer, WS-Addressing, WS-Eventing,
+WS-Security, WS-Federation, WS-Trust, and many more.
 
 h3. Resource, Representation, State, Transfer
 
-* (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML+URI
-* Transfer Rules (Protocol) e.g. HTTP
+* (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML(HyperText Markup Language) + URI(Uniform Resource Identifier)
+* Transfer Rules (Protocol) e.g. HTTP(HyperText Transfer Protocol)
 
 
-h1. Universal Identifiers, Formats & Protocols - The Holy Trinity
 
-* Identifiers -> URLs (Uniform Resource Locator), URIs (Uniform Resource Identifier)
-* Formats -> HTML (HyperText Markup Language), XML (Extensible Markup Language)
-* Protocols -> HTTP (HyperText Transfer Protocol), AtomPub (Atom Publishing Protocol)
+h1. Universal Identifiers, Formats & Protocols<br>The Holy Trinity
+
+{{ gradient red magenta red magenta }}
+
+{% left %}
+
+h3. Identifiers
+
+* URLs (Uniform Resource Locator)
+* URIs (Uniform Resource Identifier)
+
+h3. Formats
+
+* HTML (HyperText Markup Language)
+* XML (Extensible Markup Language)
+
+{% end %}
+
+{% right %}
+
+h3. Protocols
+
+* HTTP (HyperText Transfer Protocol)
+* AtomPub (Atom Publishing Protocol)  
+
+{% end %}
 
 
 h1. The Holy REST Trinity - Noun, Verbs, Types
 
-REST-Speak -  Internet-Speak  - Plain Old English
+{{ gradient green lime green lime }}
 
-* Verbs  -> Protocols    -> Communication & Data Exchange Rules
-* Nouns  -> Identifiers  -> Names, Addresses
-* Types  -> Formats      -> Documents, Feeds, Photos, Videos, Music, etc.
+table(#restspeak).
+|_. REST-Speak |_. Internet-Speak  |_. Plain Old English |
+| Verbs        | -> Protocols      | -> Communication & Data Exchange Rules  |
+| Nouns        | -> Identifiers    | -> Names, Addresses |
+| Types        | -> Formats        | -> Documents, Feeds, Photos, Videos, Music, etc. |
 
-* Verbs -> HTTP GET, POST, PUT, DELETE
-* Nouns -> @flickr.com/photos/tag/vancouver@, @deli.cio.us/vanajax/tag/libraries@, etcetera
-* Types -> HTML, RSS, PNG, etcetera
+&nbsp;
+
+table(#restspeak2).
+|_. REST-Speak |_. Examples  |
+| Verbs        | -> HTTP(HyperText Transfer Protocol) GET, POST, PUT, DELETE |
+| Nouns        | -> @flickr.com/photos/tag/wien@, @deli.cio.us/tag/wien@, etc. |
+| Types        | -> HTML(HyperText Markup Language), RSS(Really Simple Syndication), PNG(Portable Network Graphics), etcetera |
 
 
 h1. REST Design Principles - What's REST?
 
-* Idenifiers Matter - Choose Great Names
-* Open Formats Matter - Avoid Vendor Lock-In
-* Protocols Matter - Learn more about HTTP and Use Best Practices
+{{ gradient yellow white yellow white }}
+
+* Idenifiers Matter -> Choose Great Names
+* Open Formats Matter -> Avoid Vendor Lock-In
+* Protocols Matter -> Learn more about HTTP and Use Best Practices
 **  Use HTTP GET for Read-Only/Side-Effect-Free Requests
 **  Use HTTP Accept Headers for Format Selection
 **  Use Full HTTP Method Vocabulary (GET, POST, PUT, DELETE)
 
 * No Web without Linking and No Linking without Identifiers!
-* (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML+URI
+* (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML(HyperText Markup Language) + URI(Uniform Resource Identifier)
 
 
 h1. Architecture Astronaut REST Speak
+
+{{ gradient silver white silver white }}
 
 * REST-y
 * REST-ful
@@ -75,8 +159,11 @@ h1. Architecture Astronaut REST Speak
 * Resource-Oriented Architecure (ROA)
 * Web-Oriented Architecure (WOA)
 
-* REST-RPC-Hybrid (Three Web Service Architectures - 1) REST, 2) REST-RPC Hybrid, 3) RPC[1] )
+* REST-RPC-Hybrid - Three Web Service Architectures:
+## REST
+## REST-RPC Hybrid
+## RPC[1]
 
-fn1. RPC -> Remote Procedure Call
+fn1. RPC = Remote Procedure Call
 
-{{ google_analytics :code => 'UA-397343-10' }}
+{{ google_analytics code=UA-397343-10 }}

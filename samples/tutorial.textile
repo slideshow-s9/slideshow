@@ -32,6 +32,7 @@ Agenda
 ---
 <sup>1</sup> {{ source }}
 
+{{ help }}
 
 h1. What's Slide Show (S9)?
 
@@ -112,14 +113,13 @@ with a single push button (F11).  Hit the space bar or the right arrow, down arr
  
 That's all. It's that simple.
 
-
-h1. What's Opera Show? What's FullerScreen?
+h1. Slide Show (S9) Template Pack Options 
 
 {{ gradient yellow white yellow white }}
 
 {% left %} 
 
-h3. Opera Show
+h2. What's Opera Show?
 
 Opera has been shipping with built-in full screen projection and slide show support for years (since Opera 4)! 
 Pioneered the concept using Cascading Style Sheets (CSS2) that offer/include 
@@ -129,9 +129,9 @@ the @projection@ media type in addition to @screen@, @print@ or @handheld@, for 
 
 {% right %} 
 
-h3. FullerScreen
+h2. What's FullerScreen?
 
-A free, open source Firefox addon that lets you turn your web page into a 
+FullerScreen is a free, open source Firefox addon that lets you turn your web page into a 
 slide show and your browser into full screen projection with a single push button (F11).
 
 {% step %} 
@@ -144,33 +144,41 @@ FullerScreen - More than just full screen projection:
 * Move mouse to the bottom-right screen corner to show joystick
 
 {% end %}
+
+(Use the @fullerscreen@ template pack to create FullerScreen slide shows.)
+
 {% end %} 
 
-h1. What's S5? What's S6?
+h1. Slide Show (S9) Template Pack Options (Cont'd)
 
 {{ gradient navy silver navy silver }}
 
-h3. Simple Standards-based Slide Show System (S5)
+{% left %}
 
-Eric Meyer's (of CSS fame) public domain (free, open source) slide show package 
-inspired by Opera Show and others that works in all modern browsers (without any plugin required
-  because it includes its own slide show machinery in JavaScript).
+h2. What's S5?
 
+Simple Standards-based Slide Show System (S5) -Eric Meyer's (of CSS fame) public domain (free, open source) slide show package inspired by Opera Show and others
+that works in all modern browsers (without any plugin required
+because it includes its own slide show machinery in JavaScript).
 
-h3. S6 - Easier to Understand and Extend S5 Rewrite 
+(Use the @s5blank@ or @s5themes@ template pack to create S5 slide shows.)
 
-S6 is the rewrite of Eric Meyer's S5 using the jQuery JavaScript library -- offering easier to
-understand and easier to extend code. Add plugins, effects and more. Contributions welcome!
+{% end %}
 
-h3. Keyboard Controls
+{% right %}
 
-| Action | Key |
-| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
-| Go to previous slide | Left Arrow, Up Arrow, Page Up |
-| Go to first slide | Home |
-| Go to last slide | End |
-| Toggle between slideshow and outline view (&#216;) | T |
-| Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
+h2. What's S6?
+
+S6 started as a rewrite of Eric Meyer's S5 using the jQuery JavaScript library -- offering easier to understand and easier to extend code. Add plugins, effects and more. Contributions welcome!
+
+(Use the @s6blank@, @s6gradients@ or @s6syntax@ template pack to create S6 slide shows.)
+
+{% end %}
+
+h2. What's Slidy? What's Slippy? What's Google HTML5 Slides? 
+
+Check the "Slide Show Template Gallery":http://slideshow.rubyforge.org/templates.html
+for more template packs and samples.
 
 
 
@@ -178,9 +186,8 @@ h1. Gradient Themes Using "Loss-Free" Vector Graphics in S9
 
 {{ gradient red magenta red magenta }}
 
-Firefox and Opera (and Safari too) ship with built-in machinery for
- theming slide shows using "loss-free" vector  graphics. Offers "Flash/Silverlight-like" functionality out-of-the-box (no plugin download/installation required) using free web standards -
- a World Wide Web Consortium (W3C) Recommendation known as - surprise, surprise 
+Firefox and Opera (and Chrome and Safari too) ship with built-in machinery for
+ theming slide shows using "loss-free" vector  graphics. Offers "Flash/Silverlight-like" functionality out-of-the-box (no plugin download/installation required) using free web standards - a World Wide Web Consortium (W3C) Recommendation known as - surprise, surprise 
  - Scalable Vector Graphics (SVG).
 
 
@@ -205,6 +212,38 @@ or:
 
 {{{
 gradient-colors: #0e1f5b #3b5998
+}}}
+
+
+h1. Gradient Themes Using "Loss-Free" Vector Graphics in S9 (Cont'd) 
+
+{{ gradient yellow orange yellow orange }}
+
+h3. CSS3 Background Gradients 
+
+Using modern browser such as Firefox (3.6+), Chrome and Safari you can
+now theme your slide shows using using "loss-free" vector
+graphics in plain old CSS. Thanks to gradient support in backgrounds in CSS3.
+
+For example, the linear gradient from top to bottom with four color is defined
+in CSS3 as:
+
+{{{
+.gradient_yellow_orange {
+  
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%,
+                 from(yellow), to(orange),
+                 color-stop(0.33,orange), color-stop(0.66,yellow));
+  
+  background: -moz-linear-gradient(top, yellow, orange, yellow, orange);
+}
+}}}
+
+Using Slide Show (S9) you can use the @gradient@ helper that generates the CSS3
+for you:
+
+{{{
+{{{{ gradient yellow orange yellow orange }}
 }}}
 
 
