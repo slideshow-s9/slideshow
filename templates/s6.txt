@@ -1,11 +1,21 @@
-# builtin S6 template package manifest
+#  S6 blank template package manifest
+#  Change as desired/needed
+#
+#  Questions? Comments?
+#  Send them along to the Free Web Slide Show Alternatives (S5, S6, S9 And Friends) Forum/Mailing List. 
+#  http://groups.google.com/group/webslideshow
 
-__file__.svg    gradient.svg.erb
-__file__.html   s6/header.html.erb + s6/footer.html.erb 
-__file__.css    s6/style.css.erb
+__file__.html   slides.html.erb
+__file__.css    style.css.erb
+
+# styles
+
 s6/outline.css
 s6/print.css
 s6/slides.css
+
+# javascript machinery
+
 s6/jquery.js
 s6/slides.js
 s6/slides.core.js
@@ -14,4 +24,4 @@ s6/slides.core.js
 # -- use html-to-pdf tool (such as wkhtmltopdf, prince, etc) to generate pdf
 # -- from javascript free web page
 
-__file__.pdf.html  s6/header.pdf.html.erb + s6/footer.pdf.html.erb
+__file__.pdf.html  slides.pdf.html.erb
