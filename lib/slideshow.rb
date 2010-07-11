@@ -14,6 +14,7 @@ require 'net/http'
 require 'ostruct'
 require 'date'
 require 'yaml'
+require 'cgi'
 
 # required gems
 require 'redcloth'  # default textile library
@@ -38,6 +39,7 @@ require 'slideshow/helpers/background_helper'
 require 'slideshow/helpers/source_helper'
 require 'slideshow/helpers/directive_helper'
 require 'slideshow/helpers/markdown_helper'
+require 'slideshow/helpers/sh_helper'
 
 # load built-in filters
 require 'slideshow/filters/headers_filter'

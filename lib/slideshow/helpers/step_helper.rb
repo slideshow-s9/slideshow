@@ -15,9 +15,9 @@ def step( opts={}, &blk )
   after  << "<!-- end step -->\n"
 
   html  = ""
-  html << guard_text( before )
+  html << guard_block( before )
   html << text
-  html << guard_text( after )
+  html << guard_block( after )
 
   concat_erb( html, blk.binding )
   return

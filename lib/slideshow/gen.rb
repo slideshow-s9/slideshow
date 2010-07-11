@@ -60,10 +60,28 @@ class Gen
   end
  
   def guard_text( text )
+    # todo/fix 2: note for Textile we need to differentiate between blocks and inline
+    #   thus, to avoid runs - use guard_block (add a leading newline to avoid getting include in block that goes before)
+    
     # todo/fix: remove wrap_markup; replace w/ guard_text
     #   why: text might be css, js, not just html      
     wrap_markup( text )
   end
+   
+  def guard_block( text )
+    if markup_type == :textile
+      # saveguard with notextile wrapper etc./no further processing needed
+      # note: add leading newlines to avoid block-runons
+      "\n\n<notextile>\n#{text}\n</notextile>\n"
+    else
+      text
+    end    
+  end
+  
+  def guard_inline( text )
+    wrap_markup( text )
+  end
+  
    
   def wrap_markup( text )    
     if markup_type == :textile

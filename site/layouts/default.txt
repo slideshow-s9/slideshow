@@ -9,7 +9,6 @@ filter:    erb
    <title><%= @page.title %> - Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby</title>   
    <link rel="stylesheet" href="slideshow.css" type="text/css">
    <link rel="icon"       href="favicon.png"   type="image/png"> 
-           
 </head>
 <body>
 
@@ -23,7 +22,8 @@ filter:    erb
     <a href="index.html">Home</a> |
     <a href="tutorial.html">10-Minute Quick Start Guide</a> |
     <a href="more.html">Settings, Tips, Tricks and More</a> |
-    <a href="plugins.html">Plugins, Helpers</a> | 
+    <a href="plugins.html">Plugins, Helpers</a> |    
+    <a href="code.html">Syntax Highlighting</a> |
     <a href="templates.html">Template Pack Gallery</a> | 
     <a href="themes.html">Gradient Themes</a> |
     <a href="http://groups.google.com/group/webslideshow">What's New? &middot; Forum (Questions? Comments?)</a> |

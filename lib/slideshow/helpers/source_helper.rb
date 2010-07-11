@@ -27,7 +27,7 @@ def source( *args )
   
   puts "  Adding HTML for source link to '#{name_or_path}'..."      
   
-  guard_text( buf )      
+  guard_inline( buf )      
 end
     
   

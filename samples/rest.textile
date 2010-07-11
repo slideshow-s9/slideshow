@@ -38,7 +38,7 @@ Agenda
 * Architecture Astronaut REST Speak
 
 ---
-<sup>1</sup> {{ source }}
+^1^ {{ source }}
 
 {{ help }}
 

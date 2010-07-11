@@ -25,7 +25,7 @@ EOS
 <!-- end help -->
 EOS
 
- guard_text( html )  
+ guard_block( html )  
 end
 
 
@@ -142,7 +142,7 @@ def format_code( code, opts )
   out << code_highlighted
   out << %{<!-- end code -->\n}
   
-  wrap_markup( out ) # saveguard with notextile wrapper etc./no further processing needed
+  guard_block( out ) # saveguard with notextile wrapper etc./no further processing needed
 end
 
 

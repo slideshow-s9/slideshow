@@ -28,7 +28,7 @@ def google_analytics( opts = {} )
 <!-- end google-analytics -->
 EOS
 
-  guard_text( text )             
+  guard_block( text )             
 end
   
   

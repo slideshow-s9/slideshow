@@ -30,7 +30,7 @@ Agenda
 * Turn Your Online Wiki Pages into Slide Shows - Sputnik Case Study
 
 ---
-<sup>1</sup> {{ source }}
+^1^ {{ source }}
 
 {{ help }}
 

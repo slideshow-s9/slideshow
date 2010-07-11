@@ -20,8 +20,6 @@ p(toc-title). Contents:
 </div>
 
 
-
-
 h2(#lib). Using Embedded Ruby (ERB) Helpers in Your Slides
 
 Slide Show (S9) includes support for plugins and helpers
@@ -215,82 +213,7 @@ key as many times as you want. The new content just gets added.
 
 h2(#code). Code/Syntax Highlighting Helpers
 
-The @code@ helper lets you include and syntax highlight code e.g.
-
-{{{
-<%% code do %> 
-  your inline code here 
-<%% end %> 
-}}}
-
-or include code: 
-
-{{{
-<%%= code 'highlight.rb' %> 
-}}}
-
-To select the language (default is @ruby@) use the @:lang@ option e.g.
-
-{{{
-<%%= code 'effects.css', lang: => 'css' %> 
-}}}
-
-Note, you can also include parts of files using "Codex-style markers":http://pragdave.blogs.pragprog.com/pragdave/2008/05/our-take-on-pre.html  
-in your source (e.g. @#START:your_marker_here@ and 
-@#END:your_marker_here@) and you can also pass along an extra CSS class 
-(@large@,@small@,@tiny@,etc.) e.g. this directive in Codex
-
-{{{
-:code code/meta/my_ostruct.rb[impl class=code-small] 
-}}}
-
-becomes in S9: 
-
-{{{
-<%%= code 'code/meta/my_ostruct.rb#impl', class:=>'small' %> 
-}}}
-
-To select the underlying engine for code highlighting use the @:engine@ option e.g.
-
-{{{
-<%%= code 'highlight.rb', :engine => 'coderay' %> 
-}}}
-
-or use a header to set it once e.g:
-
-{{{
-code-engine: uv   # or use your very own code engine here 
-}}}
-
-You can also use the built-in code highlighting engines 
-"stand-alone" without the code "wrapper" helper. 
-To use Ultraviolet use: 
-
-{{{
-<%% uv do %> 
-  your inline code here 
-<%% end %> 
-}}}
-
-To use CodeRay use: 
-
-{{{
-<%% coderay do %> 
-  your inline code here 
-<%% end %> 
-}}} 
-   
-Note, that @uv@ and @coderay@ only support inline code (if you want to 
-include code use a nested include e.g.: 
-
-{{{
-<%% coderay :lang => 'css', :line_numbers => 'off' do %> 
-  <%%= include 'effects.css' %> 
-<%% end %> 
-}}}
-
-For more options or on how to write your own syntax highlighting 
-helpers it might be best to check the "source of the helpers":http://github.com/geraldb/slideshow/tree/master/lib/slideshow/helpers.
+Use the @code@ helper to include and syntax highlight code. "More &raquo;":code.html
 
 h2(#dev). How to Create Your Own Helpers
 
