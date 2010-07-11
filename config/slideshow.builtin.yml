@@ -20,8 +20,10 @@ filters:
   - leading-headers
   - erb-django-style
   - erb-rename-helper-hack
+  - dump_content_to_file_debug_text_erb
   - erb
   - code-block-curly-style
+  - dump_content_to_file_debug_text
 
 
 # markup (textile, markdown) config

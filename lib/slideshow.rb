@@ -42,6 +42,7 @@ require 'slideshow/helpers/markdown_helper'
 # load built-in filters
 require 'slideshow/filters/headers_filter'
 require 'slideshow/filters/text_filter'
+require 'slideshow/filters/debug_filter'
 
 
 module Slideshow
