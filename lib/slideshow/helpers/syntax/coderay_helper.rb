@@ -1,6 +1,7 @@
 require 'coderay'
 
 module Slideshow
+ module Syntax 
   module CodeRayHelper
 
   # coderay option defaults
@@ -74,7 +75,10 @@ def coderay( *args, &blk )
   return
 end
 
-end # module CodeRayHelper
+end # module   CodeRayHelper
+end # module  Syntax
 end # module Slideshow
 
-Slideshow::Gen.__send__( :include, Slideshow::CodeRayHelper )
+class Slideshow::Gen
+  include Slideshow::Syntax::CodeRayHelper
+end

@@ -1,4 +1,5 @@
 module Slideshow
+ module Syntax
   module ShHelper
 
   # sh option defaults
@@ -18,7 +19,7 @@ def sh_worker( code, opts )
   css_class_opt = opts.fetch( :class, nil ) #  large, small, tiny, etc.
   css_class << " #{css_class_opt}" if css_class_opt   # e.g. use/allow multiple classes -> code small, code large, etc.
    
-  out =  %{<pre class='#{lang} #{css_class} gutter:#{line_numbers ? 'true' : 'false'}'>\n}
+  out =  %{<pre class='#{css_class} brush: #{lang} gutter: #{line_numbers ? 'true' : 'false'}'>}
   out << code_highlighted
   out << %{</pre>\n}
     
@@ -39,6 +40,9 @@ def sv( *args, &blk )
 end  
     
 end   # module ShHelper
+end  # module Syntax
 end # module Slideshow
 
-Slideshow::Gen.__send__( :include, Slideshow::ShHelper )
+class Slideshow::Gen
+  include Slideshow::Syntax::ShHelper
+end

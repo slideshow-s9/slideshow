@@ -39,7 +39,8 @@ require 'slideshow/helpers/background_helper'
 require 'slideshow/helpers/source_helper'
 require 'slideshow/helpers/directive_helper'
 require 'slideshow/helpers/markdown_helper'
-require 'slideshow/helpers/sh_helper'
+
+require 'slideshow/helpers/syntax/sh_helper'
 
 # load built-in filters
 require 'slideshow/filters/headers_filter'
@@ -77,8 +78,8 @@ end # module Slideshow
 #     gem install coderay
 #     gem install ultraviolet etc.
 BUILTIN_OPT_HELPERS = [
-  'slideshow/helpers/uv_helper.rb',
-  'slideshow/helpers/coderay_helper.rb',
+  'slideshow/helpers/syntax/uv_helper.rb',
+  'slideshow/helpers/syntax/coderay_helper.rb',
 ]
 
 BUILTIN_OPT_HELPERS.each do |helper| 
