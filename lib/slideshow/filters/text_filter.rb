@@ -191,7 +191,7 @@ def comments_percent_style( content )
     
     # 1) string-ify values and keys (that is, wrap in '')
     #  plus separate w/ commas
-    params.gsub!( /([:a-zA-Z0-9][\w\/\-\.#]*)|('[^'\n]*')/) do |match|
+    params.gsub!( /([:a-zA-Z0-9#][\w\/\-\.#()]*)|('[^'\n]*')/) do |match|
       symbol = ( Regexp.last_match( 0 )[0,1] == ':' )
       quoted = ( Regexp.last_match( 0 )[0,1] == "'" )
       if symbol || quoted  # return symbols or quoted string as is
