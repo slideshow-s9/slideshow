@@ -1,5 +1,18 @@
 module MarkdownEngines
 
+  def pandocRuby_to_html (content)
+    require 'tidy'    
+    Tidy.path = '/usr/lib/libtidy.dylib' # or where ever your tidylib resides
+    my_nasty_html_string = PandocRuby.new( content ).to_html(:smart)  
+    nice_html = ""
+    Tidy.open(:show_warnings=>true) do |tidy|
+      tidy.options.show_body_only = "yes"
+      tidy.options.char_encoding = 'utf8'
+      nice_html = tidy.clean(my_nasty_html_string)
+    end
+    puts nice_html
+  end
+
   def rdiscount_to_html( content )
     RDiscount.new( content ).to_html
   end

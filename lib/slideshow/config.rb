@@ -48,7 +48,7 @@ class Config
   
   def known_markdown_libs
     # returns an array of known markdown engines e.g.
-    # [ rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
+    # [ pandoc-ruby, rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
     
     @hash[ 'markdown' ][ 'libs' ] + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
   end

@@ -21,7 +21,6 @@ lib/slideshow/markdown.rb
 lib/slideshow/opts.rb
 lib/slideshow/slide.rb
 lib/slideshow/textile.rb
-templates/gradient.svg.erb
 templates/s6.txt
 templates/s6.txt.gen
 templates/s6.txt.sample
