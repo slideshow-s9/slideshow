@@ -55,7 +55,7 @@ Firefox supports two types of gradients:
 <%= background '-moz-linear-gradient(top, silver, white, silver, white)', :class => 'cover' %>
 
 ---
-<sup>1</sup> {{ source }}
+<sup>1</sup> {{ source path=3rd }}
 
 {{ help }}
 
