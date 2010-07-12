@@ -1,3 +1,7 @@
+=== 0.9.3 / 2010-07-13
+
+* Added support for pandoc-ruby (for Markdown processing); skip %-filters; break slides using div/h1 rule [Thanks David Sanson]
+
 === 0.9.2 / 2010-07-11
 
 * Change default template pack from s6gradients to s6blank

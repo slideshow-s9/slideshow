@@ -9,6 +9,7 @@ lib/slideshow.rb
 lib/slideshow/config.rb
 lib/slideshow/filters/debug_filter.rb
 lib/slideshow/filters/headers_filter.rb
+lib/slideshow/filters/slide_filter.rb
 lib/slideshow/filters/text_filter.rb
 lib/slideshow/gen.rb
 lib/slideshow/helpers/analytics_helper.rb

@@ -526,7 +526,7 @@ class Gen
 
   # 1) add slide break  
   
-  if @markdown_libs.first == 'pandoc-ruby'
+  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
     content = add_slide_directive_before_div_h1( content )
   else
     content = add_slide_directive_before_h1( content )
