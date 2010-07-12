@@ -34,6 +34,7 @@ markdown:
 #  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
 
   libs:
+    - pandoc-ruby
     - rdiscount
     - rpeg-markdown
     - maruku
