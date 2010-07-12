@@ -101,7 +101,7 @@ class Opts
     :gradient_color1   => 'red',
     :gradient_color2   => 'black',
 
-    :code_engine       => 'uv',  # ultraviolet (uv) | coderay (cr)
+    :code_engine       => 'sh',  # SyntaxHighligher (sh) | ultraviolet (uv) | coderay (cr)
     :code_txmt         => 'false', # Text Mate Hyperlink for Source?
   }
 

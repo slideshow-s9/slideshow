@@ -1,4 +1,5 @@
-module MarkdownEngines
+module Slideshow
+  module MarkdownEngines
 
   def pandoc_ruby_to_html (content)
     require 'tidy'    
@@ -32,7 +33,8 @@ module MarkdownEngines
   end
 
 end   # module MarkdownEngines
+end # module Slideshow
 
 class Slideshow::Gen
-  include MarkdownEngines
+  include Slideshow::MarkdownEngines
 end

@@ -1,4 +1,5 @@
-module HeadersFilter
+module Slideshow
+  module HeadersFilter
 
 def leading_headers( content_with_headers )
   
@@ -38,8 +39,8 @@ def leading_headers( content_with_headers )
 end
   
 end  # module HeadersFilter
-
+end # module Slideshow
 
 class Slideshow::Gen
-  include HeadersFilter
+  include Slideshow::HeadersFilter
 end

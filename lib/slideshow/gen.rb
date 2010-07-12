@@ -60,10 +60,28 @@ class Gen
   end
  
   def guard_text( text )
+    # todo/fix 2: note for Textile we need to differentiate between blocks and inline
+    #   thus, to avoid runs - use guard_block (add a leading newline to avoid getting include in block that goes before)
+    
     # todo/fix: remove wrap_markup; replace w/ guard_text
     #   why: text might be css, js, not just html      
     wrap_markup( text )
   end
+   
+  def guard_block( text )
+    if markup_type == :textile
+      # saveguard with notextile wrapper etc./no further processing needed
+      # note: add leading newlines to avoid block-runons
+      "\n\n<notextile>\n#{text}\n</notextile>\n"
+    else
+      text
+    end    
+  end
+  
+  def guard_inline( text )
+    wrap_markup( text )
+  end
+  
    
   def wrap_markup( text )    
     if markup_type == :textile
@@ -479,7 +497,10 @@ class Gen
   
   # shared variables for templates (binding)
   @content_for = {}  # reset content_for hash
+
   @name        = basename
+  @extname     = extname
+
   @headers     = @opts  # deprecate/remove: use headers method in template
 
   @session     = {}  # reset session hash for plugins/helpers
@@ -490,31 +511,12 @@ class Gen
     
   content = File.read( inname )
 
-  # fix: add to comment text filter as first rule!!
-  # check for !SLIDE alias %slide (needs to get coverted to ! otherwise
-  #   it gets removed as a comment)
-  content.gsub!(/^%slide/, '!SLIDE' )
-
   # run text filters
   
   config.text_filters.each do |filter|
     mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
     content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
-
-  # check for !SLIDE markers; change to HTML comments
-  
-  # -- slide marker stats
-  slide_markers = 0
-  
-  ## todo: use html processing instruction <?s9 slide ?> ????
-  content.gsub!(/^!SLIDE(.*)/ ) do |match|
-    slide_markers += 1
-    "<!-- _S9SLIDE_ #{$1} -->"
-  end
-  
-  puts "  Processing directives (#{slide_markers} !SLIDE-directives)..."
-
 
   # convert light-weight markup to hypertext
  

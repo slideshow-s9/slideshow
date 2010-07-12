@@ -3,9 +3,91 @@
 #
 # use web filters for processing html/hypertext
 
-module TextFilter
+module Slideshow
+  module TextFilter
 
-  def comments_percent_style( content )    
+def directives_bang_style_to_percent_style( content )
+
+  # for compatibility allow !SLIDE/!STYLE as an alternative to %slide/%style-directive
+  
+  bang_count = 0
+
+  # get unparsed helpers e.g. SLIDE|STYLE  
+  unparsed = config.helper_unparsed.map { |item| item.upcase }.join( '|' )                                                                   
+  
+  content.gsub!(/^!(#{unparsed})/) do |match|
+    bang_count += 1
+    "%#{$1.downcase}"
+  end
+
+  puts "  Patching !-directives (#{bang_count} #{config.helper_unparsed.join('/')}-directives)..."
+
+  content
+end
+
+def directives_percent_style( content )
+
+  directive_unparsed  = 0
+  directive_expr      = 0
+  directive_block_beg = 0
+  directive_block_end = 0
+
+  # process directives (plus skip %begin/%end comment-blocks)
+
+  inside_block  = 0
+  inside_helper = false
+  
+  content2 = ""
+  
+  content.each_line do |line|
+    if line =~ /^%([a-zA-Z][a-zA-Z0-9_]*)(.*)/
+      directive = $1.downcase
+      params    = $2
+
+      logger.debug "processing %-directive: #{directive}"
+
+      # slide, style
+      if config.helper_unparsed.include?( directive )
+        directive_unparsed += 1
+        content2 << "<%= #{directive} '#{params ? params : ''}' %>"
+      elsif config.helper_exprs.include?( directive )
+        directive_expr += 1
+        content2 << "<%= #{directive} #{params ? erb_simple_params(directive,params) : ''} %>"        
+      elsif inside_helper && directive == 'end'
+        inside_helper = false
+        directive_block_end += 1
+        content2 << "%>"        
+      elsif inside_block > 0 && directive == 'end'
+        inside_block -= 1
+        directive_block_end += 1
+        content2 << "<% end %>"
+      elsif [ 'comment', 'comments', 'begin', 'end' ].include?( directive )  # skip begin/end comment blocks
+        content2 << line
+      elsif [ 'helper', 'helpers' ].include?( directive )
+        inside_helper = true
+        directive_block_beg += 1
+        content2 << "<%"
+      else
+        inside_block += 1
+        directive_block_beg += 1
+        content2 << "<% #{directive} #{params ? erb_simple_params(directive,params) : ''} do %>"
+      end
+    else
+      content2 << line
+    end
+  end  
+    
+  puts "  Preparing %-directives (" +
+      "#{directive_unparsed} #{config.helper_unparsed.join('/')} directives, " +
+      "#{directive_expr} #{config.helper_exprs.join('/')} expr-directives, " +
+      "#{directive_block_beg}/#{directive_block_end} block-directives)..."
+
+  content2
+end
+
+
+
+def comments_percent_style( content )    
     
     # remove comments
     # % comments
@@ -18,7 +100,7 @@ module TextFilter
     comments_end    = 0
 
     # remove multi-line comments
-    content.gsub!(/^%begin.*?%end/m) do |match|
+    content.gsub!(/^%(begin|comment|comments).*?%end/m) do |match|
       comments_multi += 1
       ""
     end
@@ -44,8 +126,8 @@ module TextFilter
       ""
     end
     
-    puts "  Removing comments (#{comments_single} %-lines, " +
-       "#{comments_multi} %begin/%end-blocks, #{comments_end} %end-blocks)..."
+    puts "  Removing %-comments (#{comments_single} lines, " +
+       "#{comments_multi} begin/end-blocks, #{comments_end} end-blocks)..."
     
     content    
   end
@@ -58,17 +140,21 @@ module TextFilter
     content
   end
   
-  def include_helper_hack( content )
-    # note: include is a ruby keyword; rename to __include__ so we can use it 
+  def erb_rename_helper_hack( content )
+    # note: include is a ruby keyword; rename to s9_include so we can use it 
     
-    include_counter = 0
+    rename_counter = 0
     
-    content.gsub!( /<%=[ \t]*include/ ) do |match|
-      include_counter += 1
-      '<%= __include__' 
+    # turn renames into something like:
+    #   include|class   etc.
+    renames = config.helper_renames.join( '|' )
+    
+    content.gsub!( /<%=[ \t]*(#{renames})/ ) do |match|
+      rename_counter += 1
+      "<%= s9_#{$1}" 
     end
 
-    puts "  Patching embedded Ruby (erb) code aliases (#{include_counter} include)..."
+    puts "  Patching embedded Ruby (erb) code for aliases (#{rename_counter} #{config.helper_renames.join('/')}-aliases)..."
 
     content
   end
@@ -81,32 +167,110 @@ module TextFilter
     content
   end
 
+  def erb_simple_params( method, params )
+    
+    # replace params to support html like attributes e.g.
+    #  plus add comma separator
+    #
+    #  class=part       -> :class => 'part'   
+    #  3rd/tutorial     -> '3rd/tutorial'
+    #  :css             -> :css
+    
+    return params   if params.nil? || params.strip.empty?
+
+    params.strip!    
+    ## todo: add check for " ??
+    if params.include?( '=>' )
+      puts "** warning: skipping patching of params for helper '#{method}'; already includes '=>':"
+      puts "  #{params}"
+      
+      return params
+    end
+    
+    before = params.clone
+    
+    # 1) string-ify values and keys (that is, wrap in '')
+    #  plus separate w/ commas
+    params.gsub!( /([:a-zA-Z0-9#][\w\/\-\.#()]*)|('[^'\n]*')/) do |match|
+      symbol = ( Regexp.last_match( 0 )[0,1] == ':' )
+      quoted = ( Regexp.last_match( 0 )[0,1] == "'" )
+      if symbol || quoted  # return symbols or quoted string as is
+        "#{Regexp.last_match( 0 )},"
+      else
+        "'#{Regexp.last_match( 0 )}',"
+      end
+    end
+        
+    # 2) symbol-ize hash keys
+    #    change = to =>
+    #    remove comma for key/value pairs
+    params.gsub!( /'(\w+)',[ \t]*=/ ) do |match|
+      ":#{$1}=>"
+    end
+    
+    # 3) remove trailing comma
+    params.sub!( /[ \t]*,[ \t]*$/, '' ) 
+     
+    puts "    Patching params for helper '#{method}' from '#{before}' to:"
+    puts "      #{params}"  
+       
+    params    
+  end
+
+
+  def erb_django_simple_params( code )
+    
+    # split into method/directive and parms plus convert params
+    code.sub!( /^[ \t]([\w.]+)(.*)/ ) do |match|
+      directive = $1
+      params    = $2
+      
+      "#{directive} #{params ? erb_simple_params(directive,params) : ''}"     
+    end
+    
+    code
+  end
+
   def erb_django_style( content )
 
     # replace expressions (support for single lines only)
     #  {{ expr }}  ->  <%= expr %>
     #  {% stmt %}  ->  <%  stmt %>   !! add in do if missing (for convenience)
+    #
+    # use use {{{ or {{{{ to escape expr back to literal value
+    # and use {%% %} to escape stmts
 
     erb_expr = 0
     erb_stmt_beg = 0
     erb_stmt_end = 0
 
-    content.gsub!( /\{\{([^{}\n]+?)\}\}/ ) do |match|
-      erb_expr += 1
-      "<%= #{$1} %>"
-    end
-
-    content.gsub!( /\{%[ \t]*end[ \t]*%\}/ ) do |match|
-      erb_stmt_end += 1
-      "<% end %>"
-    end
-
-    content.gsub!( /\{%([^%\n]+?)%\}/ ) do |match|
-      erb_stmt_beg += 1
-      if $1.include?('do') 
-        "<% #{$1} %>"
+    content.gsub!( /(\{{2,4})([^{}\n]+?)(\}{2,4})/ ) do |match|
+      escaped = ($1.length > 2)
+      if escaped
+        "{{#{$2}}}"
       else
-        "<% #{$1} do %>"
+        erb_expr += 1
+        "<%= #{erb_django_simple_params($2)} %>"        
+      end
+    end
+
+    content.gsub!( /(\{%{1,2})([ \t]*end[ \t]*)%\}/ ) do |match|
+      escaped = ($1.length > 2)
+      if escaped
+        "{%#{$2}%}"
+      else
+        erb_stmt_end += 1
+        "<% end %>"
+      end
+    end
+
+    content.gsub!( /(\{%{1,2})([^%\n]+?)%\}/ ) do |match|
+      escaped = ($1.length > 2)
+      if escaped
+        "{%#{$2}%}"
+      else
+        erb_stmt_beg += 1
+        "<% #{erb_django_simple_params($2)} do %>"
       end
     end
 
@@ -119,35 +283,46 @@ module TextFilter
   def code_block_curly_style( content )
     # replace {{{  w/ <pre class='code'>
     # replace }}}  w/ </pre>
+    # use 4-6 { or } to escape back to literal value (e.g. {{{{ or {{{{{{ => {{{ )
+    # note: {{{ / }}} are anchored to beginning of line ( spaces and tabs before {{{/}}}allowed )
     
     # track statistics
-    code_begin = 0
-    code_end   = 0    
-    
-    content.gsub!( "{{{{{{", "<pre class='code'>_S9BEGIN_" )
-    content.gsub!( "}}}}}}", "_S9END_</pre>" )  
-    
-    content.gsub!( "{{{" ) do |match|
-      code_begin += 1
-      "<pre class='code'>"
+    code_begin     = 0
+    code_begin_esc = 0
+    code_end       = 0    
+    code_end_esc   = 0    
+        
+    content.gsub!( /^[ \t]*(\{{3,6})/ ) do |match|
+      escaped = ($1.length > 3)
+      if escaped
+        code_begin_esc += 1
+        "{{{"
+      else
+        code_begin += 1
+        "<pre class='code'>"
+      end
     end    
     
-    content.gsub!( "}}}" ) do |match|
-      code_end += 1
-      "</pre>"
+    content.gsub!( /^[ \t]*(\}{3,6})/ ) do |match|
+      escaped = ($1.length > 3)
+      if escaped
+        code_end_esc += 1
+        "}}}"
+      else
+        code_end += 1
+        "</pre>"      
+      end
     end
-    
-    # restore escaped {{{}}} 
-    content.gsub!( "_S9BEGIN_", "{{{" )
-    content.gsub!( "_S9END_", "}}}" )
-    
-    puts "  Patching code blocks (#{code_begin}/#{code_end} {{{/}}}-lines)..."    
+        
+    puts "  Patching {{{/}}}-code blocks (#{code_begin}/#{code_end} blocks, " +
+         "#{code_begin_esc}/#{code_end_esc} escaped blocks)..."    
     
     content
   end
 
-end
+end   # module TextFilter
+end  # module Slideshow
 
 class Slideshow::Gen
-  include TextFilter
+  include Slideshow::TextFilter
 end

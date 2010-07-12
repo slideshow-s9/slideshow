@@ -3,27 +3,18 @@
 
 body
 {
-   font-family:  Helvetica,Arial,sans-serif; 
-   margin: 0;
+  font-family:  Helvetica,Arial,sans-serif; 
 }
 
-h1,h2,h3 {
-   /* color: #8b0000;  /* dark red/ruby */
+h1
+{
+  border-bottom: 1px solid black;   
 }
 
 h2
 {
- /* old-style:
-   padding: 0.2em;
-   background-color: #8b0000;  // dark red/ruby 
-   color: white;
-   font-weight: bold;
- */
-   border-bottom: 1px solid #bbb;
- /*
-   background-color: #eeeeee;  
- */
-   font-weight: bold; 
+  border-bottom: 1px solid black;
+  font-weight: bold; 
 }
 
 
@@ -34,17 +25,24 @@ span.highlight { background-color: yellow;
                }
 
 #header {
-   color: white;
-   background: #8b0000;  /* dark red/ruby */
-   font-size: 200%;
    padding: 0.25em;
-   margin-bottom: 0;
 }
 
-#nav {
-  color: black;
+#header .small
+{
+  font-size: 120%;
+  color: gray;
+  padding-left: 15px;
+}
+
+#header .big
+{
+  font-size: 200%;
   font-weight: bold;
-  background: #eeeeee;
+}
+
+
+#nav {
   padding: 0.5em;
 }
 
@@ -103,3 +101,133 @@ a:hover {
    text-align: center;
    font-weight: bold;
 }
+
+
+/* styles for ultraviolet code syntax highlighting theme 'eiffel' */
+
+/* use our own background
+pre.eiffel .EmbeddedSource {
+   background-color: #6597F6;
+}
+pre.eiffel {
+   background-color: #FFFFFF;
+   color: #000000;
+}
+*/
+
+pre.eiffel .LibraryObject {
+   font-weight: bold;
+   color: #6D79DE;
+}
+pre.eiffel .Section {
+   font-style: italic;
+}
+pre.eiffel .FunctionArgumentAndResultTypes {
+   color: #70727E;
+}
+pre.eiffel .TypeName {
+   font-style: italic;
+}
+pre.eiffel .Number {
+   color: #CD0000;
+   font-style: italic;
+}
+pre.eiffel .MarkupList {
+   color: #B90690;
+}
+pre.eiffel .MarkupTagAttribute {
+   font-style: italic;
+}
+pre.eiffel .LibraryVariable {
+   font-weight: bold;
+   color: #21439C;
+}
+pre.eiffel .line-numbers {
+   background-color: #C3DCFF;
+   color: #000000;
+}
+pre.eiffel .FunctionParameter {
+   font-style: italic;
+}
+pre.eiffel .MarkupTag {
+   color: #1C02FF;
+}
+pre.eiffel .MarkupHeading {
+   font-weight: bold;
+   color: #0C07FF;
+}
+pre.eiffel .JsOperator {
+   color: #687687;
+}
+pre.eiffel .InheritedClassName {
+   font-style: italic;
+}
+pre.eiffel .StringInterpolation {
+   color: #26B31A;
+}
+pre.eiffel .MarkupQuote {
+   color: #000000;
+   font-style: italic;
+}
+pre.eiffel .MarkupNameOfTag {
+   font-weight: bold;
+}
+pre.eiffel .InvalidTrailingWhitespace {
+   background-color: #FFD0D0;
+}
+pre.eiffel .LibraryConstant {
+   font-weight: bold;
+   color: #06960E;
+}
+pre.eiffel .MarkupXmlDeclaration {
+   color: #68685B;
+}
+pre.eiffel .PreprocessorDirective {
+   font-weight: bold;
+   color: #0C450D;
+}
+pre.eiffel .BuiltInConstant {
+   color: #585CF6;
+   font-style: italic;
+}
+pre.eiffel .MarkupDtd {
+   font-style: italic;
+}
+pre.eiffel .Invalid {
+   background-color: #990000;
+   color: #FFFFFF;
+}
+pre.eiffel .LibraryFunction {
+   font-weight: bold;
+   color: #3C4C72;
+}
+pre.eiffel .String {
+   color: #D80800;
+}
+pre.eiffel .UserDefinedConstant {
+   color: #C5060B;
+   font-style: italic;
+}
+pre.eiffel .Keyword {
+   font-weight: bold;
+   color: #0100B6;
+}
+pre.eiffel .MarkupDoctype {
+   color: #888888;
+}
+pre.eiffel .FunctionName {
+   font-weight: bold;
+   color: #0000A2;
+}
+pre.eiffel .PreprocessorLine {
+   color: #1A921C;
+}
+pre.eiffel .Variable {
+   color: #0206FF;
+   font-style: italic;
+}
+pre.eiffel .Comment {
+   color: #00B418;
+}
+
+

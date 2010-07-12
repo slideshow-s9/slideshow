@@ -16,9 +16,10 @@ a:link, a:visited { color: black; }
 h1 { font-size: 30pt;  }
 h2 { font-size: 28pt;  }
 h3 { font-size: 25pt;  }
-p, li, td, th { font-size: 18pt; }
+p, li, dt, dd, td, th { font-size: 18pt; }
 
 pre { font-size: 14pt;  }
+pre.small { font-size: 11pt; }
 
 pre.code {
         background-color: azure;
@@ -26,6 +27,8 @@ pre.code {
       }
      
 ul { list-style-type: square; }    
+   
+.center { text-align: center; }   
      
 .slide { page-break-after: always;
          min-height: 100mm;
@@ -50,4 +53,10 @@ for princexml (CSS3 paged media support)
 <body>
 
 <div class="presentation">
+
+<%= @content %>
+
+  </div> <!-- presentation -->
+</body>
+</html> 
 

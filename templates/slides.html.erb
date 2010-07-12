@@ -1,13 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
 <html>
 <head>
-   <%= content_for :head %>
+   <meta http-equiv="content-type" content="text/html;charset=utf-8"> 
+   <title><%= @headers['title'] %></title>
 
-	  <title><%= @headers['title'] %></title>
+<meta name="generator" content="<%= @headers['generator'] %>">
+<meta name="author"    content="<%= @headers['author']%>" >
 
-<!-- configuration parameters -->
+<!-- S6 configuration parameters -->
 <meta name="defaultView" content="slideshow">
-<!-- style sheet links -->
+
+<!-- S6 style sheet links -->
 <link rel="stylesheet" href="<%= "#{@name}.css" %>" type="text/css" media="projection" id="slideProj">
 <link rel="stylesheet" href="s6/outline.css" type="text/css" media="screen" id="outlineStyle">
 <link rel="stylesheet" href="s6/print.css" type="text/css" media="print" id="slidePrint">
@@ -16,27 +19,26 @@
 <script src="s6/jquery.js" type="text/javascript"></script>
 <script src="s6/slides.js" type="text/javascript"></script>
 
+
+<script type="text/javascript">
   <%= content_for :js %>
+</script>
+
+<%= content_for :head %>
 
 </head>
 <body>
 
-<div class="layout">
-  
-  <div class="background">  
-    <object data="<%= "#{@name}.svg" %>" width="100%" height="100%">
-		</object>
-  </div>   
-  
-<div id="controls"><!-- DO NOT EDIT --></div>
-<div id="currentSlide"><!-- DO NOT EDIT --></div>
-<div id="header"></div>
-<div id="footer">
-<h1><%= @headers['footer'] %></h1>
-<h2><%= @headers['subfooter'] %></h2>
-</div>
+<div class="layout"> 
+  <div id="controls"><!-- DO NOT EDIT --></div>
+  <div id="currentSlide"><!-- DO NOT EDIT --></div>
+  <div id="header"></div>
+  <div id="footer">
+    <h1><%= @headers['footer'] %></h1>
+    <h2><%= @headers['subfooter'] %></h2>
+  </div>
 
-      <div id='microsoft'>       
+   <div id='microsoft'>       
         <p>
           Microsoft's Internet Explorer browser
             has no built-in vector graphics machinery
@@ -52,7 +54,15 @@
               at the <a href='http://slideshow.rubyforge.org'>Slide Show (S9)</a>
             project site. Thanks!)
         </p>             
-    </div>
-</div>
+   </div>
+</div><!-- layout -->
 
 <div class="presentation">
+   
+<%= @content %>
+
+</div><!-- presentation -->
+</body>
+</html>
+
+   

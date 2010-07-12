@@ -46,9 +46,6 @@
   
   /* .step { visibility: hidden; } */
 
-/* enable svg backgrounds for gradient themes */
-div.background { position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: -1; }
-body { opacity: .99; }
 
 html, body { margin: 0; padding: 0; }
 

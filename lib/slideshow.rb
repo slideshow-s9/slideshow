@@ -14,6 +14,7 @@ require 'net/http'
 require 'ostruct'
 require 'date'
 require 'yaml'
+require 'cgi'
 
 # required gems
 require 'redcloth'  # default textile library
@@ -35,10 +36,16 @@ require 'slideshow/helpers/analytics_helper'
 require 'slideshow/helpers/table_helper'
 require 'slideshow/helpers/step_helper'
 require 'slideshow/helpers/background_helper'
+require 'slideshow/helpers/source_helper'
+require 'slideshow/helpers/directive_helper'
+require 'slideshow/helpers/markdown_helper'
+
+require 'slideshow/helpers/syntax/sh_helper'
 
 # load built-in filters
 require 'slideshow/filters/headers_filter'
 require 'slideshow/filters/text_filter'
+require 'slideshow/filters/debug_filter'
 
 
 module Slideshow
@@ -71,8 +78,8 @@ end # module Slideshow
 #     gem install coderay
 #     gem install ultraviolet etc.
 BUILTIN_OPT_HELPERS = [
-  'slideshow/helpers/uv_helper.rb',
-  'slideshow/helpers/coderay_helper.rb',
+  'slideshow/helpers/syntax/uv_helper.rb',
+  'slideshow/helpers/syntax/coderay_helper.rb',
 ]
 
 BUILTIN_OPT_HELPERS.each do |helper| 

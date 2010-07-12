@@ -1,4 +1,5 @@
-module StepHelper
+module Slideshow
+  module StepHelper
 
   
 def step( opts={}, &blk )
@@ -14,9 +15,9 @@ def step( opts={}, &blk )
   after  << "<!-- end step -->\n"
 
   html  = ""
-  html << guard_text( before )
+  html << guard_block( before )
   html << text
-  html << guard_text( after )
+  html << guard_block( after )
 
   concat_erb( html, blk.binding )
   return
@@ -24,8 +25,9 @@ end
   
   
 end # module StepHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include StepHelper
+  include Slideshow::StepHelper
 end
 

@@ -1,5 +1,5 @@
 ---
-title: Welcome to Slide Show (S9)       
+title: Welcome       
 filter:
   - erb
   - textileplus

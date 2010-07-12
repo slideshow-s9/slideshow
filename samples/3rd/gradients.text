@@ -6,7 +6,7 @@ Title: Using CSS3 Gradients for Backgrounds in Your Slides
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %% Some Inline Ruby Helpers
 
-<%
+%helper
   def background_demo( code )
    
     # add background style rule also to source as code block for demo
@@ -17,12 +17,12 @@ Title: Using CSS3 Gradients for Backgrounds in Your Slides
     buf << "\n    #{code}\n"
     buf
   end
-%>
+%end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %% Some Extra CSS 
 
-<% content_for :css do %>
+%css 
   
 h1, h2  { text-align: center; }
 
@@ -33,8 +33,7 @@ pre {
   background: #f3f3f3;
 }
     
-<% end %>
-
+%end
 
 %%%%%%%%%%%%%%
 %% Let's go.
@@ -42,7 +41,7 @@ pre {
 # Understanding Gradients
 
 (Adapted S6/S9 Version <sup>1</sup> from [Original Article](https://developer.mozilla.org/en/Using_gradients))
-{: .center }
+%class center
 
 Firefox (3.6+) includes support for gradients in the CSS background.
 Using CSS gradients in a background lets you display smooth transitions
@@ -56,9 +55,9 @@ Firefox supports two types of gradients:
 <%= background '-moz-linear-gradient(top, silver, white, silver, white)', :class => 'cover' %>
 
 ---
-<sup>1</sup> ([Markdown Source](http://github.com/geraldb/slideshow/blob/master/samples/gradients.text))
+<sup>1</sup> {{ source path=3rd }}
 
-<%= help %>
+{{ help }}
 
 
 # Simple Linear Gradients
@@ -251,4 +250,4 @@ Gradient Generators
 
 <%= background '-moz-linear-gradient(top, yellow, orange, yellow, orange)' %>
 
-{{ google_analytics :code => 'UA-397343-10' }}
+{{ google_analytics code=UA-397343-10 }}

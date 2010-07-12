@@ -1,4 +1,5 @@
-module TableHelper
+module Slideshow
+  module TableHelper
 
 # todo: add center, plus generic col helper
 
@@ -20,9 +21,9 @@ def left( opts={}, &blk )
   after  << "<!-- end left -->\n"
 
   html  = ""
-  html << guard_text( before )
+  html << guard_block( before )
   html << text
-  html << guard_text( after )
+  html << guard_block( after )
 
   concat_erb( html, blk.binding )
   return
@@ -45,9 +46,9 @@ def right( opts={}, &blk )
   after  << "<!-- end right -->\n"
 
   html  = ""
-  html << guard_text( before )
+  html << guard_block( before )
   html << text
-  html << guard_text( after )
+  html << guard_block( after )
       
   concat_erb( html, blk.binding )
   return
@@ -55,7 +56,8 @@ end
   
   
 end # module TableHelper
+end # module Slideshow
 
 class Slideshow::Gen
-  include TableHelper
+  include Slideshow::TableHelper
 end

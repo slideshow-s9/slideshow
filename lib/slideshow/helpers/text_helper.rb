@@ -1,6 +1,7 @@
-module TextHelper
+module Slideshow
+  module TextHelper
   
-def __include__( name, opts = {} )
+def s9_include( name, opts = {} )
   puts "  Including '#{name}'..." 
   content = File.read( name )
 end
@@ -24,7 +25,7 @@ EOS
 <!-- end help -->
 EOS
 
- guard_text( html )  
+ guard_block( html )  
 end
 
 
@@ -141,10 +142,11 @@ def format_code( code, opts )
   out << code_highlighted
   out << %{<!-- end code -->\n}
   
-  wrap_markup( out ) # saveguard with notextile wrapper etc./no further processing needed
+  guard_block( out ) # saveguard with notextile wrapper etc./no further processing needed
 end
 
 
 end # module TextHelper
+end # module Slideshow
 
-Slideshow::Gen.__send__( :include, TextHelper )
+Slideshow::Gen.__send__( :include, Slideshow::TextHelper )

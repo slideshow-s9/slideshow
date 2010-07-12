@@ -1,6 +1,8 @@
 require 'uv'
 
-module UvHelper
+module Slideshow
+ module Syntax
+  module UvHelper
 
   # uv option defaults
   UV_LANG         = 'ruby'
@@ -79,7 +81,10 @@ def uv( *args, &blk )
   return
 end  
     
-end # module UvHelper
+end   # module UvHelper
+end  # module Syntax
+end # module Slideshow
 
-Slideshow::Gen.__send__( :include, UvHelper )
-
+class Slideshow::Gen
+  include Slideshow::Syntax::UvHelper
+end

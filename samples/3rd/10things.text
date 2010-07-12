@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Start off with some headers
 
-title: 10 Things Every Java Programmer Should Know About Ruby
-author: Jim Weirich
+Title: 10 Things Every Java Programmer Should Know About Ruby
+Author: Jim Weirich
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %  Add some styles here
 %
 
-{% content_for :css %}
+%css
 
 body    { font-family: Helvetica; }
           
@@ -36,7 +36,7 @@ div.code pre {
   padding: 5px;
 }
 
-{% end %}
+%end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Let's go. The presentation starts here
@@ -44,12 +44,14 @@ div.code pre {
 # 10 Things Every Java Programmer Should Know About Ruby
 
 Jim Weirich
-{: .center}
+%class center
 
-Adapted S6/S9 Version from [Original Slide Deck](http://onestepback.org/articles/10things)
-{: .center}
+Adapted S6/S9 Version <sup>1</sup> from [Original Slide Deck](http://onestepback.org/articles/10things)
+%class center
 
 ---
+<sup>1</sup> {{ source path=3rd }}
+
 {{ help }}
 
 
@@ -126,7 +128,7 @@ This has interesting consequences
 
 * `Array` is a constant name that is bound to the Array class object.
 * Creating new objects does not require special syntax. We just send `new` to the class object.
-{: .clear}
+%clear
 <!-- workaround: note - list includes code block with block attribute -->
 
 
@@ -170,7 +172,7 @@ Even integers are full fledged objects.
 * Ruby:
   * `nil` is a normal object
   * You can never get a null pointer error!
-{: .clear}
+%clear
   
     a = nil
     a.nil?     # => true
@@ -193,12 +195,12 @@ Even integers are full fledged objects.
 * Blocks are not objects
   * But that's a distinction without a difference
   * By the time you need them, they automatically convert to `Proc` objects
-{: .clear}
+%clear
 
 
 %%% use two-column layout using left/right helpers
 
-{% left :class => 'code' %}
+%left class=code
     def with_block
       yield
     end
@@ -206,9 +208,9 @@ Even integers are full fledged objects.
     with_block {
       # Never converted
     }    
-{% end %}
+%end
 
-{% right :class => 'code' %}
+%right class=code
     def with_proc(&block)
       block.call
     end
@@ -216,7 +218,7 @@ Even integers are full fledged objects.
     with_proc {
       # Converted internally
     }
-{% end %}
+%end
 
 
 # Item #8 - (Almost) Everything is a Message
@@ -254,7 +256,7 @@ Ruby programmers tend to think of `obj.method` as sending a message
 to an object.
 
 What's the Difference?
-{: .center}
+%class center
 
 The difference is subtle, but important!
   
@@ -334,18 +336,17 @@ Ruby takes dynamic behavior several steps beyond Java.
 
 %%% use two-column layout using left/right helpers
 
-{% left %}
+%left
 * `method_missing`
 * Easy Reflection
 * Open Classes
-{% end %}
+%end
 
-{% right %}
+%right
 * Singleton Objects
 * Definition Hooks
 * Code Evalutation
-{% end %}
-
+%end
 
 # Easy Reflection: Create Object
 
@@ -454,19 +455,20 @@ Output
 # Item #6 - Objects are Strongly Typed - Not Statically Typed
 
 _What is a Type?_
-{:.center}
+%class center
 
 A type is  
 **a set of values**  
 and  
 **a set of operations**  
-{:.center}
+%class center
 
 
 %% start a new slide w/ title
-!SLIDE
 
-{% left %}
+%slide
+
+%left
 
 ### C Code (Weak)
 
@@ -478,9 +480,9 @@ and
       printf("%d\n", x);
       return 0;
     }
-{% end %}
+%end
 
-{% right %}
+%right
 
 ### Java Code (Strong)
 
@@ -491,38 +493,38 @@ and
         System.out.println(x);
       }
     }
-{% end %}
+%end
 
-{% left %}
+%left
     int two() { return 2; }
-{% end %}
-{% right %}
+%end
+%right
     public class Two {
       public static int two() {
         return 2;
       }
     }
-{% end %}
+%end
 
-{% left %}
+%left
 
 ### Output
 
     nan
     0
-{% end %}
-{% right %}
+%end
+%right
 
 ### Output
 
     3.5
-{% end %}
+%end
 
 
 
-!SLIDE
+%slide
 
-{% left %}
+%left
 
 ### Ruby Code (?)
 
@@ -531,7 +533,7 @@ and
     x = 1.5 + two
     puts x
     printf "%d", x
-{: .clear}
+%clear
 
     def two
       2
@@ -541,9 +543,9 @@ and
 
     3.5
     3
-{% end %}
+%end
 
-{% right %}
+%right
 
 ### So what makes a language type safe?
 
@@ -553,18 +555,18 @@ and
 
 Or...
 
-{% step %}
+%step
 * Catching all inappropriate operations on a type, either at
   * compile time, or
   * run time
-{% end %}
+%end
 
-{% end %}
+%end
 
 
-!SLIDE
+%slide
 
-{% left %}
+%left 
 
 ### Ruby Code
 
@@ -578,9 +580,9 @@ Or...
 
     puts factorial(20)
     puts factorial(21)
-{% end %}
+%end 
 
-{% right %}
+%right
 
 ### Java Code
 
@@ -597,28 +599,28 @@ Or...
         System.out.println(factorial(21));
       }
     }
-{% end %}
+%end
 
-{% left %}
+%left
 
 ### Output
 
     2432902008176640000
     51090942171709440000
-{% end %}
+%end 
 
-{% right %}
+%right
 
 ### Output
 
     2432902008176640000
     -4249290049419214848
-{% end %}
+%end 
 
 
 # Lanaguage Typing Systems
 
-{% left %}
+%left
 
 ### Java is
 
@@ -627,9 +629,9 @@ Or...
 * Manifestly
 
 typed.
-{% end %}
+%end
 
-{% right %}
+%right
 
 ### Ruby is
 
@@ -638,8 +640,7 @@ typed.
 * Implicitly
 
 typed.
-{% end %}
-
+%end 
 
 # Testimonial
 
@@ -664,7 +665,7 @@ typed.
 
 # Item #5 - Don't Worry About Interfaces
 
-{% left %}
+%left 
 
 ### Ruby Uses Duck Typing
 
@@ -672,9 +673,9 @@ typed.
 * And talks like a duck,
   * Then we can treat it like a duck.
   * (who cares what it _really_ is)
-{% end %}
+%end 
 
-{% right %}
+%right
     class Duck
       def talk() puts "Quack" end
     end
@@ -685,7 +686,7 @@ typed.
       Duck.new,
       DuckLikeObject.new ] 
     flock.each do |d| d.talk end
-{% end %}
+%end 
 
 No need to inherit from a common interface.
 
@@ -770,7 +771,7 @@ A mix-in allows the commonality to be factored out.
 :  Interactive Ruby. Console based interactive Ruby interpreter. 
 
 
-!SLIDE
+%slide
 
     $ ri Array
     ---------------------------------------------------------- Module: Array
@@ -798,7 +799,7 @@ A mix-in allows the commonality to be factored out.
          rassoc, reject, reject!, replace, reverse, reverse!, reverse_each,
          rindex, select, shift, slice, slice!, sort, sort!, to_a, to_ary,
          to_s, transpose, uniq, uniq!, unshift, values_at, zip, |
-{: .small}
+%class small
 
 # Another RI Example
 
@@ -813,7 +814,7 @@ Ask about the instance method `last`...
          first form returns +nil+.
     
             [ "w", "x", "y", "z" ].last   #=> "z"
-{: .small}
+%class small
 
 
 # IRB Sample
@@ -844,7 +845,7 @@ Add `1+2`, then find the methods defined in `Proc`...
 # Item #Zero - Ruby Puts the Fun Back In Programming
 
 ![fun](i/fun.jpg)
-{:.center}
+%class center
 
 
 # Some More Things You Should Know
@@ -884,4 +885,4 @@ under the following conditions:
 * You must give the original author credit.
 * You may not use this work for commercial purposes.
 
-{{ google_analytics :code => 'UA-397343-10' }}
+{{ google_analytics code=UA-397343-10 }}

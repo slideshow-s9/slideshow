@@ -1,4 +1,5 @@
-module TextileEngines
+module Slideshow
+  module TextileEngines
 
   def redcloth_java_fix_escape_nonascii( txt )
     txt.chars.map{ |x| x.size > 1 ? "&##{x.unpack("U*")};" : x }.join
@@ -42,9 +43,9 @@ module TextileEngines
     content = red.to_html
   end
 
-end # module TextileEngines
-
+end   # module TextileEngines
+end # module Slideshow
 
 class Slideshow::Gen
-  include TextileEngines
+  include Slideshow::TextileEngines
 end

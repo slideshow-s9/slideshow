@@ -1,6 +1,7 @@
 # Originally based on code from Rails and Merb; adapted from Webby.
 
-module CaptureHelper
+module Slideshow
+  module CaptureHelper
  
   # Called in pages and partials to store up content for later use. Takes a
   # string and/or a block. First, the string is evaluated, and then the
@@ -130,5 +131,6 @@ module CaptureHelper
   end
  
 end  # module CaptureHelper
+end # module Slideshow 
  
-Slideshow::Gen.__send__( :include, CaptureHelper )
+Slideshow::Gen.__send__( :include, Slideshow::CaptureHelper )
