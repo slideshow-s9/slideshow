@@ -18,6 +18,23 @@ def dump_content_to_file_debug_text_erb( content )
   content
 end
 
+# use it to dump content before html post processing
+
+def dump_content_to_file_debug_html( content )
+
+  return content   unless logger.level == Logger::DEBUG
+
+  outname = "#{@name}.debug.html"
+
+  puts "  Dumping content before html post processing to #{outname}..."
+
+  File.open( outname, 'w' ) do |f|
+    f.write( content )	
+  end
+
+  content
+end
+
 # use it to dump content before text-to-html conversion
 
 def dump_content_to_file_debug_text( content )

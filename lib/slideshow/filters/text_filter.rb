@@ -15,9 +15,9 @@ def directives_bang_style_to_percent_style( content )
   # get unparsed helpers e.g. SLIDE|STYLE  
   unparsed = config.helper_unparsed.map { |item| item.upcase }.join( '|' )                                                                   
   
-  content.gsub!(/^!(#{unparsed})/) do |match|
+  content.gsub!(/^!(#{unparsed})(.*)$/) do |match|
     bang_count += 1
-    "%#{$1.downcase}"
+    "<%= #{$1.downcase} '#{$2}' %>"
   end
 
   puts "  Patching !-directives (#{bang_count} #{config.helper_unparsed.join('/')}-directives)..."
@@ -27,6 +27,13 @@ end
 
 def directives_percent_style( content )
 
+  # skip filter for pandoc
+  # - pandoc uses % for its own markdown extension
+  # - don't process % pass it along/through to pandoc
+
+  return content  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
+    
+    
   directive_unparsed  = 0
   directive_expr      = 0
   directive_block_beg = 0
@@ -88,6 +95,11 @@ end
 
 
 def comments_percent_style( content )    
+
+  # skip filter for pandoc
+  # - pandoc uses % for its own markdown extension
+
+  return content  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
     
     # remove comments
     # % comments

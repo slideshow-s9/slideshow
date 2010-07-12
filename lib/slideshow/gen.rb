@@ -511,34 +511,39 @@ class Gen
     
   content = File.read( inname )
 
-  # run text filters (skip if using pandoc-ruby)
+  # run text filters
   
-  unless @markdown_libs.first == "pandoc-ruby"
-    config.text_filters.each do |filter|
-      mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
-      content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
-    end
+  config.text_filters.each do |filter|
+    mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
+    content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
 
   # convert light-weight markup to hypertext
 
   content = text_to_html( content )
 
-  # post-processing (skip if using pandoc-ruby)
+  # post-processing
+
+  # 1) add slide break  
   
-  if @markdown_libs.first == "pandoc-ruby"
-    @content = content
-    @slides = content
+  if @markdown_libs.first == 'pandoc-ruby'
+    content = add_slide_directive_before_div_h1( content )
   else
+    content = add_slide_directive_before_h1( content )
+  end
+
+  dump_content_to_file_debug_html( content )
+
+  # 2) use generic slide break processing instruction to
+  #   split content into slides
 
     slide_counter = 0
 
     slides       = []
     slide_source = ""
      
-    # wrap h1's in slide divs; note: use just <h1 since some processors add ids e.g. <h1 id='x'>
     content.each_line do |line|
-       if line.include?( '<h1' ) || line.include?( '<!-- _S9SLIDE_' )  then
+       if line.include?( '<!-- _S9SLIDE_' )  then
           if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
             slides   << slide_source  # add slide to slide stack
             slide_source = ""         # reset slide source buffer
@@ -574,7 +579,10 @@ class Gen
         from = Regexp.last_match.end(0)
       end
        
-      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+       # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
+       #    (e.g. extract h1 - do not assume it starts slide source)
+      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m 
         slide.header  = $1
         slide.content = ($2 ? $2 : "")
         logger.debug "  adding slide with header:\n#{slide.header}"
@@ -599,7 +607,6 @@ class Gen
     @slides   = slides2     # strutured content 
     @content  = content2   # content all-in-one
 
-  end
 
   manifest.each do |entry|
     outname = entry[0]

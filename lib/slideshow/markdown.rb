@@ -1,9 +1,9 @@
 module Slideshow
   module MarkdownEngines
 
-  def pandoc_ruby_to_html (content)
-    content = PandocRuby.new( content ).to_s5(:smart).gsub(/class="incremental"/,'class="step"')
-    content.to_a[13..-1].join # remove the layout div
+  def pandoc_ruby_to_html( content )
+    content = PandocRuby.new( content, :from => :markdown, :to => :html ).convert
+    content.gsub( /class="incremental"/, 'class="step"' )
   end
 
   def rdiscount_to_html( content )

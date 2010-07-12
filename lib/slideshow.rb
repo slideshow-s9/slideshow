@@ -46,11 +46,12 @@ require 'slideshow/helpers/syntax/sh_helper'
 require 'slideshow/filters/headers_filter'
 require 'slideshow/filters/text_filter'
 require 'slideshow/filters/debug_filter'
+require 'slideshow/filters/slide_filter'
 
 
 module Slideshow
 
-  VERSION = '0.9.2'
+  VERSION = '0.9.3'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator
