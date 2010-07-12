@@ -511,7 +511,7 @@ class Gen
     
   content = File.read( inname )
 
-  # run text filters
+  # run text filters (skip if using pandoc-ruby)
   
   unless @markdown_libs.first == "pandoc-ruby"
     config.text_filters.each do |filter|
@@ -521,8 +521,9 @@ class Gen
   end
 
   # convert light-weight markup to hypertext
-logger.debug (content) 
+
   content = text_to_html( content )
+
   # post-processing (skip if using pandoc-ruby)
   
   if @markdown_libs.first == "pandoc-ruby"
