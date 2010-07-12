@@ -513,85 +513,92 @@ class Gen
 
   # run text filters
   
-  config.text_filters.each do |filter|
-    mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
-    content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
+  unless @markdown_libs.first == "pandoc-ruby"
+    config.text_filters.each do |filter|
+      mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
+      content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
+    end
   end
 
   # convert light-weight markup to hypertext
- 
+logger.debug (content) 
   content = text_to_html( content )
- 
-  # post-processing
+  # post-processing (skip if using pandoc-ruby)
+  
+  if @markdown_libs.first == "pandoc-ruby"
+    @content = content
+    @slides = content
+  else
 
-  slide_counter = 0
+    slide_counter = 0
 
-  slides       = []
-  slide_source = ""
+    slides       = []
+    slide_source = ""
      
-  # wrap h1's in slide divs; note: use just <h1 since some processors add ids e.g. <h1 id='x'>
-  content.each_line do |line|
-     if line.include?( '<h1' ) || line.include?( '<!-- _S9SLIDE_' )  then
-        if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
-          slides   << slide_source  # add slide to slide stack
-          slide_source = ""         # reset slide source buffer
+    # wrap h1's in slide divs; note: use just <h1 since some processors add ids e.g. <h1 id='x'>
+    content.each_line do |line|
+       if line.include?( '<h1' ) || line.include?( '<!-- _S9SLIDE_' )  then
+          if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
+            slides   << slide_source  # add slide to slide stack
+            slide_source = ""         # reset slide source buffer
+          end
+          slide_counter += 1
+       end
+       slide_source  << line
+    end
+  
+    if slide_counter > 0 then
+      slides   << slide_source     # add slide to slide stack
+      slide_source = ""            # reset slide source buffer 
+    end
+
+    ## split slide source into header (optional) and content/body
+    ## plus check for (css style) classes
+
+    slides2 = []
+    slides.each do |slide_source|
+      slide = Slide.new
+
+      ## check for css style classes    
+      from = 0
+      while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
+        logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
+
+        if slide.classes.nil?
+          slide.classes = $2.strip
+        else
+          slide.classes << " #{$2.strip}"
         end
-        slide_counter += 1
-     end
-     slide_source  << line
-  end
-  
-  if slide_counter > 0 then
-    slides   << slide_source     # add slide to slide stack
-    slide_source = ""            # reset slide source buffer 
-  end
-
-  ## split slide source into header (optional) and content/body
-  ## plus check for (css style) classes
-
-  slides2 = []
-  slides.each do |slide_source|
-    slide = Slide.new
-
-    ## check for css style classes    
-    from = 0
-    while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
-      logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
-
-      if slide.classes.nil?
-        slide.classes = $2.strip
-      else
-        slide.classes << " #{$2.strip}"
-      end
       
-      from = Regexp.last_match.end(0)
-    end
+        from = Regexp.last_match.end(0)
+      end
        
-    if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
-      slide.header  = $1
-      slide.content = ($2 ? $2 : "")
-      logger.debug "  adding slide with header:\n#{slide.header}"
-    else
-      slide.content = slide_source
-      logger.debug "  adding slide with *no* header:\n#{slide.content}"
+      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m  # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+        slide.header  = $1
+        slide.content = ($2 ? $2 : "")
+        logger.debug "  adding slide with header:\n#{slide.header}"
+      else
+        slide.content = slide_source
+        logger.debug "  adding slide with *no* header:\n#{slide.content}"
+      end
+      slides2 << slide
     end
-    slides2 << slide
-  end
 
-   # for convenience create a string w/ all in-one-html
-   #  no need to wrap slides in divs etc.
+     # for convenience create a string w/ all in-one-html
+     #  no need to wrap slides in divs etc.
    
-   content2 = ""
-   slides2.each do |slide|         
-      content2 << slide.to_classic_html
-   end
+     content2 = ""
+     slides2.each do |slide|         
+        content2 << slide.to_classic_html
+     end
    
-  # make content2 and slide2 available to erb template
-  # -- todo: cleanup variable names and use attr_readers for content and slide
+    # make content2 and slide2 available to erb template
+    # -- todo: cleanup variable names and use attr_readers for content and slide
   
-  @slides   = slides2     # strutured content 
-  @content  = content2   # content all-in-one
+    @slides   = slides2     # strutured content 
+    @content  = content2   # content all-in-one
 
+  end
 
   manifest.each do |entry|
     outname = entry[0]

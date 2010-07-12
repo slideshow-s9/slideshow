@@ -2,14 +2,7 @@ module Slideshow
   module MarkdownEngines
 
   def pandoc_ruby_to_html (content)
-    require 'tidy'    
-    Tidy.path = '/usr/lib/libtidy.dylib' # or where ever your tidylib resides
-    my_nasty_html_string = PandocRuby.new( content ).to_html(:smart)
-    Tidy.open(:show_warnings=>true) do |tidy|
-      tidy.options.show_body_only = "yes"
-      tidy.options.char_encoding = 'utf8'
-      tidy.clean(my_nasty_html_string)
-    end
+    PandocRuby.new( content ).to_s5(:smart).gsub(/class="incremental"/,'class="step"')
   end
 
   def rdiscount_to_html( content )

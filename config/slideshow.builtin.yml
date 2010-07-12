@@ -16,7 +16,7 @@ filters:
   - skip-end-directive
   - directives_bang_style_to_percent_style
   - directives_percent_style
-  - comments-percent-style
+  - comments-percent-style 
   - leading-headers
   - erb-django-style
   - erb-rename-helper-hack
