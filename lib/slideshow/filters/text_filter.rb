@@ -17,7 +17,7 @@ def directives_bang_style_to_percent_style( content )
   
   content.gsub!(/^!(#{unparsed})(.*)$/) do |match|
     bang_count += 1
-    "<%= #{$1.downcase} '#{$2}' %>"
+    "<%= #{$1.downcase} '#{$2 ? $2 : ''}' %>"
   end
 
   puts "  Patching !-directives (#{bang_count} #{config.helper_unparsed.join('/')}-directives)..."

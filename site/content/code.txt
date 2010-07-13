@@ -83,7 +83,7 @@ SyntaxHighligher is a free, open-source syntax highlighter in JavaScript:
 
 Note, if you use the SyntaxHighligher engine you will need to
 use the "@s6syntax@":http://github.com/geraldb/slideshow-s6-syntax-highlighter
-template pack that includes SyntaxHighlighter machinery or as an alternative
+template pack that includes the SyntaxHighlighter machinery or as an alternative
 bundle up your own template pack.
 
 h3. What's Ultraviolet? 
