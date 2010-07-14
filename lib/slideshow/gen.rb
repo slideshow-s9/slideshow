@@ -40,11 +40,12 @@ class Gen
   def markdown_to_html( content )
     # call markdown filter; turn markdown lib name into method_name (mn)
     # eg. rpeg-markdown =>  rpeg_markdown_to_html
+
+    # lets you use differnt options/converters for a single markdown lib
+    mn = config.markdown_to_html_method( @markdown_libs.first )    
     
-    puts "  Converting Markdown-text (#{content.length} bytes) to HTML using library '#{@markdown_libs.first}'..."
-        
-    mn = @markdown_libs.first.downcase.tr( '-', '_' )
-    mn = "#{mn}_to_html".to_sym
+    puts "  Converting Markdown-text (#{content.length} bytes) to HTML using library '#{@markdown_libs.first}' calling '#{mn}'..."
+    
     send mn, content   # call 1st configured markdown engine e.g. kramdown_to_html( content )
   end
 
@@ -424,6 +425,93 @@ class Gen
     end
   end
 
+  # move into a filter??
+  def post_processing_slides( content )
+    
+    # 1) add slide break  
+  
+    if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
+      content = add_slide_directive_before_div_h1( content )
+    else
+      content = add_slide_directive_before_h1( content )
+    end
+
+    dump_content_to_file_debug_html( content )
+
+    # 2) use generic slide break processing instruction to
+    #   split content into slides
+
+    slide_counter = 0
+
+    slides       = []
+    slide_source = ""
+     
+    content.each_line do |line|
+       if line.include?( '<!-- _S9SLIDE_' )  then
+          if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
+            slides   << slide_source  # add slide to slide stack
+            slide_source = ""         # reset slide source buffer
+          end
+          slide_counter += 1
+       end
+       slide_source  << line
+    end
+  
+    if slide_counter > 0 then
+      slides   << slide_source     # add slide to slide stack
+      slide_source = ""            # reset slide source buffer 
+    end
+
+    ## split slide source into header (optional) and content/body
+    ## plus check for (css style) classes
+
+    slides2 = []
+    slides.each do |slide_source|
+      slide = Slide.new
+
+      ## check for css style classes    
+      from = 0
+      while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
+        logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
+
+        if slide.classes.nil?
+          slide.classes = $2.strip
+        else
+          slide.classes << " #{$2.strip}"
+        end
+      
+        from = Regexp.last_match.end(0)
+      end
+       
+       # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
+       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
+       #    (e.g. extract h1 - do not assume it starts slide source)
+      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m 
+        slide.header  = $1
+        slide.content = ($2 ? $2 : "")
+        logger.debug "  adding slide with header:\n#{slide.header}"
+      else
+        slide.content = slide_source
+        logger.debug "  adding slide with *no* header:\n#{slide.content}"
+      end
+      slides2 << slide
+    end
+
+     # for convenience create a string w/ all in-one-html
+     #  no need to wrap slides in divs etc.
+   
+     content2 = ""
+     slides2.each do |slide|         
+        content2 << slide.to_classic_html
+     end
+   
+    # make content2 and slide2 available to erb template
+    # -- todo: cleanup variable names and use attr_readers for content and slide
+  
+    @slides   = slides2     # strutured content 
+    @content  = content2   # content all-in-one    
+  end
+
 
   def create_slideshow( fn )
 
@@ -524,88 +612,16 @@ class Gen
 
   # post-processing
 
-  # 1) add slide break  
-  
-  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
-    content = add_slide_directive_before_div_h1( content )
-  else
-    content = add_slide_directive_before_h1( content )
-  end
-
-  dump_content_to_file_debug_html( content )
-
-  # 2) use generic slide break processing instruction to
-  #   split content into slides
-
-    slide_counter = 0
-
-    slides       = []
-    slide_source = ""
-     
-    content.each_line do |line|
-       if line.include?( '<!-- _S9SLIDE_' )  then
-          if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
-            slides   << slide_source  # add slide to slide stack
-            slide_source = ""         # reset slide source buffer
-          end
-          slide_counter += 1
-       end
-       slide_source  << line
-    end
-  
-    if slide_counter > 0 then
-      slides   << slide_source     # add slide to slide stack
-      slide_source = ""            # reset slide source buffer 
-    end
-
-    ## split slide source into header (optional) and content/body
-    ## plus check for (css style) classes
-
-    slides2 = []
-    slides.each do |slide_source|
-      slide = Slide.new
-
-      ## check for css style classes    
-      from = 0
-      while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
-        logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
-
-        if slide.classes.nil?
-          slide.classes = $2.strip
-        else
-          slide.classes << " #{$2.strip}"
-        end
-      
-        from = Regexp.last_match.end(0)
-      end
-       
-       # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
-       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
-       #    (e.g. extract h1 - do not assume it starts slide source)
-      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m 
-        slide.header  = $1
-        slide.content = ($2 ? $2 : "")
-        logger.debug "  adding slide with header:\n#{slide.header}"
-      else
-        slide.content = slide_source
-        logger.debug "  adding slide with *no* header:\n#{slide.content}"
-      end
-      slides2 << slide
-    end
-
-     # for convenience create a string w/ all in-one-html
-     #  no need to wrap slides in divs etc.
-   
-     content2 = ""
-     slides2.each do |slide|         
-        content2 << slide.to_classic_html
-     end
-   
-    # make content2 and slide2 available to erb template
+  # make content2 and slide2 available to erb template
     # -- todo: cleanup variable names and use attr_readers for content and slide
   
-    @slides   = slides2     # strutured content 
-    @content  = content2   # content all-in-one
+  if @markup_type == :markdown && config.markdown_post_processing?( @markdown_libs.first ) == false
+    puts "  Skipping post-processing (passing content through as is)..."
+    @content = content  # content all-in-one - make it available in erb templates
+  else
+    # sets @content (all-in-one string) and @slides (structured content; split into slides)
+    post_processing_slides( content )
+  end
 
 
   manifest.each do |entry|

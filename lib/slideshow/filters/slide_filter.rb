@@ -1,6 +1,7 @@
 module Slideshow
   module SlideFilter
 
+
 # add slide directive before h1 (tells slideshow gem where to break slides)
 #
 # e.g. changes:

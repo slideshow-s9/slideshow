@@ -28,8 +28,34 @@ class Config
     
     # for now builtin has no erb processing; add builtin hash to main hash 
     @hash[ 'builtin' ] = YAML.load_file( config_builtin_file )
+    
+    # todo/fix: merge config files
+    #   check more locations
+
+    # check for user settings in working folder (check for slideshow.yml)
+    
+    config_user_file = "./slideshow.yml"
+    if File.exists?( config_user_file )
+      puts "Loading settings from '#{config_user_file}'..."
+      @hash[ 'user' ] = YAML.load_file( config_user_file )   
+    end    
+     
   end
 
+  def markdown_to_html_method( lib )    
+    method = @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'converter', nil )
+    
+    # use default name
+    if method.nil?
+      method = "#{lib.downcase}_to_html"
+    end
+    
+    method.tr('-','_').to_sym
+  end
+  
+  def markdown_post_processing?( lib )
+    @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'post-processing', true )
+  end
   
   def known_textile_extnames
     # returns an array of known file extensions e.g.
@@ -39,18 +65,21 @@ class Config
     # textile:
     #   extnames:  [ .textile, .t ]
     
-    (@hash[ 'textile' ][ 'extnames' ] || []) + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
+    @hash[ 'textile' ][ 'extnames' ] + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
   end
 
   def known_markdown_extnames
-    (@hash[ 'markdown' ][ 'extnames' ] || []) + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
+    @hash[ 'markdown' ][ 'extnames' ] + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
   end
   
   def known_markdown_libs
     # returns an array of known markdown engines e.g.
     # [ pandoc-ruby, rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
     
-    (@hash[ 'markdown' ][ 'libs' ] || []) + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
+    libs      = @hash[ 'markdown' ][ 'libs' ] + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
+    user_libs = @hash.fetch( 'user', {} ).fetch( 'markdown', {} ).fetch( 'libs', [] )
+    
+    user_libs + libs
   end
 
   def known_extnames
@@ -61,11 +90,11 @@ class Config
   end
   
   def text_filters
-    @hash[ 'builtin' ][ 'filters' ] + ( @hash[ 'filters' ] || [] ) 
+    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ]
   end
   
   def helper_renames
-     @hash[ 'builtin' ][ 'helper' ][ 'renames' ] + ( @hash[ 'helper' ][ 'renames' ] || [] )
+     @hash[ 'builtin' ][ 'helper' ][ 'renames' ] + @hash[ 'helper' ][ 'renames' ]
   end
 
   def helper_unparsed
@@ -76,7 +105,7 @@ class Config
   def helper_exprs
     # allow expression as directives (no need for %end block)
     # by default directives are assumed statements (e.g. %mydir  %end)
-    @hash[ 'builtin' ][ 'helper' ][ 'exprs' ] + ( @hash[ 'helper' ][ 'exprs' ] || [] )
+    @hash[ 'builtin' ][ 'helper' ][ 'exprs' ] + @hash[ 'helper' ][ 'exprs' ]
   end
 
   def google_analytics_code
