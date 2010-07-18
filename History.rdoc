@@ -1,3 +1,15 @@
+=== 0.9.6 / 2010-07-18
+
+* Update builtin S6 blank templates (adding autoplay, custom transitions, custom title selector, and more)
+
+=== 0.9.5 / 2010-07-14
+
+* Minor fix (for custom converter methods)
+
+=== 0.9.4 / 2010-07-14
+
+* Added support for custom converter methods (for Markdown processing)
+
 === 0.9.3 / 2010-07-13
 
 * Added support for pandoc-ruby (for Markdown processing); skip %-filters; break slides using div/h1 rule [Thanks David Sanson]

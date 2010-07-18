@@ -31,11 +31,11 @@ lib/slideshow/textile.rb
 templates/s6.txt
 templates/s6.txt.gen
 templates/s6/jquery.js
-templates/s6/outline.css
+templates/s6/jquery.microsoft.js
+templates/s6/jquery.slideshow.js
 templates/s6/print.css
-templates/s6/slides.core.js
-templates/s6/slides.css
-templates/s6/slides.js
+templates/s6/projection.css
+templates/s6/screen.css
 templates/slides.html.erb
 templates/slides.pdf.html.erb
 templates/style.css.erb

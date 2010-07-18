@@ -6,9 +6,14 @@ slides.html.erb
 slides.pdf.html.erb
 style.css.erb
 
-s6/outline.css
+# styles
+
+s6/projection.css
 s6/print.css
-s6/slides.css
+s6/screen.css
+
+# javascript machinery
+
 s6/jquery.js
-s6/slides.core.js
-s6/slides.js
+s6/jquery.microsoft.js
+s6/jquery.slideshow.js

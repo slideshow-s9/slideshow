@@ -1,6 +1,18 @@
 module Slideshow
   module MarkdownEngines
 
+  def pandoc_ruby_to_html( content )
+    content = PandocRuby.new( content, :from => :markdown, :to => :html ).convert
+  end
+  
+  def pandoc_ruby_to_html_incremental( content )
+    content = PandocRuby.new( content, :from => :markdown, :to => :html ).convert
+    content = content.gsub(/<(ul|ol)/) do |match|
+      "#{Regexp.last_match(0)} class='step'"
+    end
+    content
+  end
+  
   # sample how to use your own converter
   # configure in slideshow.yml
   # pandoc-ruby:
@@ -17,20 +29,7 @@ module Slideshow
     content = content.gsub(/class="incremental"/,'class="step"')
     content = content.to_a[13..-1].join # remove the layout div
   end
-
-
-  def pandoc_ruby_to_html( content )
-    content = PandocRuby.new( content, :from => :markdown, :to => :html ).convert
-  end
-  
-  def pandoc_ruby_to_html_incremental( content )
-    content = PandocRuby.new( content, :from => :markdown, :to => :html ).convert
-    content = content.gsub(/<(ul|ol)/) do |match|
-      "#{Regexp.last_match(0)} class='step'"
-    end
-    content
-  end
-  
+    
   def rdiscount_to_html( content )
     RDiscount.new( content ).to_html
   end

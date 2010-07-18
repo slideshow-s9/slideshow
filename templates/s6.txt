@@ -10,15 +10,15 @@ __file__.css    style.css.erb
 
 # styles
 
-s6/outline.css
+s6/projection.css
 s6/print.css
-s6/slides.css
+s6/screen.css
 
 # javascript machinery
 
 s6/jquery.js
-s6/slides.js
-s6/slides.core.js
+s6/jquery.microsoft.js
+s6/jquery.slideshow.js
 
 # template for pdf generation
 # -- use html-to-pdf tool (such as wkhtmltopdf, prince, etc) to generate pdf
