@@ -15,6 +15,8 @@
 
 .layout * { display: none; }
 
+.projection { display: none; }
+
 /*************
  * make toggle button visible and reposition to upper right corner *
  * note: toogle button is nested inside #controls > #navLinks > #toogle

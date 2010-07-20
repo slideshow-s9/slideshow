@@ -5,26 +5,39 @@ html, body { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; }
 a:link, a:visited { color: black; }
 
 h1 { font-size: 30pt;  }
+
+.slide h1 {  text-align: center; }
+.slide h1.fullscreen { position: absolute;
+                       top: 40%;
+                       width: 100%; }
+
 h2 { font-size: 28pt;  }
 h3 { font-size: 25pt;  }
 p, li, dt, dd, td, th { font-size: 18pt; }
 
-pre { font-size: 16pt;  }
-pre.small { font-size: 12pt; }
-
-pre.code { 
-        background-color: azure;
-        padding: 5px;
-      }
-
-div.code {
-        background-color: azure;
-        padding: 5px;
-}
-
 ul { list-style-type: square; }    
 
 .center { text-align: center; }
+.right  { text-align: right;  }
+
+pre { font-size: 16pt;  }
+
+.code { 
+        background-color: azure;
+        padding: 5px;
+      }
+     
+.footnote a:first-of-type  { text-decoration: none; }
+
+p.smaller  { font-size: 97%; }
+
+p.small,
+p.footnote { font-size: 88%; }
+
+p.tiny     { font-size: 82%; }
+
+.help p,
+.help td  { font-size: 88%; }
 
 /*** style rules for steps ****/     
 

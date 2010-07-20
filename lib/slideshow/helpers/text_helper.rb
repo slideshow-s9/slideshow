@@ -13,15 +13,18 @@ def help()
 *Slide Show Keyboard Controls (Help)*
 
 | Action | Key |
-| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down |
+| Go to next slide | Space Bar, Right Arrow, Down Arrow, Page Down, Click Heading |
 | Go to previous slide | Left Arrow, Up Arrow, Page Up |
 | Toggle between slideshow and outline view (&#216;) | T |
 | Show/hide slide controls (&#216; &laquo; &raquo;) | C, Move mouse to bottom right corner |
+| Zoom in, zoom out, zoom reset (100%)  | Control[@+@]Plus, Control[@+@]Minus, Control[@+@]@0@ |
 EOS
 
  html = <<EOS
 <!-- begin help -->
+<div class='help projection'>
 #{textile_to_html( text )}
+</div>
 <!-- end help -->
 EOS
 

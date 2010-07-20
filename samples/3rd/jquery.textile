@@ -1,18 +1,38 @@
-title: Prototype and jQuery - Going from one to the other
-gradient: top-bottom navy aqua
+%%%%%%%%%%%%%%
+% Some Headers
 
-h1. Prototype vs jQuery  
+Title: Prototype &hArr; jQuery - To and from JavaScript libraries
 
-To and from JavaScript libraries by "Remy Sharp":http://remysharp.com
+%%%%%%%%%%%%%%%%%%%%
+% Some Extra Styling
 
-(Adapted S9 Version from "Original PDF Slide Deck":http://www.slideshare.net/remy.sharp/prototype-jquery-going-from-one-to-the-other)
+%css
+
+table#ajax      { width: 100%; }
+
+table#ajax td   { text-align: center; }
+
+%end
+
+%%%%%%%%%%%%%
+% Slides Start Here
+
+h1. Prototype &hArr; jQuery  
+
+p(center). To and from JavaScript libraries by ["Remy Sharp":http://remysharp.com][1]
+
+---
+fn1. Adapted S6 Version from "Original PDF Slide Deck":http://www.slideshare.net/remy.sharp/prototype-jquery-going-from-one-to-the-other, {{ source path=3rd text='S9 Textile Source' }}
+
+{{ help }}
+
 
 h1. Why Prototype?
 
 * Extends the DOM and core JavaScript objects
 * An arsenal of utility functions
 
-Based on Prototype 1.5.1 & 1.6
+p(right smaller). Based on Prototype 1.5.1 & 1.6
 
 h1. Why jQuery
 
@@ -20,9 +40,11 @@ h1. Why jQuery
 * Totally encapsulated
 * Aims to be exceptionally easy to develop with
 
-Based on jQuery 1.2.1
+p(right smaller). Based on jQuery 1.2.1
 
 h1. Differences in Native Support
+
+{% left %}
 
 Prototype has:
 
@@ -30,31 +52,22 @@ Prototype has:
 * Try.these
 * Position, Range
 
+{% end %}
+
+{% right %}
+
 jQuery has: 
 
 * No Conflict (@$@) 
 * Effects 
 
-Non-exhaustive list, and in most case, the
+{% end %}
+
+p(smaller). Non-exhaustive list, and in most case, the
 functionality can be implemented with plugins.
 
-h1. Syntax Comparison
 
-* Dollar (@$@) Variable
-* CSS Based Selectors
-* DOM Ready Event
-* Iteration
-* DOM Walking
-* DOM Manipulation
-* Element Classes
-* Events
-* Bubbling
-* Ajax
-* Plugins / Extensions
-* Browser Detection
-
-
-
+h1(fullscreen). Syntax Comparison
 
 
 h1. Dollar Variable
@@ -62,7 +75,7 @@ h1. Dollar Variable
 * Prototype uses @$@ for id based selection
 * jQuery @$@ = CSS based selector (= @$$@ in Prototype)
 
-Note that Prototype will return element objects or arrays of
+p(smaller). Note that Prototype will return element objects or arrays of
 elements for most methods. jQuery will usually return a jQuery
 object (which looks like an array in Firebug).
 
@@ -118,7 +131,7 @@ h1. DOM Ready Event
 * Prototype - uses Event object
 * jQuery - uses two types of syntax, both meaning the same thing
 
-jQuery uses different methods to execute the ready function when
+p(smaller). jQuery uses different methods to execute the ready function when
 the DOM is ready, using specific methods for Internet Explorer
 and for Safari[1]
 
@@ -217,11 +230,12 @@ $.ajax(options) // url included in options
 
 h1. Ajax - Method Comparison
 
-| Prototype     | jQuery        |
-| @onCreate@    | @beforeSend@  |
-| @onSuccess@   | @success@     |
-| @onException@ | @error@       |
-| @onComplete@  | @complete@    |
+table(#ajax).
+|_. Prototype   |_.      |_. jQuery      |
+| @onCreate@    | &hArr; | @beforeSend@  |
+| @onSuccess@   | &hArr; | @success@     |
+| @onException@ | &hArr; | @error@       |
+| @onComplete@  | &hArr; | @complete@    |
 
 h1. Ajax Examples
 
@@ -272,10 +286,11 @@ jQuery - @jQuery.browser.msie@, @.safari@, etc.
 
 h1. Resources
 
-|   &nbsp;  | Prototype | jQuery  |
+table(#resources).
+|_.         |_. Prototype |_. jQuery  |
 | API       | "@prototypejs.org/api@":http://prototypejs.org/api | "@docs.jquery.com/Core@":http://docs.jquery.com/Core  |
 | Tutorials | "@prototypejs.org/learn@":http://prototypejs.org/learn | "@docs.jquery.com/Tutorials@":http://docs.jquery.com/Tutorials  |
-| Effects   | "@script.aculo.us@":http://script.aculo.us | "@interface.eyecon.ro@":http://interface.eyecon.ro  |
+| Effects   | "@script.aculo.us@":http://script.aculo.us | "@docs.jquery.com/Effects@":http://docs.jquery.com/Effects  |
 
 
 {{ google_analytics :code => 'UA-397343-10' }}

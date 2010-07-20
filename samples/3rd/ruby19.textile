@@ -1,21 +1,19 @@
 %%%%%%%
 % Slide Show Headers
 
-title: Ruby 1.9: What to Expect
+Title: Ruby 1.9: What to Expect
 
 %%%%%%%%%%%%%
 % Slides Start Here
 
 h1. Ruby 1.9: What to Expect
 
-Sam Ruby @ OSCON 2008, Portland, Oregon, July 2008
-
-Adapted S6/S9[1] Version from "Original Slide Deck":http://intertwingly.net/slides/2008/oscon/ruby19/1
+p(center). Sam Ruby @ OSCON 2008, Portland, Oregon, July 2008[1]
 
 ---
-fn1. ("Source":http://slideshow.rubyforge.org/svn/samples/ruby19.textile)
+fn1. Adapted S6 Version from "Original Slide Deck":http://intertwingly.net/slides/2008/oscon/ruby19/1, {{ source path=3rd text='S9 Textile Source'}}
 
-{{help}}
+{{ help }}
 
 
 h1. About Sam Ruby
@@ -36,6 +34,8 @@ h1. Agenda
 * Part 1: What's Changed?
 * Part 2: What's New?
 
+
+h1(fullscreen).  Part 0 - Overview
 
 
 h1. What is Ruby?
@@ -109,25 +109,7 @@ h1. Continuous Integration (CI) Efforts
 * Rake (contrib)
 * XMPP4R
 
-h1. Part 1 - What's Changed?
-
-* Single Character Strings
-* String Index
-* {"a","b"} No Longer Supported
-* @Array.to_s@ Now Contains Punctuation
-* Colon No Longer Valid In When Statements
-* Block Variables Now Shadow Local Variables
-* @Hash.index@ Deprecated
-* @Fixnum.to_sym@ Now Gone
-* Hash Keys Now Unordered
-* Stricter Unicode Regular Expressions
-* @tr@ and @Regexp@ Now Understand Unicode
-* @pack@ and @unpack@
-* @BasicObject@ More Brutal Than @BlankSlate@
-* Delegation Changes
-* Use of $KCODE Produces Warnings
-* @instance_methods@ Now an Array of Symbols
-* Source File Encoding
+h1(fullscreen). Part 1 - What's Changed?
 
 
 h1. Single Character Strings
@@ -482,21 +464,7 @@ h1. Rails Dependencies
 
 @actionmailer-2.1.0@, @actionpack-2.1.0@, @activerecord-2.1.0@, @activeresource-2.1.0@, @activesupport-2.1.0@, @builder-2.1.2@, @memcache-client-1.5.0@, @rails-2.1.0@, @rake-0.8.1@, @sources-0.0.1@, @text-format-0.6.3@, @tmail-1.2.3@, @tzinfo-0.3.8@, @xml-simple-1.0.11@, @html-scanner@, @db2.rb@, @mysql.rb@
 
-h1. Part 2 - What's New?
-
-* Alternate Syntax for Symbol as Hash Keys
-* Block Local Variables
-* Inject Methods
-* @to_enum@
-* No block? Enum!
-* Lambda Shorthand
-* Complex Numbers
-* Decimal Is Still Not The Default
-* Regex "Properties"
-* Splat in Middle
-* Fibers
-* Break Values
-* "Nested" Methods
+h1(fullscreen). Part 2 - What's New?
 
 
 h1. Alternate Syntax for Symbol as Hash Keys

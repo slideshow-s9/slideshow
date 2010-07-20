@@ -8,14 +8,14 @@ Title: Web Services REST-Style: Universal Identifiers, Formats & Protocols
 
 %css 
   
-h1  { text-align: center; }
-
 table { width: 100%; }
 th    { text-align: left; }
 
 table#restspeak th:nth-child(1) { width: 20%; }
-table#restspeak th:nth-child(2) { width: 20%; }
-table#restspeak th:nth-child(3) { width: 60%; }
+table#restspeak th:nth-child(2) { width: 5%; }
+table#restspeak th:nth-child(3) { width: 20%; }
+table#restspeak th:nth-child(4) { width: 5%; }
+table#restspeak th:nth-child(5) { width: 50%; }
 
 table#restspeak2 th:nth-child(1) { width: 20%; }
 table#restspeak2 th:nth-child(2) { width: 80%; }
@@ -38,9 +38,15 @@ Agenda
 * Architecture Astronaut REST Speak
 
 ---
-^1^ {{ source }}
+fn1. {{ source text='Textile Source' }}
 
 {{ help }}
+
+
+h1(fullscreen). Part 1 - What's REST?
+
+{{ gradient silver white silver white }}
+
 
 h1. What's REST?
 
@@ -53,9 +59,10 @@ bq. rest - n. - peace, ease, or refreshment resulting from the insight that the 
 No matter what vendors tell you - no need to "Light Up the Web" - relax - built on an *open architecture using universal identifiers, formats & protocols and _evolving_ open standards* - no need to reinvent the wheel and sign-up for single-vendor offerings.
 
 
+
 h1. What's REST? (Cont'd)
 
-{{ gradient red orange red orange }}
+{{ gradient yellow orange yellow orange }}
 
 {% left %}
 
@@ -80,23 +87,35 @@ Best Practices for Designing Web Services for a Unified Human and Programable We
 fn1. WS-* =  Web Service Specs including WS-Transfer, WS-Addressing, WS-Eventing,
 WS-Security, WS-Federation, WS-Trust, and many more.
 
+%begin
 h3. Resource, Representation, State, Transfer
 
 * (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML(HyperText Markup Language) + URI(Uniform Resource Identifier)
 * Transfer Rules (Protocol) e.g. HTTP(HyperText Transfer Protocol)
+%end
 
+
+h1(fullscreen). Part 2 - Universal Identifiers, Formats & Protocols
+
+{{ gradient silver white silver white }}
 
 
 h1. Universal Identifiers, Formats & Protocols<br>The Holy Trinity
 
-{{ gradient red magenta red magenta }}
+{{ gradient green lime green lime }}
 
 {% left %}
+
+{% step %}
 
 h3. Identifiers
 
 * URLs (Uniform Resource Locator)
 * URIs (Uniform Resource Identifier)
+
+{% end %}
+
+{% step %}
 
 h3. Formats
 
@@ -105,12 +124,18 @@ h3. Formats
 
 {% end %}
 
+{% end %}
+
 {% right %}
+
+{% step %}
 
 h3. Protocols
 
 * HTTP (HyperText Transfer Protocol)
 * AtomPub (Atom Publishing Protocol)  
+
+{% end %}
 
 {% end %}
 
@@ -120,38 +145,43 @@ h1. The Holy REST Trinity - Noun, Verbs, Types
 {{ gradient green lime green lime }}
 
 table(#restspeak).
-|_. REST-Speak |_. Internet-Speak  |_. Plain Old English |
-| Verbs        | -> Protocols      | -> Communication & Data Exchange Rules  |
-| Nouns        | -> Identifiers    | -> Names, Addresses |
-| Types        | -> Formats        | -> Documents, Feeds, Photos, Videos, Music, etc. |
+|_. REST-Speak |_.      |_. Internet-Speak   |_.      |_. Plain Old English |
+| Verbs        | &hArr; | Protocols          | &hArr; | Communication & Data Exchange Rules  |
+| Nouns        | &hArr; | Identifiers        | &hArr; | Names, Addresses |
+| Types        | &hArr; | Formats            | &hArr; | Documents, Feeds, Photos, Videos, Music, etc. |
 
 &nbsp;
 
 table(#restspeak2).
 |_. REST-Speak |_. Examples  |
-| Verbs        | -> HTTP(HyperText Transfer Protocol) GET, POST, PUT, DELETE |
-| Nouns        | -> @flickr.com/photos/tag/wien@, @deli.cio.us/tag/wien@, etc. |
-| Types        | -> HTML(HyperText Markup Language), RSS(Really Simple Syndication), PNG(Portable Network Graphics), etcetera |
+| Verbs        | &rArr; HTTP(HyperText Transfer Protocol) GET, POST, PUT, DELETE |
+| Nouns        | &rArr; @flickr.com/photos/tag/wien@, @deli.cio.us/tag/wien@, etc. |
+| Types        | &rArr; HTML(HyperText Markup Language), RSS(Really Simple Syndication), PNG(Portable Network Graphics), etcetera |
 
 
-h1. REST Design Principles - What's REST?
+h1(fullscreen). Part 3 - Design Principles & Architecture
 
-{{ gradient yellow white yellow white }}
+{{ gradient silver white silver white }}
 
-* Idenifiers Matter -> Choose Great Names
-* Open Formats Matter -> Avoid Vendor Lock-In
-* Protocols Matter -> Learn more about HTTP and Use Best Practices
+
+h1. REST Design Principles 
+
+{{ gradient red orange red orange }}
+
+* Idenifiers Matter &rArr; Choose Great Names
+* Open Formats Matter &rArr; Avoid Vendor Lock-In
+* Protocols Matter &rArr; Learn more about HTTP and Use Best Practices
 **  Use HTTP GET for Read-Only/Side-Effect-Free Requests
 **  Use HTTP Accept Headers for Format Selection
 **  Use Full HTTP Method Vocabulary (GET, POST, PUT, DELETE)
 
 * No Web without Linking and No Linking without Identifiers!
-* (Stateless) Resource Representation -> Open Format + Identifier e.g. HTML(HyperText Markup Language) + URI(Uniform Resource Identifier)
+* (Stateless) Resource Representation &rArr; Open Format + Identifier e.g. HTML(HyperText Markup Language) + URI(Uniform Resource Identifier)
 
 
 h1. Architecture Astronaut REST Speak
 
-{{ gradient silver white silver white }}
+{{ gradient red orange red orange }}
 
 * REST-y
 * REST-ful
@@ -165,5 +195,10 @@ h1. Architecture Astronaut REST Speak
 ## RPC[1]
 
 fn1. RPC = Remote Procedure Call
+
+
+h1(fullscreen). The End - Thank You
+
+{{ gradient silver white silver white }}
 
 {{ google_analytics code=UA-397343-10 }}

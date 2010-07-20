@@ -3,14 +3,6 @@
 
 Title: Slide Show (S9) 10-Minute Tutorial
 
-%%%%%%%%%%%%%%%%%%%%%
-%% Some Extra CSS 
-
-%css 
-  
-h1  { text-align: center; }
-
-%end
 
 %%%%%%%%%%%%%%
 %% Let's go.
@@ -30,9 +22,10 @@ Agenda
 * Turn Your Online Wiki Pages into Slide Shows - Sputnik Case Study
 
 ---
-^1^ {{ source }}
+fn1. {{ source text='Textile Source' }}
 
 {{ help }}
+
 
 h1. What's Slide Show (S9)?
 
