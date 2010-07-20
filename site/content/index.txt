@@ -146,19 +146,23 @@ h3. Bonus: Try some different templates/theme packs
 * "Slidy W3C Blue Theme":http://slideshow.rubyforge.org/slidy/tutorial.html
 * "More &raquo;":templates.html
 
-h2(#textile). What's Textile? What's Markdown?
+h2(#textile). What's Textile? What's Markdown? What's reStructuredText?
 
 Textile is a wiki-style markup language that's easy-to-write and easy-to-read and
 that lets you author web pages in plain text. More:
 
 * "Textile Reference":http://redcloth.org/textile/
 
-Markdown is yet another wiki-style markup language that's easy-to-write and easy-to-read and
+Markdown is another wiki-style markup language that's easy-to-write and easy-to-read and
 that lets you author web pages in plain text. More:
 
 * "Markdown Quick Start":http://daringfireball.net/projects/markdown/basics
 * "Markdown Reference":http://daringfireball.net/projects/markdown/syntax
 
+reStructuredText is yet another wiki-style markup language. More:
+
+* "reStructuredText Quick Reference":http://docutils.sourceforge.net/docs/user/rst/quickref.html
+* "reStructuredText Project Site":http://docutils.sourceforge.net/rst.html
 
 h2(#s6). What's S5? What's S6?
 

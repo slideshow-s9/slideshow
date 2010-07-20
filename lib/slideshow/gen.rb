@@ -462,6 +462,7 @@ def run( args )
          puts "  slideshow microformats"
          puts "  slideshow microformats.textile         # Process slides using Textile"
          puts "  slideshow microformats.text            # Process slides using Markdown"
+         puts "  slideshow microformats.rst             # Process slides using reStructuredText"
          puts "  slideshow -o slides microformats       # Output slideshow to slides folder"
          puts
          puts "More examles:"
