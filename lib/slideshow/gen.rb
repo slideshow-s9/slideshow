@@ -56,6 +56,8 @@ class Gen
         markdown_to_html( content )
       when :textile
         textile_to_html( content )
+      when :rest
+        rest_to_html( content )
     end
     content
   end
@@ -93,10 +95,12 @@ class Gen
     end
   end
     
+  # todo/fix: move to Config class  
   def cache_dir
     RUBY_PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
   end
 
+  # todo/fix: move to Config class  
   def win32_cache_dir
     unless ENV['HOMEDRIVE'] && ENV['HOMEPATH'] && File.exists?(home = ENV['HOMEDRIVE'] + ENV['HOMEPATH'])
       puts "No HOMEDRIVE or HOMEPATH environment variable.  Set one to save a" +
@@ -107,6 +111,7 @@ class Gen
     end
   end
   
+  # todo/fix: move to Config class    
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"
       
@@ -430,7 +435,7 @@ class Gen
     
     # 1) add slide break  
   
-    if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
+    if (@markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby') || @markup_type == :rest
       content = add_slide_directive_before_div_h1( content )
     else
       content = add_slide_directive_before_h1( content )
@@ -579,6 +584,8 @@ class Gen
 
   if config.known_markdown_extnames.include?( extname )
     @markup_type = :markdown
+  elsif config.known_rest_extnames.include?( extname )
+    @markup_type = :rest
   else
     @markup_type = :textile
   end

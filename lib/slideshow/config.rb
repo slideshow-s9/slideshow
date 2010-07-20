@@ -57,6 +57,10 @@ class Config
     @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'post-processing', true )
   end
   
+  def known_rest_extnames
+    @hash[ 'builtin' ][ 'rest' ][ 'extnames' ]
+  end
+  
   def known_textile_extnames
     # returns an array of known file extensions e.g.
     # [ '.textile', '.t' ]
@@ -86,7 +90,7 @@ class Config
     # ruby check: is it better self. ?? or more confusing
     #  possible conflict only with write access (e.g. prop=) 
     
-    known_textile_extnames + known_markdown_extnames
+    known_textile_extnames + known_markdown_extnames + known_rest_extnames
   end
   
   def text_filters

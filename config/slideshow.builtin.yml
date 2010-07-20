@@ -26,11 +26,14 @@ filters:
   - dump_content_to_file_debug_text
 
 
-# markup (textile, markdown) config
+# markup (textile, markdown, rest) config
     
 textile:
   extnames: [ .textile, .t ]
   
+rest:  
+  extnames: [ .rst, .rest ]
+    
 markdown:
   extnames: [ .markdown, .m, .mark, .mkdn, .md, .txt, .text ]
 

@@ -73,7 +73,7 @@ module Slideshow
 
 end # module Slideshow
 
-# load built-in (optional) helpers/plugins
+# load built-in (optional) helpers/plugins/engines
 #   If a helper fails to load, simply ingnore it
 #   If you want to use it install missing required gems e.g.:
 #     gem install coderay
@@ -81,6 +81,7 @@ end # module Slideshow
 BUILTIN_OPT_HELPERS = [
   'slideshow/helpers/syntax/uv_helper.rb',
   'slideshow/helpers/syntax/coderay_helper.rb',
+  'slideshow/rest.rb',
 ]
 
 BUILTIN_OPT_HELPERS.each do |helper| 
