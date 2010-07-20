@@ -26,6 +26,7 @@ Examples:
   slideshow microformats                
   slideshow microformats.textile         # Process slides using Textile
   slideshow microformats.text            # Process slides using Markdown
+  slideshow microformats.rst             # Process slides using reStructuredText (*see Requirements)
 
   slideshow -o slides microformats       # Output slideshow to slides folder
 
@@ -45,8 +46,11 @@ More examles:
 
 * BlueCloth (Markdown Markup) [Optional]
 * RDiscount (Markdown Markup) [Optional]
+* pandoc-ruby (Markdown/reStructuredText Markup) [Optional]
+
 * Coderay (Syntax Highlighting) [Optional]
 * Ultraviolet (Syntax Highlighting) [Optional]
+
 
 == INSTALL:
 

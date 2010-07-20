@@ -17,39 +17,9 @@ class Gen
     @opts
   end
 
-  attr_reader :markup_type  # :textile, :markdown
+  attr_reader :markup_type  # :textile, :markdown, :rest
   
-  def load_markdown_libs
-    # check for available markdown libs/gems
-    # try to require each lib and remove any not installed
-    @markdown_libs = []
-
-    config.known_markdown_libs.each do |lib|
-      begin
-        require lib
-        @markdown_libs << lib
-      rescue LoadError => ex
-        logger.debug "Markdown library #{lib} not found. Use gem install #{lib} to install."
-      end
-    end
-
-    puts "  Found #{@markdown_libs.length} Markdown libraries: #{@markdown_libs.join(', ')}"
-  end
- 
-  
-  def markdown_to_html( content )
-    # call markdown filter; turn markdown lib name into method_name (mn)
-    # eg. rpeg-markdown =>  rpeg_markdown_to_html
-
-    # lets you use differnt options/converters for a single markdown lib
-    mn = config.markdown_to_html_method( @markdown_libs.first )    
-    
-    puts "  Converting Markdown-text (#{content.length} bytes) to HTML using library '#{@markdown_libs.first}' calling '#{mn}'..."
-    
-    send mn, content   # call 1st configured markdown engine e.g. kramdown_to_html( content )
-  end
-
-  # uses configured markup processor (textile,markdown) to generate html
+  # uses configured markup processor (textile,markdown,rest) to generate html
   def text_to_html( content )
     content = case @markup_type
       when :markdown
@@ -128,101 +98,6 @@ class Gen
     @config_dir
   end
 
-  def load_manifest_core( path )
-    manifest = []
-  
-    File.open( path ).readlines.each_with_index do |line,i|
-      case line
-      when /^\s*$/
-        # skip empty lines
-      when /^\s*#.*$/
-        # skip comment lines
-      else
-        logger.debug "line #{i+1}: #{line.strip}"
-        values = line.strip.split( /[ <,+]+/ )
-        
-        # add source for shortcuts (assumes relative path; if not issue warning/error)
-        values << values[0] if values.size == 1
-                
-        manifest << values
-      end      
-    end
-
-    manifest
-  end
-
-  def load_manifest( path )
-        
-    filename = path
- 
-    puts "  Loading template manifest #{filename}..."  
-    manifest = load_manifest_core( filename )
-    
-    # post-processing
-    # normalize all source paths (1..-1) /make full path/add template dir
-
-    templatesdir = File.dirname( path )
-    logger.debug "templatesdir=#{templatesdir}"
-
-    manifest.each do |values|
-      (1..values.size-1).each do |i|
-        values[i] = "#{templatesdir}/#{values[i]}"
-        logger.debug "  path[#{i}]=>#{values[i]}<"
-      end
-    end
-             
-    manifest
-  end
-
-  def find_manifests( patterns )
-    manifests = []
-    
-    patterns.each do |pattern|
-      pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
-      logger.debug "Checking #{pattern}"
-      Dir.glob( pattern ) do |file|
-        logger.debug "  Found manifest: #{file}"
-        manifests << [ File.basename( file ), file ]
-      end    
-    end
-    
-    manifests
-  end
-
-  def installed_generator_manifests
-    # 1) search gem/templates 
-
-    builtin_patterns = [
-      "#{File.dirname( LIB_PATH )}/templates/*.txt.gen"
-    ]
-
-    find_manifests( builtin_patterns )
-  end
-
-  def installed_template_manifests
-    # 1) search ./templates
-    # 2) search config_dir/templates
-    # 3) search gem/templates
-
-    builtin_patterns = [
-      "#{File.dirname( LIB_PATH )}/templates/*.txt"
-    ]
-    config_patterns  = [
-      "#{config_dir}/templates/*.txt",
-      "#{config_dir}/templates/*/*.txt"
-    ]
-    current_patterns = [
-      "templates/*.txt",
-      "templates/*/*.txt"
-    ]
-    
-    patterns = []
-    patterns += current_patterns  unless LIB_PATH == File.expand_path( 'lib' )  # don't include working dir if we test code from repo (don't include slideshow/templates)
-    patterns += config_patterns
-    patterns += builtin_patterns
- 
-    find_manifests( patterns )
-  end
 
   def load_template( path ) 
     puts "  Loading template #{path}..."
@@ -233,22 +108,6 @@ class Gen
     ERB.new( content ).result( the_binding )
   end
 
-  def load_template_old_delete( name, builtin )
-    
-    if opts.has_includes? 
-      opts.includes.each do |path|
-        logger.debug "File.exists? #{path}/#{name}"
-        
-        if File.exists?( "#{path}/#{name}" ) then          
-          puts "Loading custom template #{path}/#{name}..."
-          return File.read( "#{path}/#{name}" )
-        end
-      end       
-    end
-    
-    # fallback load builtin template packaged with gem
-    load_builtin_template( builtin )
-  end
   
   def with_output_path( dest, output_path )
     dest_full = File.expand_path( dest, output_path )
@@ -261,130 +120,7 @@ class Gen
     dest_full
   end
   
-
-  def fetch_file( dest, src )
-    logger.debug "fetch( dest: #{dest}, src: #{src})"
-
-    uri = URI.parse( src )
   
-    # new code: honor proxy env variable HTTP_PROXY
-    proxy = ENV['HTTP_PROXY']
-    proxy = ENV['http_proxy'] if proxy.nil?   # try possible lower/case env variable (for *nix systems) is this necessary??
-    
-    if proxy
-      proxy = URI.parse( proxy )
-      logger.debug "using net http proxy: proxy.host=#{proxy.host}, proxy.port=#{proxy.port}"
-      if proxy.user && proxy.password
-        logger.debug "  using credentials: proxy.user=#{proxy.user}, proxy.password=****"
-      else
-        logger.debug "  using no credentials"
-      end
-    else
-      logger.debug "using direct net http access; no proxy configured"
-      proxy = OpenStruct.new   # all fields return nil (e.g. proxy.host, etc.)
-    end
-  
-    # same as short-cut: http_proxy.get_respone( uri )
-    # use full code for easier changes
-    
-    http_proxy = Net::HTTP::Proxy( proxy.host, proxy.port, proxy.user, proxy.password )
-    http       = http_proxy.new( uri.host, uri.port )
-    request    = Net::HTTP::Get.new( uri.request_uri )
-    response   = http.request( request )  
-  
-    unless response.code == '200'   # note: responsoe.code is a string
-      msg = "#{response.code} #{response.message}" 
-      puts "*** error: #{msg}"
-      return   # todo: throw StandardException?
-    end
-
-    logger.debug "  content_type: #{response.content_type}, content_length: #{response.content_length}"
-  
-    # check for content type; use 'wb' for images
-    if response.content_type =~ /image/
-      logger.debug '  switching to binary'
-      flags = 'wb'
-    else
-      flags = 'w'
-    end
-  
-    File.open( dest, flags ) do |f|
-      f.write( response.body )	
-    end
-  end
-  
-  
-  def fetch_slideshow_templates
-    logger.debug "fetch_uri=#{opts.fetch_uri}"
-    
-    src = opts.fetch_uri
-    
-    ## check for builtin shortcut (assume no / or \) 
-    if src.index( '/' ).nil? && src.index( '\\' ).nil?
-      shortcut = src.clone
-      src = config.map_fetch_shortcut( src )
-      
-      if src.nil?
-        puts "** Error: No mapping found for fetch shortcut '#{shortcut}'."
-        return
-      end
-      puts "  Mapping fetch shortcut '#{shortcut}' to: #{src}"
-    end
-    
-    
-    # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
-    # src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
-    uri = URI.parse( src )
-  
-    logger.debug "host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
-  
-    dirname  = File.dirname( uri.path )    
-    basename = File.basename( uri.path, '.*' ) # e.g. fullerscreen     (without extension)
-    filename = File.basename( uri.path )       # e.g. fullerscreen.txt (with extension)
-
-    logger.debug "dirname: #{dirname}"
-    logger.debug "basename: #{basename}, filename: #{filename}"
-
-    dlbase = "http://#{uri.host}:#{uri.port}#{dirname}"
-    pkgpath = File.expand_path( "#{config_dir}/templates/#{basename}" )
-  
-    logger.debug "dlpath: #{dlbase}"
-    logger.debug "pkgpath: #{pkgpath}"
-  
-    FileUtils.makedirs( pkgpath ) unless File.directory? pkgpath 
-   
-    puts "Fetching template package '#{basename}'"
-    puts "  : from '#{dlbase}'"
-    puts "  : saving to '#{pkgpath}'"
-  
-    # download manifest
-    dest = "#{pkgpath}/#{filename}"
-
-    puts "  Downloading manifest '#{filename}'..."
-
-    fetch_file( dest, src )
-
-    manifest = load_manifest_core( dest )
-      
-    # download templates listed in manifest
-    manifest.each do |values|
-      values[1..-1].each do |file|
-      
-        dest = "#{pkgpath}/#{file}"
-
-        # make sure path exists
-        destpath = File.dirname( dest )
-        FileUtils.makedirs( destpath ) unless File.directory? destpath
-    
-        src = "#{dlbase}/#{file}"
-    
-        puts "  Downloading template '#{file}'..."
-        fetch_file( dest, src )
-      end
-    end   
-    puts "Done."  
-  end
-
   def create_slideshow_templates
     
     manifest_name = opts.manifest 

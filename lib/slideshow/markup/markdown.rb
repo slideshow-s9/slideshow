@@ -49,6 +49,42 @@ module Slideshow
   def kramdown_to_html( content )
     Kramdown::Document.new( content ).to_html
   end
+  
+  
+  ### code for managing multiple markdown libs
+  
+  def load_markdown_libs
+    # check for available markdown libs/gems
+    # try to require each lib and remove any not installed
+    @markdown_libs = []
+
+    config.known_markdown_libs.each do |lib|
+      begin
+        require lib
+        @markdown_libs << lib
+      rescue LoadError => ex
+        logger.debug "Markdown library #{lib} not found. Use gem install #{lib} to install."
+      end
+    end
+
+    puts "  Found #{@markdown_libs.length} Markdown libraries: #{@markdown_libs.join(', ')}"
+  end
+ 
+  
+  def markdown_to_html( content )
+    # call markdown filter; turn markdown lib name into method_name (mn)
+    # eg. rpeg-markdown =>  rpeg_markdown_to_html
+
+    # lets you use differnt options/converters for a single markdown lib
+    mn = config.markdown_to_html_method( @markdown_libs.first )    
+    
+    puts "  Converting Markdown-text (#{content.length} bytes) to HTML using library '#{@markdown_libs.first}' calling '#{mn}'..."
+    
+    send mn, content   # call 1st configured markdown engine e.g. kramdown_to_html( content )
+  end
+  
+  
+  
 
 end   # module MarkdownEngines
 end # module Slideshow

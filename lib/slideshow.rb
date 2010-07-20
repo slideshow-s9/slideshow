@@ -25,9 +25,12 @@ require 'kramdown'  # default markdown library
 require 'slideshow/opts'
 require 'slideshow/config'
 require 'slideshow/gen'
+require 'slideshow/manifest'
+require 'slideshow/fetch'
 require 'slideshow/slide'
-require 'slideshow/textile'
-require 'slideshow/markdown'
+
+require 'slideshow/markup/textile'
+require 'slideshow/markup/markdown'
 
 # load built-in (required) helpers/plugins
 require 'slideshow/helpers/text_helper'
@@ -81,7 +84,7 @@ end # module Slideshow
 BUILTIN_OPT_HELPERS = [
   'slideshow/helpers/syntax/uv_helper.rb',
   'slideshow/helpers/syntax/coderay_helper.rb',
-  'slideshow/rest.rb',
+  'slideshow/markup/rest.rb',
 ]
 
 BUILTIN_OPT_HELPERS.each do |helper| 
