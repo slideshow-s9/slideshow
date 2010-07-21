@@ -1,3 +1,9 @@
+=== 0.9.7 / 2010-07-22
+
+* Added support for reStructedText (using pandoc-ruby gem)
+* Update builtin S6 blank templates (toggle slide counter, debug, etc.)
+* Update SyntaxHighlighter helper
+
 === 0.9.6 / 2010-07-18
 
 * Update builtin S6 blank templates (adding autoplay, custom transitions, custom title selector, and more)
