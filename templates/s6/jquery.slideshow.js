@@ -17,6 +17,16 @@ Slideshow.transition = function( $from, $to ) {
  * inspired by Karl Swedberg's Scroll Up Headline Reader jQuery Tutorial[1]
  * [1] http://docs.jquery.com/Tutorials:Scroll_Up_Headline_Reader
  */
+
+function transitionSlideUpSlideDown( $from, $to ) {
+   $from.slideUp( 500, function() { $to.slideDown( 1000 ); } );
+}
+	
+function transitionFadeOutFadeIn( $from, $to ) {
+	 $from.fadeOut( 500 );
+   $to.fadeIn( 500 );			
+}
+
 function transitionScrollUp( $from, $to ) {   
   var cheight = $from.outerHeight();
 
@@ -78,11 +88,7 @@ Slideshow.init = function( options ) {
    
   function updateCurrentSlideCounter()
   { 
-      $( '#currentSlide' ).html( '<a id="plink" href="">'
-         + '<span id="csHere">' + settings.snum + '<\/span> '
-         + '<span id="csSep">\/<\/span> ' 
-         + '<span id="csTotal">' + settings.smax + '<\/span>'
-         + '<\/a>' );
+      $( '#currentSlide' ).html( settings.snum + '/' + settings.smax );
   }
   
   function updateJumpList()
@@ -92,8 +98,6 @@ Slideshow.init = function( options ) {
   
   function updatePermaLink()
   {
-      $('#plink').get(0).href = window.location.pathname + '#slide' + settings.snum;
-      
       // todo: unify hash marks??; use #1 for div ids instead of #slide1? 
       window.location.hash = '#'+settings.snum;
   }
@@ -229,6 +233,13 @@ function toggle()
    
    function createControls()
    {	  
+     // todo: make layout into an id (not class?)
+     //  do we need or allow more than one element?
+     
+  
+     // if no div.layout exists, create one
+     if( $( '.layout' ).length == 0 )
+        $( "<div class='layout'></div>").appendTo( 'body' );
   
      $( '.layout' )
 	    .append( "<div id='controls'>" )
@@ -254,7 +265,13 @@ function toggle()
       updateCurrentSlideCounter();
       updatePermaLink(); 
    }
-      
+  
+  function toggleSlideNumber()
+  {
+     // toggle slide number/counter
+     $( '#currentSlide' ).toggle();
+  }
+  
   function toggleFooter()
   {
      $( '#footer').toggle(); 
@@ -268,7 +285,7 @@ function toggle()
 		key.which = key.keyCode;
 	}
 	if (key.which == 84) {
-		toggle();
+		toggle();  // toggle between project and screen css media mode 
 		return;
 	}
 	if( settings.isProjection ) {
@@ -303,7 +320,7 @@ function toggle()
 				goTo(settings.smax);
 				break;   
 			case 67: // c
-				showHide('c');
+				showHide('c');  // toggle controls (navlinks,navlist)
 				break;
       case 65: //a
 			case 80: //p
@@ -312,6 +329,12 @@ function toggle()
 				break;
       case 70: //f
         toggleFooter();
+        break;
+      case 78: // n
+        toggleSlideNumber();
+        break;
+      case 68: // d
+        toggleDebug();
         break;
 		}
 	}
@@ -334,6 +357,33 @@ function autoplay()
      else {
 			  subgo(1);
 	   }
+}
+
+function toggleDebug()
+{
+   settings.debug = !settings.debug;
+   doDebug();
+}
+
+function doDebug()
+{
+   // fix/todo: save background into oldbackground
+   //  so we can restore later 
+   
+   if( settings.debug == true )
+   {
+      $( '#header' ).css( 'background', '#FCC' );
+      $( '#footer' ).css( 'background', '#CCF' );
+      $( '#controls' ).css( 'background', '#BBD' );
+      $( '#currentSlide' ).css( 'background', '#FFC' ); 
+   }
+   else
+   {
+      $( '#header' ).css( 'background', 'transparent' );
+      $( '#footer' ).css( 'background', 'transparent' );
+      $( '#controls' ).css( 'background', 'transparent' );
+      $( '#currentSlide' ).css( 'background', 'transparent' );       
+   }
 }
 
 	 
@@ -452,14 +502,10 @@ function addSlideIds() {
      toggle();
    else if( settings.mode == 'autoplay' )
      toggleAutoplay();
-     
+  
+  
    if( settings.debug == true )
-   {
-      $( '#header' ).css( 'background', '#FCC' );
-      $( '#footer' ).css( 'background', '#CCF' );
-      $( '#controls' ).css( 'background', '#BBD' );
-      $( '#currentSlide' ).css( 'background', '#FFC' ); 
-   }
+     doDebug();
                 
    document.onkeyup = keys;
 

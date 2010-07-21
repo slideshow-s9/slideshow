@@ -19,10 +19,23 @@ def sh_worker( code, opts )
   css_class_opt = opts.fetch( :class, nil ) #  large, small, tiny, etc.
   css_class << " #{css_class_opt}" if css_class_opt   # e.g. use/allow multiple classes -> code small, code large, etc.
    
-  out =  %{<pre class='#{css_class} brush: #{lang} gutter: #{line_numbers ? 'true' : 'false'}'>}
+  out =  %{<div class='#{css_class}'><pre class='brush: #{lang} toolbar: false gutter: #{line_numbers ? 'true' : 'false'}'>}
   out << code_highlighted
-  out << %{</pre>\n}
+  out << %{</pre></div>\n}
     
+  name        = opts.fetch( :name, nil )
+  txmt_value  = opts.fetch( :txmt, headers.code_txmt )
+  txmt        = (txmt_value =~ /true|yes|on/i) ? true : false
+    
+  # add optional href link for textmate
+  if name
+    out << %{<div class="codeurl">}
+    out << %{<a href="txmt://open?url=file://#{File.expand_path(name)}">} if txmt  
+    out << name
+    out << %{</a>} if txmt
+    out << %{</div>\n}
+  end
+          
   return out 
 end  
 

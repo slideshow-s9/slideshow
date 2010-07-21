@@ -7,7 +7,7 @@ module Slideshow
 # e.g. changes:
 # <h1 id='optional' class='optional'>
 #  to
-# <!-- _S9SLIDE_ -->
+#  html comment -> _S9SLIDE_ (note: rdoc can't handle html comments?) 
 # <h1 id='optional' class='optional'>
 
 def add_slide_directive_before_h1( content )
@@ -33,7 +33,7 @@ end
 # <div id='header'>
 # <h1 id='optional' class='optional'>
 #  to
-# <!-- _S9SLIDE_ -->
+#  html comment -> _S9SLIDE_ 
 # <div id='header'>
 # <h1 id='optional' class='optional'>
 
