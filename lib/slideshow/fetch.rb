@@ -22,20 +22,50 @@ module Slideshow
       logger.debug "using direct net http access; no proxy configured"
       proxy = OpenStruct.new   # all fields return nil (e.g. proxy.host, etc.)
     end
-  
-    # same as short-cut: http_proxy.get_respone( uri )
-    # use full code for easier changes
-    
+      
     http_proxy = Net::HTTP::Proxy( proxy.host, proxy.port, proxy.user, proxy.password )
-    http       = http_proxy.new( uri.host, uri.port )
-    request    = Net::HTTP::Get.new( uri.request_uri )
-    response   = http.request( request )  
+
+    redirect_limit = 4
+    response = nil
+
+    until false
+      raise ArgumentError, 'HTTP redirect too deep' if redirect_limit == 0
+      redirect_limit -= 1
+      
+      http = http_proxy.new( uri.host, uri.port )
+    
+      logger.debug "GET #{uri.request_uri} uri=#{uri}, redirect_limit=#{redirect_limit}"
+    
+      request    = Net::HTTP::Get.new( uri.request_uri, { 'User-Agent'=> 'slideshow'} )
+      if uri.instance_of? URI::HTTPS
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+    
+      response   = http.request( request )  
   
-    unless response.code == '200'   # note: responsoe.code is a string
-      msg = "#{response.code} #{response.message}" 
-      puts "*** error: #{msg}"
-      return   # todo: throw StandardException?
+      if response.code == '200'
+        logger.debug "#{response.code} #{response.message}"
+        break
+      elsif (response.code == '301' || response.code == '302' || response.code == '303' || response.code == '307' )
+        # 301 = moved permanently
+        # 302 = found
+        # 303 = see other
+        # 307 = temporary redirect
+        logger.debug "#{response.code} #{response.message} location=#{response.header['location']}"
+        newuri = URI.parse( response.header['location'] )
+        if newuri.relative?
+          logger.debug "url relative; try to make it absolute"
+          newuri = uri + response.header['location']
+        end
+        uri = newuri
+      else
+        msg = "#{response.code} #{response.message}" 
+        puts "*** error: #{msg}"
+        return   # todo: throw StandardException?  
+      end
     end
+
 
     logger.debug "  content_type: #{response.content_type}, content_length: #{response.content_length}"
   

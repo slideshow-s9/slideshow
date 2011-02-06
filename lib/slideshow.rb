@@ -11,6 +11,7 @@ require 'fileutils'
 require 'pp'
 require 'uri'
 require 'net/http'
+require 'net/https'
 require 'ostruct'
 require 'date'
 require 'yaml'
@@ -54,7 +55,7 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '0.9.7'
+  VERSION = '0.9.8'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator

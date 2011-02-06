@@ -1,3 +1,8 @@
+=== 0.9.8 / 2011-02-06
+
+* Added support for HTTPS and HTTP redirect for downloads
+* Update builtin S6 blank template
+
 === 0.9.7 / 2010-07-22
 
 * Added support for reStructedText (using pandoc-ruby gem)
