@@ -7,9 +7,12 @@ var Slideshow = {};
  *   passes in a reference to from and to slide wrapped in jQuery wrapper
  */
 
-Slideshow.transition = Slideshow.transition = function( $from, $to ) {
+Slideshow.transition = function( $from, $to ) {
+  // $from.hide();
+  // $to.show();
+  
   $from.hide('fast');
-  $to.show('fast');
+  $to.show('fast'); 
 }
 
 /***********************
@@ -54,7 +57,8 @@ Slideshow.init = function( options ) {
      titleSelector     : 'h1',      
      slideSelector     : '.slide',   // dummy (not yet working)
      stepSelector      : '.step',    // dummy (not yet working)
-     debug             :  false
+     debug             :  false,
+     change		   : null  //  todo: change to use a custom event and trigger
   }, options || {});
 
   settings.isProjection = true; // are we in projection (slideshow) mode (in contrast to screen (outline) mode)?     
@@ -66,7 +70,7 @@ Slideshow.init = function( options ) {
    
   function debug( msg ) 
   {
-    if( window.console && window.console.log )
+    if( settings.debug && window.console && window.console.log  )
       window.console.log( '[debug] ' + msg ); 
   }   
 
@@ -157,6 +161,8 @@ Slideshow.init = function( options ) {
   updateJumpList();
   updateCurrentSlideCounter();
   updatePermaLink(); 
+  
+  if (settings.change) { settings.change(); }
 }
 
  function subgo( dir )
@@ -451,9 +457,9 @@ function collectSteps() {
 function addClicker() {
     // if you click on heading of slide -> go to next slide (or next step)
    
-   $( settings.titleSelector, $slides ).bind('click', function(ev) {
-        if(ev.which != 1) return;
-        
+   $( settings.titleSelector, $slides ).click( function( ev ) {
+      if(ev.which != 1) return;  // only process left clicks (e.g 1; middle and rightclick use 2 and 3)
+
       if( !settings.isProjection )  // suspend clicker in outline view (just slideshow view)
 	       return;
      
@@ -462,19 +468,21 @@ function addClicker() {
 				 go(1);
 			else 
 				 subgo(1);
-   } ); 
+   } );
+   
    
    $( settings.titleSelector, $slides ).bind('contextmenu', function() { 
       if( !settings.isProjection )  // suspend clicker in outline view (just slideshow view)
-	       return;
-     
+        return;
+
       var csteps = settings.steps[settings.snum-1]; // current slide steps array 
-			if ( !csteps || settings.incpos >= csteps.length ) 
-				 go(-1);
-			else 
-				 subgo(-1);
-     return false;
-   } );
+      if ( !csteps || settings.incpos >= csteps.length ) 
+         go(-1);
+      else 
+         subgo(-1);
+
+      return false;
+   } );       
 }
 
 function addSlideIds() {
