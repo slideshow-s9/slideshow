@@ -105,7 +105,7 @@ module Slideshow
     # src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
     uri = URI.parse( src )
   
-    logger.debug "host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
+    logger.debug "scheme: #{uri.scheme}, host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
   
     dirname  = File.dirname( uri.path )    
     basename = File.basename( uri.path, '.*' ) # e.g. fullerscreen     (without extension)
@@ -114,7 +114,7 @@ module Slideshow
     logger.debug "dirname: #{dirname}"
     logger.debug "basename: #{basename}, filename: #{filename}"
 
-    dlbase = "http://#{uri.host}:#{uri.port}#{dirname}"
+    dlbase = "#{uri.scheme}://#{uri.host}:#{uri.port}#{dirname}"
     pkgpath = File.expand_path( "#{config_dir}/templates/#{basename}" )
   
     logger.debug "dlpath: #{dlbase}"
