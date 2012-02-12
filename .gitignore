@@ -5,8 +5,8 @@
 pkg/
 doc/
 
-# ignore webby output
-site/output/
+# ignore jekyll generated output
+site/_site/
 
 # ignore samples output folders
 samples/o/

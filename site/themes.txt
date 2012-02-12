@@ -1,17 +1,15 @@
 ---
-title: Gradient Themes       
-filter:
-  - erb
-  - textileplus
+layout: default
+title: Gradient Themes
 ---
 
-h1. <%= @page.title %>
+h1. {{ page.title }}
 
 <div class="toc">
 
 p(toc-title). Contents:
 
-* "How To Use Gradient Themes for the Built-In S6 Template Pack?":#use   
+* "How To Use Gradient Themes for the Built-In S6 Template Pack?":#use
 * "Questions? Comments?":#questions
 
 </div>
@@ -42,9 +40,9 @@ a simple CSS-style name value pair (if you use the built-in S6 templates).
 
 Example 1: Use @top-bottom@ gradient theme with the colors red and black
 
-{{{
+{% code %}
 gradient: top-bottom red black
-}}}
+{% endcode %}
 
 *Themes*. The built-in predefined gradient themes include: @diagonal@,
 @top-bottom@, 
@@ -60,27 +58,27 @@ gradient: top-bottom red black
 
 Example 2: Use pre-defined CSS colors (with default @top-bottom@ gradient theme)
 
-{{{
-gradient-colors: green lime         
-}}}
+{% code %}
+gradient-colors: green lime
+{% endcode %}
 
 Example 3: Use self-defined colors (with default @top-bottom@ gradient theme)
 
-{{{
+{% code %}
 gradient-colors: #0e1f5b #3b5998
-}}}
+{% endcode %}
 
 Example 4: Use @radial@ gradient theme and facebook colors
 
-{{{
-gradient: radial #0e1f5b #3b5998   
-}}}
+{% code %}
+gradient: radial #0e1f5b #3b5998
+{% endcode %}
 
 Example 5: Just change gradient theme and use default colors, that is, @marron@ and @black@
 
-{{{
-gradient-theme: repeat              
-}}}
+{% code %}
+gradient-theme: repeat
+{% endcode %}
 
 That's it.
 

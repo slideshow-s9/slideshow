@@ -1,11 +1,9 @@
 ---
-title: Settings, Tips, Tricks and More       
-filter:
-  - erb
-  - textileplus
+layout: default
+title: Settings, Tips, Tricks and More
 ---
 
-h1. <%= @page.title %>
+h1. {{ page.title }}
 
 <div class="toc">
 
@@ -29,7 +27,7 @@ h2(#notitle). How To Create Slides Without Titles?
 You can use the @!SLIDE@ directive to create slides without headings.
 Example:
 
-{{{
+{% code %}
 !SLIDE
 
 A slide with no title
@@ -49,22 +47,22 @@ And another
 !SLIDE image 
 
 !i/friendsbadge.png!
-}}}
+{% endcode %}
 
 Note, you can pass along CSS style classes to your generated @div@
 or @section@ that wraps your slide. Example:
 
-{{{
+{% code %}
 !SLIDE smaller commandline
-}}}
+{% endcode %}
 
 Will become:
 
-{{{
+{% code %}
 <div class='slide smaller commandline'>
   ...
 </div>
-}}}
+{% endcode %}
 
 
 h2(#themes). How To Use Gradient Themes for the Built-In S6 Template Pack?
@@ -80,9 +78,9 @@ package with manifest using the built-in S6 machinery.
 
 Example: Generate a template pack w/ manifest in your working folder 
 
-{{{
+{% code %}
 $ slideshow -g
-}}}
+{% endcode %}
 
 Or fetch a sample template pack from the internet or fork it using @git@ or create it from scratch.
 See the "Template Gallery":templates.html for more info and examples to get started.
@@ -90,10 +88,10 @@ See the "Template Gallery":templates.html for more info and examples to get star
 To use your own template pack use the @-t/--template MANIFEST@ option 
 passing along the manifest. Example:
 
-{{{
+{% code %}
 $ slideshow -t s6.txt  microformats
 $ slideshow -t s5blank.txt   microformats
-}}}
+{% endcode %}
 
 Got templates? Send a link and announcement to the
 "Forum/Mailing List":http://groups.google.com/group/webslideshow
@@ -103,13 +101,13 @@ h2(#fetch). How To Fetch New Template Packages?
 
 Using the @-f/--fetch URI@ option lets you fetch (install) new templates. Example:
 
-{{{
+{% code %}
 $ slideshow -f http://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt 
-}}}
+{% endcode %}
 
 Resulting in:
 
-{{{
+{% code %}
 Fetching template package 's5blank' 
   : from 'http://github.com/geraldb/slideshow-s5-blank/raw/master 
   : saving to '/home/gerald/.slideshow/templates/s5blank' 
@@ -118,7 +116,7 @@ Fetching template package 's5blank'
   ... 
   Downloading template 'ui/default/slides.js'... 
 Done. 
-}}}
+{% endcode %}
 
 Note, if you want to store the template pack somewhere else
 use the @-c/--config@ option (defaults to @~/.slideshow@).
@@ -130,15 +128,15 @@ h3. Troubleshooting
 Trouble downloading? Do you have a direct internet connection?
 If not, configure your proxy using the HTTP_PROXY environment variable. Sample:
 
-{{{
+{% code %}
 HTTP_PROXY=http://234.445.454:4341
-}}}
+{% endcode %}
 
 Or with user credentials (that is, login and password):
 
-{{{
+{% code %}
 HTTP_PROXY=http://gerald:topsecret@234.445.454:4341
-}}}
+{% endcode %}
 
 If all fails, you can always download the template pack on your own
 (using lets say @git@ itself) and than move the souces into your
@@ -153,18 +151,18 @@ Step 1: Change to your templates folder
 
 Issue the command:
 
-{{{
+{% code %}
 cd ~/.slideshow/templates
-}}}
+{% endcode %}
 
 Step 2: Clone (Fetch) the template pack using @git@
 
 Let's clone the @slideshow-google-html5-slides@ template pack.
 Issue the command:
 
-{{{
+{% code %}
 git clone http://github.com/geraldb/slideshow-google-html5-slides.git
-}}}
+{% endcode %}
 
 That's it. Use the @-l/--list@ option to list all you installed template packs.
 
@@ -172,19 +170,19 @@ h2(#list). How To List All Installed Template Packages?
 
 Using the @-l/--list@ option lets you list all installed templates. Example:
 
-{{{
+{% code %}
 $ slideshow -l
-}}}
+{% endcode %}
 
 Resulting in:
 
-{{{
+{% code %}
 Installed templates include: 
   s5blank.txt       (/home/gerald/.slideshow/templates/s5blank/s5blank.txt) 
   s5.txt            (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/s5.txt) 
   s6.txt            (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/s6.txt) 
   fullerscreen.txt  (/usr/lib/ruby/gems/1.8/gems/slideshow-0.8/templates/fullerscreen.txt) 
-}}}
+{% endcode %}
 
 
 h2(#pdf). How To Generate PDF Documents from Your Slide Shows?
@@ -196,11 +194,11 @@ using lets say the free, open source "@wkhtmltopdf@":http://code.google.com/p/wk
 
 Example:
 
-{{{
+{% code %}
 $ slideshow tutorial
 
 $ wkhtmltopdf --outline --orientation Landscape tutorial.pdf.html tutorial.pdf 
-}}}
+{% endcode %}
 
 
 h2(#slideshowopt). How To Set Default Command Line Options?
@@ -210,28 +208,28 @@ you set default command line options.
 
 Example: Make @slides@ your default output folder 
 
-{{{
+{% code %}
 $ SLIDESHOWOPT=-o slides
-}}}
+{% endcode %}
 
 Example: Make S5-compatible slide show 
 
-{{{
+{% code %}
 $ SLIDESHOWOPT=-o slides -t s5blank.txt
-}}}
+{% endcode %}
 
 Example: Make your own template package the default
 
-{{{
+{% code %}
 $ SLIDESHOWOPT=-t <your_template_manifest_here>   
-}}}
+{% endcode %}
 
 And than use the gem executable as usual (will use/add your command line 
 options stored in @SLIDESHOWOPT@):
 
-{{{
+{% code %}
 $ slideshow microformats
-}}}
+{% endcode %}
 
 
 h2(#comments). How To Comment Out Content?
@@ -239,7 +237,7 @@ h2(#comments). How To Comment Out Content?
 Use @%@ for comments anywhere (including headers) and @%begin@/@%end@
 for multi-line comments and @%end@ to skip everything until the end.
 
-{{{
+{% code %}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Start off with some headers
 
@@ -252,7 +250,7 @@ author: Jim Weirich
 # 10 Things Every Java Programmer Should Know About Ruby
 
 Jim Weirich
-}}}
+{% endcode %}
 
 See "10 Things Every Java Programmer Should Know About Ruby":http://github.com/geraldb/slideshow/blob/master/samples/3rd/10things.text
 sample.
@@ -260,11 +258,11 @@ sample.
 Note, as an alternative syntax to skip (comment out)
 content in your source enclose it with  @__SKIP__@/@__END__@. Example:
 
-{{{
+{% code %}
 __SKIP__ 
   not yet ready or private notes/comments 
 __END__ 
-}}}
+{% endcode %}
 
 As a shortcut if you just use @__END__@ (without @__SKIP__@) (Ruby-like) 
 it will skip everything from @__END__@ until the end of the file. 
