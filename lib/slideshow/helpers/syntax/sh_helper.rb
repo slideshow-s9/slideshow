@@ -8,7 +8,7 @@ module Slideshow
 
 def sh_worker( code, opts )
   
-  lang         = opts.fetch( :lang, SH_LANG )  
+  lang         = opts.fetch( :lang, headers.get( 'code-language', SH_LANG ))
   line_numbers_value = opts.fetch( :line_numbers, headers.get( 'code-line-numbers', SH_LINE_NUMBERS ))
   line_numbers = (line_numbers_value =~ /true|yes|on/i) ? true : false
      
