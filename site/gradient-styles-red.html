@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <style>
+
+#dark {
+  background-image: -moz-linear-gradient( top left, red, black );
+  background-image: -webkit-linear-gradient( top left, red, black );
+/*
+     <linearGradient id="dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="red"   />
+      <stop offset="1" stop-color="black" />
+    </linearGradient>
+*/
+}
+
+#dark_reverse {
+  background-image: -moz-linear-gradient( top left, black, red );
+  background-image: -webkit-linear-gradient( top left, black, red );
+/*
+     <linearGradient id="dark_reverse" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="black" />
+      <stop offset="1" stop-color="red"   />
+    </linearGradient>
+*/
+}
+
+#light {
+  background-image: -moz-linear-gradient( top left, red, orange );
+  background-image: -webkit-linear-gradient( top left, red, orange );
+/*
+      <linearGradient id="light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="red"    />
+      <stop offset="1" stop-color="orange" />
+    </linearGradient>
+*/
+}
+
+#top_bottom {
+  background-image: -moz-linear-gradient( top, red, black );
+  background-image: -webkit-linear-gradient( top, red, black );
+/*
+     <linearGradient id="top_bottom" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="0%"   stop-color="red"   />
+       <stop offset="100%" stop-color="black" />
+    </linearGradient>
+*/
+}
+
+#left_right {
+  background-image: -moz-linear-gradient( left, red, orange );
+  background-image: -webkit-linear-gradient( left, red, orange );
+/*
+    <linearGradient id="left_right" x1="0" y1="0" x2="1" y2="0">
+     <stop offset="0%"   stop-color="red"    />
+     <stop offset="100%" stop-color="orange" />
+   </linearGradient>
+*/
+}
+
+#repeat {
+  background-image: -moz-repeating-linear-gradient( -60deg, red, orange 5%, red 10%);
+  background-image: -webkit-repeating-linear-gradient( -60deg, red, orange 5%, red 10%);
+
+/*
+    <linearGradient id="repeat" x1="0.4" y1="0.4" x2="0.5" y2="0.5"
+         spreadMethod="repeat">
+     <stop offset="0%"   stop-color="red"    />
+     <stop offset="50%"  stop-color="orange" />
+     <stop offset="100%" stop-color="red"    />
+   </linearGradient>
+*/ 
+}
+  
+#radial {
+  background-image: -moz-radial-gradient( black, red );
+  background-image: -webkit-radial-gradient( black, red );
+/*
+   <radialGradient id="radial">
+    <stop offset="0%"   stop-color="black" />
+    <stop offset="100%" stop-color="red"   />
+   </radialGradient>  
+*/
+}
+
+#radial_off_center {
+  background-image: -moz-radial-gradient( 70% 70%, ellipse, orange, red );
+  background-image: -webkit-radial-gradient( 70% 70%, ellipse, orange, red );
+
+/*
+   <radialGradient id="radial_off_center" fx="0.7" fy="0.7" cx="0.5" cy="0.5" r="0.4">
+     <stop offset="0%"   stop-color="orange" />
+     <stop offset="100%" stop-color="red"    />
+   </radialGradient>
+*/
+}
+
+#radial_repeat {
+  background-image: -moz-repeating-radial-gradient( 60% 60%, ellipse, red, orange 5%, red 10% );
+  background-image: -webkit-repeating-radial-gradient( 60% 60%, ellipse, red, orange 5%, red 10% );
+/*  
+  <radialGradient id="radial_repeat" fx="0.5" fy="0.5" cx="0.6" cy="0.6" r="0.2"
+          spreadMethod="repeat">
+     <stop offset="0%"   stop-color="red"    />
+     <stop offset="50%"  stop-color="orange" />
+     <stop offset="100%" stop-color="red"    />
+  </radialGradient>
+*/
+}
+   </style>
+</head>
+<body>
+
+<div style="width: 100%; height: 100%;">
+  <div id="dark"              style="position: absolute; left:  2%; top:  2%; width: 30%; height: 30%;"></div>
+  <div id="dark_reverse"      style="position: absolute; left: 34%; top:  2%; width: 30%; height: 30%;"></div>
+  <div id="light"             style="position: absolute; left: 66%; top:  2%; width: 30%; height: 30%;"></div>
+
+  <div id="top_bottom"        style="position: absolute; left:  2%; top: 34%; width: 30%; height: 30%;"></div>
+  <div id="left_right"        style="position: absolute; left: 34%; top: 34%; width: 30%; height: 30%;"></div>
+  <div id="repeat"            style="position: absolute; left: 66%; top: 34%; width: 30%; height: 30%;"></div>
+
+  <div id="radial"            style="position: absolute; left:  2%; top: 66%; width: 30%; height: 30%;"></div>
+  <div id="radial_off_center" style="position: absolute; left: 34%; top: 66%; width: 30%; height: 30%;"></div>
+  <div id="radial_repeat"     style="position: absolute; left: 66%; top: 66%; width: 30%; height: 30%;"></div>
+</div>
