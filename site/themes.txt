@@ -16,7 +16,8 @@ p(toc-title). Contents:
 
 h2. Browse by Color
 
-<a href="gradient-styles-red.svg" target="gallery">Red</a> | 
+<a href="gradient-styles-red.svg" target="gallery">Red (SVG)</a> | 
+<a href="gradient-styles-red.html" target="gallery">Red (CSS3)</a> | 
 <a href="gradient-styles-blue.svg" target="gallery">Blue</a>
 
 h2. Browse by Style  
