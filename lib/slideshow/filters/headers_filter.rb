@@ -28,14 +28,11 @@ def leading_headers( content_with_headers )
       read_headers = false
       content << line
     end
-  end
-
-  # fix: do a merge w/ config instead, possible??
-  opts.set_defaults  
+  end 
 
   puts "  Reading #{headers.length} headers: #{headers.join(', ')}..."
 
-  content  
+  content
 end
   
 end  # module HeadersFilter

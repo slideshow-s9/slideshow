@@ -1,6 +1,33 @@
 module Slideshow
   module BackgroundHelper
 
+def gradient_from_headers( *args )
+
+  return "" unless headers.has_gradient?   # do nothing if use hasn't set gradient headers (ignore defaults)
+
+  # lets you use headers (gradient, gradient-theme, gradient-colors)
+  #  to define gradient (see http://slideshow.rubyforge.org/themes.html for predefined themes)
+  
+  theme  = headers[ :gradient_theme ]
+  colors = headers[ :gradient_colors ].split( ' ' )  # colors as space separated all-in-one string
+  
+  # fix: first version - ignore theme for now
+  # todo: add support for theme
+
+  buf = "linear-gradient( #{colors.join(',') } )"
+ 
+
+  # todo: add value for headers to puts
+  puts "  Adding CSS for gradient background style rule using headers..."
+  content_for( :css, <<-EOS )
+    .slide    { background-image: -webkit-#{buf};
+                background-image: -mozilla-#{buf};
+                background-image: -ms-#{buf};
+                background-image: -o-#{buf};
+                background-image: #{buf};
+              }
+  EOS
+end
 
 def gradient( *args )
 

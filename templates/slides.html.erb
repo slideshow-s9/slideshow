@@ -7,6 +7,11 @@
 <meta name="generator" content="<%= @headers['generator'] %>">
 <meta name="author"    content="<%= @headers['author']%>" >
 
+<!-- helper/macro that lets you add (CSS3) gradient using headers
+     see http://slideshow.rubyforge.org/themes.html
+     
+  <%=  gradient_from_headers() %>   -->
+
 <!-- S6 style sheet links -->
 <link rel="stylesheet" href="<%= "#{@name}.css" %>" media="projection" id="styleProjection">
 <link rel="stylesheet" href="s6/screen.css"         media="screen"     id="styleScreen">

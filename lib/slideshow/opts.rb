@@ -20,24 +20,27 @@ class Opts
     end
   end
   
-  def gradient=( value )
-    put_gradient( value, :theme, :color1, :color2 )
+  def gradient=( line )
+    # split into theme (first value) and colors (everything else)
+    #  e.g.  diagonal red black
+    
+    # todo/check: translate value w/ v.tr( '-', '_' ) ??
+    
+    values = line.split( ' ' )
+      
+    put( 'gradient-theme', values.first )                 if values.size > 0
+    put( 'gradient-colors', values[ 1..-1].join( ' ' ) )  if values.size > 1
   end
   
-  def gradient_colors=( value )
-    put_gradient( value, :color1, :color2 )
-  end
-
-  def gradient_color=( value )
-    put_gradient( value, :color1 )
+  def has_gradient?
+    # has user defined gradient (using headers)?  (default values do NOT count)
+    @hash.has_key?( :gradient_theme ) || @hash.has_key?( :gradient_colors )
   end
   
-  def gradient_theme=( value )
-    put_gradient( value, :theme )
-  end
-  
+    
+    
   def []( key )
-    value = @hash[ normalize_key( key ) ]
+    value = get( key )
     if value.nil?
       puts "** Warning: header '#{key}' undefined"
       "- #{key} not found -"
@@ -55,7 +58,7 @@ class Opts
   end
   
   def fetch?
-    get( 'fetch_uri', nil ) != nil
+    @hash.has_key?( :fetch_uri ) 
   end
   
   def fetch_uri
@@ -63,7 +66,7 @@ class Opts
   end
   
   def has_includes?
-    @hash[ :include ]
+    @hash.has_key?( :include )
   end
   
   def includes
@@ -76,7 +79,7 @@ class Opts
   end
   
   def config_path
-    get( 'config_path', nil )
+    get( 'config_path' )
   end
   
   def output_path
@@ -84,11 +87,11 @@ class Opts
   end
 
   def code_engine
-    get( 'code-engine', DEFAULTS[ :code_engine ] )
+    get( 'code-engine' )
   end
   
   def code_txmt
-    get( 'code-txmt', DEFAULTS[ :code_txmt ])
+    get( 'code-txmt' )
   end
 
 
@@ -97,22 +100,21 @@ class Opts
     :title             => 'Untitled Slide Show',
     :footer            => '',
     :subfooter         => '',
-    :gradient_theme    => 'dark',
-    :gradient_color1   => 'red',
-    :gradient_color2   => 'black',
+    :gradient_theme    => 'diagonal',
+    :gradient_colors   => 'red black',
 
     :code_engine       => 'sh',  # SyntaxHighligher (sh) | ultraviolet (uv) | coderay (cr)
     :code_txmt         => 'false', # Text Mate Hyperlink for Source?
   }
 
-  def set_defaults      
-    DEFAULTS.each_pair do | key, value |
-      @hash[ key ] = value if @hash[ key ].nil?
+  def get( key, default=nil )
+    key = normalize_key(key)
+    value = @hash.fetch( key, DEFAULTS[ key ] )
+    if value.nil?
+      default
+    else
+      value
     end
-  end
-
-  def get( key, default )
-    @hash.fetch( normalize_key(key), default )
   end
 
 private
@@ -120,18 +122,10 @@ private
   def normalize_key( key )
     key.to_s.downcase.tr('-', '_').to_sym
   end
-  
-  # Assigns the given gradient-* keys to the values in the given string.
-  def put_gradient( string, *keys )
-    values = string.split( ' ' )
-
-    values.zip(keys).each do |v, k|
-      @hash[ normalize_key( "gradient-#{k}" ) ] = v.tr( '-', '_' )
-    end
-  end
-  
+    
   def get_boolean( key, default )
-    value = @hash[ normalize_key( key ) ]
+    key = normalize_key( key )
+    value = @hash.fetch( key, DEFAULTS[ key ] )
     if value.nil?
       default
     else
