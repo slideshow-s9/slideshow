@@ -57,13 +57,13 @@ gradient: top-bottom red black
 @maroon@ or self-defined colors such as @#0e1f5b@, @#3b5998@.
 
 
-Example 2: Use pre-defined CSS colors (with default @top-bottom@ gradient theme)
+Example 2: Use pre-defined CSS colors (with default @diagonal@ gradient theme)
 
 {% code %}
 gradient-colors: green lime
 {% endcode %}
 
-Example 3: Use self-defined colors (with default @top-bottom@ gradient theme)
+Example 3: Use self-defined colors (with default @diagonal@ gradient theme)
 
 {% code %}
 gradient-colors: #0e1f5b #3b5998
@@ -75,7 +75,7 @@ Example 4: Use @radial@ gradient theme and facebook colors
 gradient: radial #0e1f5b #3b5998
 {% endcode %}
 
-Example 5: Just change gradient theme and use default colors, that is, @marron@ and @black@
+Example 5: Just change gradient theme and use default colors, that is, @red@ and @orange@
 
 {% code %}
 gradient-theme: repeat

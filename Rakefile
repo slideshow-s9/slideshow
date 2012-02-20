@@ -12,8 +12,8 @@ Hoe.spec 'slideshow' do
   self.email   = 'webslideshow@googlegroups.com'
   
   self.extra_deps = [
-    ['RedCloth','>= 4.0.0'],
-    ['kramdown','>= 0.9.0']
+    ['RedCloth','>= 4.2.9'],
+    ['kramdown','>= 0.13.5']
   ]
   
   self.remote_rdoc_dir = 'doc'

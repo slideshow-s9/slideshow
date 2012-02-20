@@ -101,7 +101,7 @@ class Opts
     :footer            => '',
     :subfooter         => '',
     :gradient_theme    => 'diagonal',
-    :gradient_colors   => 'red black',
+    :gradient_colors   => 'red orange',
 
     :code_engine       => 'sh',  # SyntaxHighligher (sh) | ultraviolet (uv) | coderay (cr)
     :code_txmt         => 'false', # Text Mate Hyperlink for Source?
