@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # builtin text filters
 # called before text_to_html
 #
