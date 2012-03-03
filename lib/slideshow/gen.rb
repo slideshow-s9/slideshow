@@ -203,25 +203,37 @@ class Gen
       slide_source = ""            # reset slide source buffer 
     end
 
+
     ## split slide source into header (optional) and content/body
-    ## plus check for (css style) classes
+    ## plus check for (css style) classes and data attributes
 
     slides2 = []
     slides.each do |slide_source|
       slide = Slide.new
 
-      ## check for css style classes    
+      ## check for css style classes
       from = 0
       while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
         logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
 
-        if slide.classes.nil?
-          slide.classes = $2.strip
-        else
-          slide.classes << " #{$2.strip}"
+        from = Regexp.last_match.end(0)  # continue search later from here
+        
+        values = $2.strip.dup
+        
+        # remove data values (eg. x=-20 scale=4) and store in data hash
+        values.gsub!( /(\w+)[ \t]*=[ \t]*([-\w]+)/ ) do |_|
+          logger.debug "    adding data pair: key=>#{$1.downcase}< value=>#{$2}<"
+          slide.data[ $1.downcase.dup ] = $2.dup
+          " "  # replace w/ space
         end
-      
-        from = Regexp.last_match.end(0)
+        
+        values.strip!  # remove spaces  # todo: use squish or similar and check for empty string
+                
+        if slide.classes.nil?
+          slide.classes = values
+        else
+          slide.classes << " #{values}"
+        end
       end
        
        # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com

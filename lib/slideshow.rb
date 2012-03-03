@@ -55,7 +55,7 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '0.9.11'
+  VERSION = '1.0.0'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator
