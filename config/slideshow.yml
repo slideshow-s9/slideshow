@@ -40,16 +40,19 @@ headers:
 #   map shortcut to URI
     
 fetch:
-    s6gradients: http://github.com/geraldb/slideshow-s6-gradients/raw/master/s6gradients.txt
-    s6syntax: http://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
-    s6blank: http://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
-    s5blank: http://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
-    s5themes: http://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt
-    fullerscreen: http://github.com/geraldb/slideshow-fullerscreen/raw/master/fullerscreen.txt
-    slidy: http://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt
-    g5: http://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
-    slippy: http://github.com/geraldb/slideshow-slippy/raw/master/slippy.txt
-  
+    s6syntax: https://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
+    s6blank: https://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
+    s5blank: https://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
+    s5themes: https://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt
+    fullerscreen: https://github.com/geraldb/slideshow-fullerscreen/raw/master/fullerscreen.txt
+    slidy: https://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt
+    g5: https://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
+    slippy: https://github.com/geraldb/slideshow-slippy/raw/master/slippy.txt
+    csss: https://github.com/geraldb/slideshow-csss/raw/master/csss.txt
+    deck.js: https://github.com/geraldb/slideshow-deck.js/raw/master/deck.js.txt
+    impress.js: https://github.com/geraldb/slideshow-impress.js/raw/master/impress.js.txt
+    shower: https://github.com/geraldb/slideshow-shower/raw/master/shower.txt
+
 # your google analytics code  
 analytics:
     google: UA-XXX

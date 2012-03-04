@@ -221,7 +221,7 @@ class Gen
         values = $2.strip.dup
         
         # remove data values (eg. x=-20 scale=4) and store in data hash
-        values.gsub!( /(\w+)[ \t]*=[ \t]*([-\w]+)/ ) do |_|
+        values.gsub!( /([-\w]+)[ \t]*=[ \t]*([-\w\.]+)/ ) do |_|
           logger.debug "    adding data pair: key=>#{$1.downcase}< value=>#{$2}<"
           slide.data[ $1.downcase.dup ] = $2.dup
           " "  # replace w/ space
