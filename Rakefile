@@ -21,4 +21,13 @@ Hoe.spec 'slideshow' do
   # switch extension to .rdoc for gihub formatting
   self.readme_file  = 'README.rdoc'
   self.history_file = 'History.rdoc'
+  
+  self.post_install_message =<<EOS
+******************************************************************************
+
+Questions? Comments? Send them along to the mailing list.
+https://groups.google.com/group/webslideshow
+
+******************************************************************************
+EOS
 end
