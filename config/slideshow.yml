@@ -68,9 +68,7 @@ helper:
 filters: []
     
 textile:
-  extnames: []  
+  extnames: []
   
 markdown:
   extnames: []
-  libs:     []
-  

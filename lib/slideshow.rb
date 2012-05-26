@@ -18,9 +18,8 @@ require 'yaml'
 require 'cgi'
 
 # required gems
-require 'redcloth'  # default textile library
-require 'kramdown'  # default markdown library
-
+require 'redcloth'          # default textile library
+require 'markdown_select'   # default markdown library 
 
 # our own code
 require 'slideshow/opts'
@@ -55,7 +54,7 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator

@@ -41,17 +41,6 @@ class Config
     end    
      
   end
-
-  def markdown_to_html_method( lib )    
-    method = @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'converter', nil )
-    
-    # use default name
-    if method.nil?
-      method = "#{lib.downcase}_to_html"
-    end
-    
-    method.tr('-','_').to_sym
-  end
   
   def markdown_post_processing?( lib )
     @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'post-processing', true )
@@ -76,16 +65,6 @@ class Config
     @hash[ 'markdown' ][ 'extnames' ] + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
   end
   
-  def known_markdown_libs
-    # returns an array of known markdown engines e.g.
-    # [ pandoc-ruby, rdiscount, rpeg-markdown, maruku, bluecloth, kramdown ]
-    
-    libs      = @hash[ 'markdown' ][ 'libs' ] + @hash[ 'builtin' ][ 'markdown' ][ 'libs' ]
-    user_libs = @hash.fetch( 'user', {} ).fetch( 'markdown', {} ).fetch( 'libs', [] )
-    
-    user_libs + libs
-  end
-
   def known_extnames
     # ruby check: is it better self. ?? or more confusing
     #  possible conflict only with write access (e.g. prop=) 

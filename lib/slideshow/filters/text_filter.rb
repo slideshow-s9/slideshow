@@ -33,7 +33,7 @@ def directives_percent_style( content )
   # - pandoc uses % for its own markdown extension
   # - don't process % pass it along/through to pandoc
 
-  return content  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
+  return content  if @markup_type == :markdown && MarkdownSelect.lib == 'pandoc-ruby'
     
     
   directive_unparsed  = 0
@@ -101,7 +101,7 @@ def comments_percent_style( content )
   # skip filter for pandoc
   # - pandoc uses % for its own markdown extension
 
-  return content  if @markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby'
+  return content  if @markup_type == :markdown && MarkdownSelect.lib == 'pandoc-ruby'
     
     # remove comments
     # % comments

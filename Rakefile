@@ -13,7 +13,7 @@ Hoe.spec 'slideshow' do
   
   self.extra_deps = [
     ['RedCloth','>= 4.2.9'],
-    ['kramdown','>= 0.13.5']
+    ['markdown_select','>= 0.1.2']
   ]
   
   self.remote_rdoc_dir = 'doc'

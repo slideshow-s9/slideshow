@@ -36,19 +36,3 @@ rest:
     
 markdown:
   extnames: [ .markdown, .m, .mark, .mkdn, .md, .txt, .text ]
-
-# note: only kramdown is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
-#  if you want to use other markdown libs install the required/desired lib e.g.
-#  use  gem install rdiscount for rdiscount and so on
-#
-# also note for now the first present markdown library gets used
-#  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
-
-  libs:
-    - pandoc-ruby
-    - rdiscount
-    - rpeg-markdown
-    - maruku
-    - bluecloth
-    - kramdown
-    

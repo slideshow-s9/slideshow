@@ -171,7 +171,7 @@ class Gen
     
     # 1) add slide break  
   
-    if (@markup_type == :markdown && @markdown_libs.first == 'pandoc-ruby') || @markup_type == :rest
+    if (@markup_type == :markdown && MarkdownSelect.lib == 'pandoc-ruby') || @markup_type == :rest
       content = add_slide_directive_before_div_h1( content )
     else
       content = add_slide_directive_before_h1( content )
@@ -370,7 +370,7 @@ class Gen
   # make content2 and slide2 available to erb template
     # -- todo: cleanup variable names and use attr_readers for content and slide
   
-  if @markup_type == :markdown && config.markdown_post_processing?( @markdown_libs.first ) == false
+  if @markup_type == :markdown && config.markdown_post_processing?( MarkdownSelect.lib ) == false
     puts "  Skipping post-processing (passing content through as is)..."
     @content = content  # content all-in-one - make it available in erb templates
   else
@@ -503,7 +503,6 @@ def run( args )
   elsif opts.fetch?
     fetch_slideshow_templates
   else
-    load_markdown_libs
     load_plugins  # check for optional plugins/extension in ./lib folder
     
     args.each { |fn| create_slideshow( fn ) }
