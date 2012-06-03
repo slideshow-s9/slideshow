@@ -66,7 +66,7 @@ module Slideshow
     # 1) search gem/templates 
 
     builtin_patterns = [
-      "#{File.dirname( LIB_PATH )}/templates/*.txt.gen"
+      "#{Slideshow.root}/templates/*.txt.gen"
     ]
 
     find_manifests( builtin_patterns )
@@ -78,7 +78,7 @@ module Slideshow
     # 3) search gem/templates
 
     builtin_patterns = [
-      "#{File.dirname( LIB_PATH )}/templates/*.txt"
+      "#{Slideshow.root}/templates/*.txt"
     ]
     config_patterns  = [
       "#{config_dir}/templates/*.txt",
@@ -90,7 +90,7 @@ module Slideshow
     ]
     
     patterns = []
-    patterns += current_patterns  unless LIB_PATH == File.expand_path( 'lib' )  # don't include working dir if we test code from repo (don't include slideshow/templates)
+    patterns += current_patterns  unless Slideshow.root == File.expand_path( '.' )  # don't include working dir if we test code from repo (don't include slideshow/templates)
     patterns += config_patterns
     patterns += builtin_patterns
  

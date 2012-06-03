@@ -1,7 +1,11 @@
 $KCODE = 'utf'
 
-LIB_PATH = File.expand_path( File.dirname(__FILE__) )
-$LOAD_PATH.unshift(LIB_PATH) 
+###
+# NB: for local testing run like:
+#
+# 1.8.x: ruby -Ilib -rrubygems lib/slideshow.rb
+# 1.9.x: ruby -Ilib lib/slideshow.rb
+
 
 # core and stlibs
 require 'optparse'
@@ -21,6 +25,15 @@ require 'cgi'
 require 'redcloth'          # default textile library
 require 'markdown'          # default markdown library
 require 'fetcher'           # fetch docs and blogs via http, https, etc.
+
+require 'props'             # manage settings/env
+
+class Env
+  def self.slideshowopt
+    ENV[ 'SLIDESHOWOPT' ]
+  end
+end # class Env
+
 
 # our own code
 require 'slideshow/opts'
@@ -55,19 +68,23 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.0.5'
-
+  VERSION = '1.1.0.beta1'
+  
+  def self.root
+    "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
+  end
+  
   # version string for generator meta tag (includes ruby version)
-  def Slideshow.generator
+  def self.generator
     "Slide Show (S9) #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
   end
 
 
-  def Slideshow.main
+  def self.main
     
     # allow env variable to set RUBYOPT-style default command line options
     #   e.g. -o slides -t <your_template_manifest_here>
-    slideshowopt = ENV[ 'SLIDESHOWOPT' ]
+    slideshowopt = Env.slideshowopt
     
     args = []
     args += slideshowopt.split if slideshowopt

@@ -413,7 +413,7 @@ def load_plugins
     
   patterns = []
   patterns << "#{config_dir}/lib/**/*.rb"
-  patterns << 'lib/**/*.rb' unless LIB_PATH == File.expand_path( 'lib' )  # don't include lib if we are in repo (don't include slideshow/lib)
+  patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)
   
   patterns.each do |pattern|
     pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
@@ -486,6 +486,7 @@ More examles:
 
 Further information:
   http://slideshow.rubyforge.org
+  
 EOS
  
  

@@ -17,8 +17,8 @@ class Config
 
   def load   
     # load builtin config file @  <gem>/config/slideshow.yml
-    config_file         = "#{File.dirname( LIB_PATH )}/config/slideshow.yml"
-    config_builtin_file = "#{File.dirname( LIB_PATH )}/config/slideshow.builtin.yml"
+    config_file         = "#{Slideshow.root}/config/slideshow.yml"
+    config_builtin_file = "#{Slideshow.root}/config/slideshow.builtin.yml"
 
     # run through erb        
     config_txt = File.read( config_file )
