@@ -19,7 +19,8 @@ require 'cgi'
 
 # required gems
 require 'redcloth'          # default textile library
-require 'markdown_select'   # default markdown library 
+require 'markdown'          # default markdown library
+require 'fetcher'           # fetch docs and blogs via http, https, etc.
 
 # our own code
 require 'slideshow/opts'
@@ -54,12 +55,13 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.0.3'
+  VERSION = '1.0.4'
 
   # version string for generator meta tag (includes ruby version)
   def Slideshow.generator
     "Slide Show (S9) #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
   end
+
 
   def Slideshow.main
     

@@ -464,28 +464,33 @@ def run( args )
        logger.level = Logger::DEBUG      
     end
  
+    usage =<<EOS
+
+Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
+
+#{cmd.help}
+
+Examples:
+  slideshow microformats
+  slideshow microformats.textile         # Process slides using Textile
+  slideshow microformats.text            # Process slides using Markdown
+  slideshow microformats.rst             # Process slides using reStructuredText
+  slideshow -o slides microformats       # Output slideshow to slides folder
+
+More examles:
+  slideshow -g                           # Generate slide show templates using built-in S6 pack
+
+  slideshow -l                           # List installed slide show templates
+  slideshow -f s5blank                   # Fetch (install) S5 blank starter template from internet
+  slideshow -t s5blank microformats      # Use your own slide show templates (e.g. s5blank)
+
+Further information:
+  http://slideshow.rubyforge.org
+EOS
+ 
+ 
     cmd.on_tail( "-h", "--help", "Show this message" ) do
-         puts 
-         puts "Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby"
-         puts
-         puts cmd.help
-         puts
-         puts "Examples:"
-         puts "  slideshow microformats"
-         puts "  slideshow microformats.textile         # Process slides using Textile"
-         puts "  slideshow microformats.text            # Process slides using Markdown"
-         puts "  slideshow microformats.rst             # Process slides using reStructuredText"
-         puts "  slideshow -o slides microformats       # Output slideshow to slides folder"
-         puts
-         puts "More examles:"
-         puts "  slideshow -g                           # Generate slide show templates using built-in S6 pack"
-         puts
-         puts "  slideshow -l                           # List installed slide show templates"
-         puts "  slideshow -f s5blank                   # Fetch (install) S5 blank starter template from internet"
-         puts "  slideshow -t s5blank microformats      # Use your own slide show templates (e.g. s5blank)"
-         puts
-         puts "Further information:"
-         puts "  http://slideshow.rubyforge.org" 
+         puts usage
          exit
     end
   end
@@ -494,7 +499,7 @@ def run( args )
   
   config.load
 
-  puts "Slide Show (S9) Version: #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+  puts Slideshow.generator
 
   if opts.list?
     list_slideshow_templates
