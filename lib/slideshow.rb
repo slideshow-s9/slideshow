@@ -68,7 +68,7 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.1.0.beta1'
+  VERSION = '1.1.0.beta2'
   
   def self.root
     "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"

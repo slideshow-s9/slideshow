@@ -6,14 +6,14 @@ Hoe.spec 'slideshow' do
   self.version = Slideshow::VERSION
   
   self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
-  self.url     = 'http://slideshow.rubyforge.org'
+  self.urls     = ['http://slideshow.rubyforge.org']
   
   self.author  = 'Gerald Bauer'
   self.email   = 'webslideshow@googlegroups.com'
   
   self.extra_deps = [
     ['RedCloth','>= 4.2.9'],
-    ['markdown','>= 0.1.0'],
+    ['markdown','>= 0.2.0'],
     ['fetcher','>= 0.1.0'],
     ['props','>= 0.1.0']
   ]
