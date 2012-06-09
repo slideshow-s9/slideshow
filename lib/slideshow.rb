@@ -34,6 +34,8 @@ class Env
   end
 end # class Env
 
+require 'textutils'     # text filters and helpers
+
 
 # our own code
 require 'slideshow/opts'
@@ -68,7 +70,7 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.1.0.beta2'
+  VERSION = '1.1.0.beta3'
   
   def self.root
     "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
