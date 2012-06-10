@@ -5,8 +5,9 @@ class Gen
   def initialize
     @logger = Logger.new(STDOUT)
     @logger.level = Logger::INFO
-    @opts   = Opts.new
+
     @config = Config.new
+    @opts   = Opts.new( @config )
   end
 
   attr_reader :logger, :opts, :config
@@ -14,6 +15,7 @@ class Gen
   
   def headers
     # give access to helpers to opts with a different name
+    ### fix/todo: use a headers wrapper?? delegation to opts.header(key) lookup??
     @opts
   end
 

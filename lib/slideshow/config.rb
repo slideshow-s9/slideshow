@@ -3,69 +3,72 @@ module Slideshow
 class Config
   
   def initialize
-    @hash = {}
+    # do nothing for now
   end
 
-  def []( key )
-    value = @hash[ normalize_key( key ) ]
-    if value.nil?
-      puts "** Warning: config key '#{key}' undefined (returning nil)"
-    end
+  def load
     
-    value
-  end
-
-  def load   
     # load builtin config file @  <gem>/config/slideshow.yml
-    config_file         = "#{Slideshow.root}/config/slideshow.yml"
-    config_builtin_file = "#{Slideshow.root}/config/slideshow.builtin.yml"
+    #
+    # NB: builtin use a different hierachy (not linked to default/home/user/cli props)
+    #     for now builtin has no erb processing
+    #     user cannot override builtin settings (only defaults see below)
+    props_builtin_file  = File.join( Slideshow.root, 'config', 'slideshow.builtin.yml' )
+    @props_builtin = Props.load_file( props_builtin_file )
 
-    # run through erb        
-    config_txt = File.read( config_file )
-    config_txt = ERB.new( config_txt ).result( binding() )
-    
-    @hash = YAML.load( config_txt )
-    
-    # for now builtin has no erb processing; add builtin hash to main hash 
-    @hash[ 'builtin' ] = YAML.load_file( config_builtin_file )
-    
-    # todo/fix: merge config files
-    #   check more locations
 
-    # check for user settings in working folder (check for slideshow.yml)
+    props_default_file  = File.join( Slideshow.root, 'config', 'slideshow.yml' )
+    @props = @props_default = Props.load_file_with_erb( props_default_file, binding() )
+
+    # check for user settings (slideshow.yml) in home folder
     
-    config_user_file = "./slideshow.yml"
-    if File.exists?( config_user_file )
-      puts "Loading settings from '#{config_user_file}'..."
-      @hash[ 'user' ] = YAML.load_file( config_user_file )   
-    end    
-     
+    props_home_file = File.join( Env.home, 'slideshow.yml' )
+    if File.exists?( props_home_file )
+      puts "Loading settings from '#{props_home_file}'..."
+      @props = @props_home = Props.load_file_with_erb( props_home_file, binding(), @props )
+    end
+      
+    # check for user settings (slideshow.yml) in working folder
+    
+    props_work_file = File.join( '.', 'slideshow.yml' )
+    if File.exists?( props_work_file )
+      puts "Loading settings from '#{props_work_file}'..."
+      @props = @props_work = Props.load_file_with_erb( props_work_file, binding(), @props )
+    end
   end
   
+  
+  def header( key )
+    @props.fetch_from_section( 'headers', normalize_key( key ), nil )
+  end
+
   def markdown_post_processing?( lib )
-    @hash.fetch( 'user', {} ).fetch( lib, {} ).fetch( 'post-processing', true )
+    ## todo: normalize key/lib???
+    @props.fetch_from_section( lib, 'post-processing', true )
   end
   
   def known_rest_extnames
-    @hash[ 'builtin' ][ 'rest' ][ 'extnames' ]
+    @props.fetch_from_section( 'rest', 'extnames', [] )
   end
   
   def known_textile_extnames
+    @props.fetch_from_section( 'textile', 'extnames', [] )
+  end
+
+  def known_markdown_extnames
+    ## delegate config to Markdown gem for now
+    ## todo/fix: how to pass on setting to Markdown gem??
+    Markdown.extnames
+  end
+  
+  def known_extnames
     # returns an array of known file extensions e.g.
     # [ '.textile', '.t' ]
     #
     # using nested key
     # textile:
     #   extnames:  [ .textile, .t ]
-    
-    @hash[ 'textile' ][ 'extnames' ] + @hash[ 'builtin' ][ 'textile' ][ 'extnames' ] 
-  end
-
-  def known_markdown_extnames
-    @hash[ 'markdown' ][ 'extnames' ] + @hash[ 'builtin' ][ 'markdown' ][ 'extnames' ]   
-  end
-  
-  def known_extnames
+    #
     # ruby check: is it better self. ?? or more confusing
     #  possible conflict only with write access (e.g. prop=) 
     
@@ -73,32 +76,36 @@ class Config
   end
   
   def text_filters
-    @hash[ 'builtin' ][ 'filters' ] + @hash[ 'filters' ]
+    @props.fetch( 'filters', [] )
   end
   
-  def helper_renames
-     @hash[ 'builtin' ][ 'helper' ][ 'renames' ] + @hash[ 'helper' ][ 'renames' ]
-  end
-
-  def helper_unparsed
-    # use unparsed params (passed along a single string)
-    @hash[ 'builtin' ][ 'helper' ][ 'unparsed' ]
-  end
-  
-  def helper_exprs
-    # allow expression as directives (no need for %end block)
-    # by default directives are assumed statements (e.g. %mydir  %end)
-    @hash[ 'builtin' ][ 'helper' ][ 'exprs' ] + @hash[ 'helper' ][ 'exprs' ]
-  end
-
   def google_analytics_code
-    @hash[ 'analytics' ][ 'google' ]
+    @props.fetch_from_section( 'analytics', 'google', nil )
   end
   
   def map_fetch_shortcut( key )
-    @hash[ 'fetch' ][ key ]
+    ## todo: normalize key???
+    @props.fetch_from_section( 'fetch', key, nil )
+  end
+
+  def helper_renames
+    ## NB: for now user cannot override/extent renames
+    @props_builtin['helper']['renames']
+  end
+
+  def helper_unparsed
+    ## NB: for now user cannot override/extent unparsed helpers
+    # use unparsed params (passed along a single string)
+    @props_builtin['helper']['unparsed']
   end
   
+  def helper_exprs
+    ## NB: for now user cannot override/extent helper exprs
+    # allow expression as directives (no need for %end block)
+    # by default directives are assumed statements (e.g. %mydir  %end)
+    @props_builtin['helper']['exprs']
+  end
+
 private
 
   def normalize_key( key )

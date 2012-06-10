@@ -5,8 +5,9 @@ module Slideshow
 
 class Opts
   
-  def initialize
-    @hash = {}
+  def initialize( config )
+    @hash   = {}
+    @config = config
   end
     
   def put( key, value )
@@ -35,18 +36,17 @@ class Opts
   def has_gradient?
     # has user defined gradient (using headers)?  (default values do NOT count)
     @hash.has_key?( :gradient_theme ) || @hash.has_key?( :gradient_colors )
-  end
-  
-    
+  end  
     
   def []( key )
     value = get( key )
+    value = @config.header( key ) if value.nil?   # try lookup in config properties next
+     
     if value.nil?
       puts "** Warning: header '#{key}' undefined"
-      "- #{key} not found -"
-    else
-      value 
+      value = "- #{key} not found -"
     end
+    value
   end
 
   def generate?

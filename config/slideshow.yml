@@ -1,22 +1,25 @@
-# built-in slideshow configuration
+#########################################
+# slideshow configuration defaults
 #
-# override settings in:
-#  ~/.slideshow/slideshow.yml
-# or
-#  ./slideshow.yml or ./.slideshow.yml
+#   override settings in:
+#     ~/slideshow.yml in home folder
+#        or
+#     ./slideshow.yml in working folder
 
-#lets you define default/fallback headers
+
+######################
+# lets you define default/fallback headers
 
 headers:
-  generator: <%= Slideshow.generator %> 
+  generator: "<%= Slideshow.generator %>"
   author:  Your Name Here
   email:   Your Email Here
   company: Your Company Here
   title:   Your Title Here
   subtitle: Your Subtitle Here
   footer: Your Footer Here
-  subfooter: Your Subfooter Here 
-  date:  <%= Date.today %>
+  subfooter: Your Subfooter Here
+  date:  "<%= Date.today %>"
 
   # todo: use nested config?? eg.
   # gradient:
@@ -36,39 +39,54 @@ headers:
 
 
 
-# shortcuts for fetching template packs
-#   map shortcut to URI
-    
-fetch:
-    s6syntax: https://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
-    s6blank: https://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
-    s5blank: https://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
-    s5themes: https://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt
-    fullerscreen: https://github.com/geraldb/slideshow-fullerscreen/raw/master/fullerscreen.txt
-    slidy: https://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt
-    g5: https://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
-    slippy: https://github.com/geraldb/slideshow-slippy/raw/master/slippy.txt
-    csss: https://github.com/geraldb/slideshow-csss/raw/master/csss.txt
-    deck.js: https://github.com/geraldb/slideshow-deck.js/raw/master/deck.js.txt
-    impress.js: https://github.com/geraldb/slideshow-impress.js/raw/master/impress.js.txt
-    shower: https://github.com/geraldb/slideshow-shower/raw/master/shower.txt
 
 # your google analytics code  
 analytics:
-    google: UA-XXX
-    
+  google: UA-XXX
 
-helper:
-  renames: []
-  exprs: []
 
-### markup (textile, markdown) config
+########################################################3
+### text/markup (textile, markdown) processing config
 
 # filters to run before markup processing
-filters: []
-    
+filters:
+  - skip-end-directive
+  - directives_bang_style_to_percent_style
+  - directives_percent_style
+  - comments-percent-style 
+  - leading-headers
+  - erb-django-style
+  - erb-rename-helper-hack
+  - dump_content_to_file_debug_text_erb
+  - erb
+  - code-block-curly-style
+  - dump_content_to_file_debug_text
+
+
+# markup (textile, markdown, rest) config
+
 textile:
-  extnames: []
-  
-markdown:
-  extnames: []
+  extnames: [ .textile, .t ]
+
+rest:
+  extnames: [ .rst, .rest ]
+
+# NB: markdown now configured in markdown.yml (using markdown gem)
+
+
+#############################
+# shortcuts for fetching template packs
+#   map shortcut to URI
+fetch:
+  s6syntax: https://github.com/geraldb/slideshow-s6-syntax-highlighter/raw/master/s6syntax.txt
+  s6blank: https://github.com/geraldb/slideshow-s6-blank/raw/master/s6blank.txt
+  s5blank: https://github.com/geraldb/slideshow-s5-blank/raw/master/s5blank.txt
+  s5themes: https://github.com/geraldb/slideshow-s5-themes/raw/master/s5themes.txt
+  fullerscreen: https://github.com/geraldb/slideshow-fullerscreen/raw/master/fullerscreen.txt
+  slidy: https://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt
+  g5: https://github.com/geraldb/slideshow-google-html5-slides/raw/master/g5.txt
+  slippy: https://github.com/geraldb/slideshow-slippy/raw/master/slippy.txt
+  csss: https://github.com/geraldb/slideshow-csss/raw/master/csss.txt
+  deck.js: https://github.com/geraldb/slideshow-deck.js/raw/master/deck.js.txt
+  impress.js: https://github.com/geraldb/slideshow-impress.js/raw/master/impress.js.txt
+  shower: https://github.com/geraldb/slideshow-shower/raw/master/shower.txt
