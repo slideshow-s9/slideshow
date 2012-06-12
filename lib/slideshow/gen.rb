@@ -6,18 +6,13 @@ class Gen
     @logger = Logger.new(STDOUT)
     @logger.level = Logger::INFO
 
-    @config = Config.new
-    @opts   = Opts.new( @config )
+    @config  = Config.new
+    @opts    = Opts.new
+    @headers = Headers.new( @config )
   end
 
-  attr_reader :logger, :opts, :config
+  attr_reader :logger, :opts, :config, :headers
   attr_reader :session      # give helpers/plugins a session-like hash
-  
-  def headers
-    # give access to helpers to opts with a different name
-    ### fix/todo: use a headers wrapper?? delegation to opts.header(key) lookup??
-    @opts
-  end
 
   attr_reader :markup_type  # :textile, :markdown, :rest
   
@@ -58,7 +53,7 @@ class Gen
   end
   
    
-  def wrap_markup( text )    
+  def wrap_markup( text )
     if markup_type == :textile
       # saveguard with notextile wrapper etc./no further processing needed
       "<notextile>\n#{text}\n</notextile>"
@@ -66,24 +61,12 @@ class Gen
       text
     end
   end
-    
-  # todo/fix: move to Config class  
+
+  # todo/fix: move to Config class
   def cache_dir
-    RUBY_PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
+    File.join( Env.home, '.slideshow' )
   end
 
-  # todo/fix: move to Config class  
-  def win32_cache_dir
-    unless ENV['HOMEDRIVE'] && ENV['HOMEPATH'] && File.exists?(home = ENV['HOMEDRIVE'] + ENV['HOMEPATH'])
-      puts "No HOMEDRIVE or HOMEPATH environment variable.  Set one to save a" +
-           "local cache of stylesheets for syntax highlighting and more."
-      return false
-    else
-      return File.join(home, '.slideshow')
-    end
-  end
-  
-  # todo/fix: move to Config class    
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"
       
@@ -346,8 +329,6 @@ class Gen
   @name        = basename
   @extname     = extname
 
-  @headers     = @opts  # deprecate/remove: use headers method in template
-
   @session     = {}  # reset session hash for plugins/helpers
 
   inname  =  "#{dirname}/#{basename}#{extname}"
@@ -436,13 +417,13 @@ def run( args )
     
     cmd.banner = "Usage: slideshow [options] name"
     
-    cmd.on( '-o', '--output PATH', 'Output Path' ) { |s| opts.put( 'output', s ) }
+    cmd.on( '-o', '--output PATH', 'Output Path' ) { |path| opts.output_path = path }
 
-    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.put( 'generate', true ) }
+    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.generate = true }
     
     cmd.on( "-t", "--template MANIFEST", "Template Manifest" ) do |t|
       # todo: do some checks on passed in template argument
-      opts.put( 'manifest', t )
+      opts.manifest = t
     end
 
     # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
@@ -450,15 +431,15 @@ def run( args )
         
     # ?? cmd.on( '-i', '--include PATH', 'Load Path' ) { |s| opts.put( 'include', s ) }
 
-    cmd.on( '-f', '--fetch URI', 'Fetch Templates' ) do |u|
-      opts.put( 'fetch_uri', u )
+    cmd.on( '-f', '--fetch URI', 'Fetch Templates' ) do |uri|
+      opts.fetch_uri = uri
     end
     
-    cmd.on( '-c', '--config PATH', 'Configuration Path (default is ~/.slideshow)' ) do |p|
-      opts.put( 'config_path', p )
+    cmd.on( '-c', '--config PATH', 'Configuration Path (default is ~/.slideshow)' ) do |path|
+      opts.config_path = path
     end
     
-    cmd.on( '-l', '--list', 'List Installed Templates' ) { opts.put( 'list', true ) }
+    cmd.on( '-l', '--list', 'List Installed Templates' ) { opts.list = true }
 
     # todo: find different letter for debug trace switch (use v for version?)
     cmd.on( "-v", "--verbose", "Show debug trace" )  do

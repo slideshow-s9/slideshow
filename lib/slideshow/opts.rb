@@ -3,13 +3,13 @@ module Slideshow
 # todo: split (command line) options and headers?
 # e.g. share (command line) options between slide shows (but not headers?)
 
-class Opts
-  
+class Headers
+
   def initialize( config )
     @hash   = {}
     @config = config
   end
-    
+
   def put( key, value )
     key = normalize_key( key )
     setter = "#{key}=".to_sym
@@ -20,7 +20,7 @@ class Opts
       @hash[ key ] = value
     end
   end
-  
+
   def gradient=( line )
     # split into theme (first value) and colors (everything else)
     #  e.g.  diagonal red black
@@ -49,43 +49,6 @@ class Opts
     value
   end
 
-  def generate?
-    get_boolean( 'generate', false )
-  end
-  
-  def list?
-    get_boolean( 'list', false )
-  end
-  
-  def fetch?
-    @hash.has_key?( :fetch_uri ) 
-  end
-  
-  def fetch_uri
-    get( 'fetch_uri', '-fetch uri required-' )
-  end
-  
-  def has_includes?
-    @hash.has_key?( :include )
-  end
-  
-  def includes
-    # fix: use os-agnostic delimiter (use : for Mac/Unix?)
-    has_includes? ? @hash[ :include ].split( ';' ) : []
-  end
-    
-  def manifest  
-    get( 'manifest', 's6.txt' )
-  end
-  
-  def config_path
-    get( 'config_path' )
-  end
-  
-  def output_path
-    get( 'output', '.' )
-  end
-
   def code_engine
     get( 'code-engine' )
   end
@@ -107,6 +70,7 @@ class Opts
     :code_txmt         => 'false', # Text Mate Hyperlink for Source?
   }
 
+## todo: rename get to fetch??
   def get( key, default=nil )
     key = normalize_key(key)
     value = @hash.fetch( key, DEFAULTS[ key ] )
@@ -131,6 +95,80 @@ private
     else
       (value == true || value =~ /true|yes|on/i) ? true : false
     end
+  end
+  
+end  # class Headers
+
+
+class Opts
+  
+  def generate=(value)
+    @generate = value
+  end
+
+  def generate?
+    return false if @generate.nil?   # default generate flag is false
+    @generate == true
+  end
+  
+  def list=(value)
+    @list = value
+  end
+  
+  def list?
+    return false if @list.nil?  # default list flag is false
+    @list == true
+  end
+
+
+  def fetch_uri=(value)
+    @fetch_uri = value
+  end
+
+  def fetch_uri
+    @fetch_uri || '-fetch uri required-'
+  end
+  
+  def fetch?
+    @fetch_uri.nil? ? false : true
+  end
+
+
+  def includes=(value)
+    @includes = value
+  end
+
+  def includes
+    # fix: use os-agnostic delimiter (use : for Mac/Unix?)
+    @includes.nil? ? [] : @includes.split( ';' )
+  end
+  
+  def has_includes?
+    @includes.nil? ? false : true
+  end
+  
+  def manifest=(value)
+    @manifest = value
+  end
+    
+  def manifest
+    @manifest || 's6.txt'
+  end
+  
+  def config_path=(value)
+    @config_path = value
+  end
+  
+  def config_path
+    @config_path
+  end
+    
+  def output_path=(value)
+    @output_path = value
+  end
+  
+  def output_path
+    @output_path || '.'
   end
 
 end # class Opts
