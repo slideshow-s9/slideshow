@@ -13,6 +13,7 @@ lib/slideshow/filters/headers_filter.rb
 lib/slideshow/filters/slide_filter.rb
 lib/slideshow/filters/text_filter.rb
 lib/slideshow/gen.rb
+lib/slideshow/headers.rb
 lib/slideshow/helpers/analytics_helper.rb
 lib/slideshow/helpers/background_helper.rb
 lib/slideshow/helpers/capture_helper.rb

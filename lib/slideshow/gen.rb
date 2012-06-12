@@ -63,9 +63,12 @@ class Gen
   end
 
   # todo/fix: move to Config class
+  # - used in syntax/uv_helper (use config.cache_dir to access?)
+  
   def cache_dir
     File.join( Env.home, '.slideshow' )
   end
+
 
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"

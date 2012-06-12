@@ -40,6 +40,7 @@ require 'textutils'     # text filters and helpers
 # our own code
 require 'slideshow/version'
 require 'slideshow/opts'
+require 'slideshow/headers'
 require 'slideshow/config'
 require 'slideshow/gen'
 require 'slideshow/manifest'

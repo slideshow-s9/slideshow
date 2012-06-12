@@ -25,14 +25,13 @@ headers:
   # gradient:
   #   theme: dark
   #   color1:
-  gradient-theme:  dark
-  gradient-color1:  red
-  gradient-color2:  black
+  gradient-theme:  diagonal
+  gradient-colors:  red orange
 
   # todo: use nested config??
   #
-  # ultraviolet (uv) | coderay (cr) 
-  code-engine:  uv
+  # SyntaxHighligher (sh) | ultraviolet (uv) | coderay (cr)
+  code-engine:  sh
   # Text Mate Hyperlink for Source?
   code-txmt:  false
   # todo: add code-linenumbers??

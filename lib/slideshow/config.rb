@@ -36,8 +36,7 @@ class Config
       @props = @props_work = Props.load_file_with_erb( props_work_file, binding(), @props )
     end
   end
-  
-  
+    
   def header( key )
     @props.fetch_from_section( 'headers', normalize_key( key ), nil )
   end
