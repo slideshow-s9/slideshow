@@ -1,5 +1,5 @@
 require 'hoe'
-require './lib/slideshow.rb'
+require './lib/slideshow/version.rb'
 
 Hoe.spec 'slideshow' do
   
@@ -7,6 +7,7 @@ Hoe.spec 'slideshow' do
   
   self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
   self.urls     = ['http://slideshow.rubyforge.org']
+  
   
   self.author  = 'Gerald Bauer'
   self.email   = 'webslideshow@googlegroups.com'

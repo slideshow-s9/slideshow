@@ -38,6 +38,7 @@ require 'textutils'     # text filters and helpers
 
 
 # our own code
+require 'slideshow/version'
 require 'slideshow/opts'
 require 'slideshow/config'
 require 'slideshow/gen'
@@ -70,8 +71,6 @@ require 'slideshow/filters/slide_filter'
 
 module Slideshow
 
-  VERSION = '1.1.0.beta5'
-  
   def self.root
     "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
   end

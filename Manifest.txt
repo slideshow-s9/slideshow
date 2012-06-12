@@ -31,6 +31,7 @@ lib/slideshow/markup/rest.rb
 lib/slideshow/markup/textile.rb
 lib/slideshow/opts.rb
 lib/slideshow/slide.rb
+lib/slideshow/version.rb
 templates/s6.txt
 templates/s6.txt.gen
 templates/s6/jquery.js
