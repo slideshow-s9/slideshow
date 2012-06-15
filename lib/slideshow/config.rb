@@ -2,9 +2,38 @@ module Slideshow
 
 class Config
   
-  def initialize
-    # do nothing for now
+  def initialize( logger, opts )
+    @logger = logger
+    @opts   = opts
   end
+
+  attr_reader :logger, :opts
+
+
+  # todo/fix: fix references after this move to here, that is, Config class
+  # - used in syntax/uv_helper (use config.cache_dir to access?)
+  
+  def cache_dir
+    File.join( Env.home, '.slideshow' )
+  end
+
+  def config_dir
+    unless @config_dir  # first time? calculate config_dir value to "cache"
+      
+      if opts.config_path
+        @config_dir = opts.config_path
+      else
+        @config_dir = cache_dir
+      end
+    
+      # make sure path exists
+      FileUtils.makedirs( @config_dir ) unless File.directory? @config_dir
+    end
+    
+    @config_dir
+  end
+
+
 
   def load
     

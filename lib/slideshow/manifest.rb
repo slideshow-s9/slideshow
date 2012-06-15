@@ -99,7 +99,3 @@ module Slideshow
     
   end # module  Manifest
 end # module Slideshow
-
-class Slideshow::Gen
-  include Slideshow::Manifest
-end
