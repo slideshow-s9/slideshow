@@ -18,7 +18,7 @@ class Runner
 def load_plugins
     
   patterns = []
-  patterns << "#{config_dir}/lib/**/*.rb"
+  patterns << "#{config.config_dir}/lib/**/*.rb"
   patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)
   
   patterns.each do |pattern|
@@ -110,11 +110,11 @@ EOS
   puts Slideshow.generator
 
   if opts.list?
-    List.new( logger, opts, config, headers ).list_slideshow_templates   ### use run; remove headers/opts
+    List.new( logger, opts, config ).run   ### todo: remove opts (merge access into config)
   elsif opts.generate?
-    GenTemplates.new( logger, opts, config, headers ).create_slideshow_templates  ### use run; remove headers/opts
+    GenTemplates.new( logger, opts, config ).run  ###  todo: remove opts
   elsif opts.fetch?
-    Fetch.new( logger, opts, config, headers ).fetch_slideshow_templates  ### use run; remove headers/opts
+    Fetch.new( logger, opts, config ).run  ### todo: remove opts
   else
     load_plugins  # check for optional plugins/extension in ./lib folder
 

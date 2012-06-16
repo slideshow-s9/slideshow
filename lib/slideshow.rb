@@ -42,10 +42,14 @@ require 'slideshow/version'
 require 'slideshow/opts'
 require 'slideshow/headers'
 require 'slideshow/config'
-require 'slideshow/gen'
 require 'slideshow/manifest'
-require 'slideshow/fetch'
 require 'slideshow/slide'
+require 'slideshow/runner'
+
+require 'slideshow/commands/fetch'
+require 'slideshow/commands/gen'
+require 'slideshow/commands/gen_templates'
+require 'slideshow/commands/list'
 
 require 'slideshow/markup/textile'
 require 'slideshow/markup/markdown'
@@ -92,7 +96,7 @@ module Slideshow
     args += slideshowopt.split if slideshowopt
     args += ARGV.dup
     
-    Gen.new.run(args)
+    Runner.new.run(args)
   end
 
 end # module Slideshow

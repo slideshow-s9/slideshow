@@ -6,13 +6,15 @@ bin/slideshow
 config/slideshow.builtin.yml
 config/slideshow.yml
 lib/slideshow.rb
+lib/slideshow/commands/fetch.rb
+lib/slideshow/commands/gen.rb
+lib/slideshow/commands/gen_templates.rb
+lib/slideshow/commands/list.rb
 lib/slideshow/config.rb
-lib/slideshow/fetch.rb
 lib/slideshow/filters/debug_filter.rb
 lib/slideshow/filters/headers_filter.rb
 lib/slideshow/filters/slide_filter.rb
 lib/slideshow/filters/text_filter.rb
-lib/slideshow/gen.rb
 lib/slideshow/headers.rb
 lib/slideshow/helpers/analytics_helper.rb
 lib/slideshow/helpers/background_helper.rb
@@ -31,6 +33,7 @@ lib/slideshow/markup/markdown.rb
 lib/slideshow/markup/rest.rb
 lib/slideshow/markup/textile.rb
 lib/slideshow/opts.rb
+lib/slideshow/runner.rb
 lib/slideshow/slide.rb
 lib/slideshow/version.rb
 templates/s6.txt

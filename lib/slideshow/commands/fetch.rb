@@ -6,14 +6,13 @@ class Fetch
 
 ### fix: remove opts, use config (wrapped!!)
   
-  def initialize( logger, opts, config, headers )
+  def initialize( logger, opts, config )
     @logger  = logger
     @opts    = opts
     @config  = config
-    @headers = headers
   end
 
-  attr_reader :logger, :opts, :config, :headers
+  attr_reader :logger, :opts, :config
 
   def fetch_file( dest, src )
     
@@ -25,7 +24,7 @@ class Fetch
   end
   
   
-  def fetch_slideshow_templates
+  def run
     logger.debug "fetch_uri=#{opts.fetch_uri}"
     
     src = opts.fetch_uri
@@ -49,7 +48,7 @@ class Fetch
   
     logger.debug "scheme: #{uri.scheme}, host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
   
-    dirname  = File.dirname( uri.path )    
+    dirname  = File.dirname( uri.path )
     basename = File.basename( uri.path, '.*' ) # e.g. fullerscreen     (without extension)
     filename = File.basename( uri.path )       # e.g. fullerscreen.txt (with extension)
 
@@ -57,12 +56,12 @@ class Fetch
     logger.debug "basename: #{basename}, filename: #{filename}"
 
     dlbase = "#{uri.scheme}://#{uri.host}:#{uri.port}#{dirname}"
-    pkgpath = File.expand_path( "#{config_dir}/templates/#{basename}" )
+    pkgpath = File.expand_path( "#{config.config_dir}/templates/#{basename}" )
   
     logger.debug "dlpath: #{dlbase}"
     logger.debug "pkgpath: #{pkgpath}"
   
-    FileUtils.makedirs( pkgpath ) unless File.directory? pkgpath 
+    FileUtils.makedirs( pkgpath ) unless File.directory? pkgpath
    
     puts "Fetching template package '#{basename}'"
     puts "  : from '#{dlbase}'"
@@ -93,7 +92,7 @@ class Fetch
         fetch_file( dest, src )
       end
     end   
-    puts "Done."  
+    puts "Done."
   end  
 
 

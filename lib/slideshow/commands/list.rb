@@ -6,17 +6,16 @@ class List
 
 ### fix: remove opts, use config (wrapped!!)
   
-  def initialize( logger, opts, config, headers )
+  def initialize( logger, opts, config )
     @logger  = logger
     @opts    = opts
     @config  = config
-    @headers = headers
   end
 
-  attr_reader :logger, :opts, :config, :headers
+  attr_reader :logger, :opts, :config
 
 
-  def list_slideshow_templates
+  def run
     manifests = installed_template_manifests
     
     puts ''

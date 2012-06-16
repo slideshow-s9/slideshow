@@ -81,8 +81,8 @@ module Slideshow
       "#{Slideshow.root}/templates/*.txt"
     ]
     config_patterns  = [
-      "#{config_dir}/templates/*.txt",
-      "#{config_dir}/templates/*/*.txt"
+      "#{config.config_dir}/templates/*.txt",
+      "#{config.config_dir}/templates/*/*.txt"
     ]
     current_patterns = [
       "templates/*.txt",

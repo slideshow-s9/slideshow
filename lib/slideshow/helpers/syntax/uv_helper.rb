@@ -24,10 +24,10 @@ def uv_worker( code, opts )
   uv_first_time = session.fetch( :uv_first_time, true )
   if uv_first_time
     session[ :uv_first_time ] = false
-    logger.debug "cache_dir=#{cache_dir}"
+    logger.debug "cache_dir=#{config.cache_dir}"
 
-    FileUtils.mkdir(cache_dir) unless File.exists?(cache_dir) if cache_dir
-    Uv.copy_files "xhtml", cache_dir  
+    FileUtils.mkdir(config.cache_dir) unless File.exists?(config.cache_dir) if config.cache_dir
+    Uv.copy_files "xhtml", config.cache_dir
   end
     
   # first time this theme gets used add it to content_for hash for templates to include   
@@ -35,7 +35,7 @@ def uv_worker( code, opts )
   if uv_themes[ theme ].nil?
     uv_themes[ theme ] = true
     
-    theme_content = File.read( "#{cache_dir}/css/#{theme}.css" )
+    theme_content = File.read( "#{config.cache_dir}/css/#{theme}.css" )
 
     theme_out =  %{/* styles for ultraviolet code syntax highlighting theme '#{theme}' */\n\n}
     theme_out << theme_content
