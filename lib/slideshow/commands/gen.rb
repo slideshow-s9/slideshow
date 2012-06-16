@@ -166,7 +166,7 @@ class Gen
       matches = manifests.select { |m| m[0] == manifest_path_or_name } 
 
       if matches.empty?
-        puts "*** error: unknown template manifest '#{manifest_path_or_name}'"  
+        puts "*** error: unknown template manifest '#{manifest_path_or_name}'"
         # todo: list installed manifests
         exit 2
       end
@@ -174,6 +174,7 @@ class Gen
       manifest = load_manifest( matches[0][1] )
     end
   
+
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
     logger.debug "outpath=#{outpath}"
@@ -214,7 +215,7 @@ class Gen
 
   @session     = {}  # reset session hash for plugins/helpers
 
-  inname  =  "#{dirname}/#{basename}#{extname}"
+  inname  =  "#{basename}#{extname}"
 
   logger.debug "inname=#{inname}"
     
@@ -245,6 +246,10 @@ class Gen
   end
 
 
+  #### fix/todo:
+  ##
+  ## check for .erb file extension for trigger for erb processing
+
   manifest.each do |entry|
     outname = entry[0]
     if outname.include? '__file__' # process
@@ -266,10 +271,21 @@ class Gen
     else # just copy verbatim if target/dest has no __file__ in name
       dest   = entry[0]
       source = entry[1]
-            
-      puts "Copying to #{dest} from #{source}..."     
+
+  #### fix/todo:
+  ##
+  ## check for .erb file extension for trigger for erb processing
+
+      puts "Copying to #{dest} from #{source}..."
       FileUtils.copy( source, with_output_path( dest, outpath ) )
     end
+  end
+  
+  
+  ## pop/restore working folder/dir
+  unless newcwd == oldcwd
+    logger.debug "oldcwd=>#{oldcwd}<, newcwd=>#{newcwd}<"
+    Dir.chdir( oldcwd )
   end
 
   puts "Done."
