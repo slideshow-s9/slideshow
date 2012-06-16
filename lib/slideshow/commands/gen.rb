@@ -96,7 +96,11 @@ class Gen
     if (@markup_type == :markdown && Markdown.lib == 'pandoc-ruby') || @markup_type == :rest
       content = add_slide_directive_before_div_h1( content )
     else
-      content = add_slide_directive_before_h1( content )
+      if config.header_level == 2
+        content = add_slide_directive_before_h2( content )
+      else # assume level 1
+        content = add_slide_directive_before_h1( content )
+      end
     end
 
     dump_content_to_file_debug_html( content )
@@ -128,7 +132,7 @@ class Gen
 
     slides2 = []
     slides.each do |slide_source|
-      slides2 << Slide.new( logger, slide_source )
+      slides2 << Slide.new( slide_source, config )
     end
 
      # for convenience create a string w/ all in-one-html

@@ -4,20 +4,23 @@ module Slideshow
 
     attr_accessor :logger
 
-    attr_accessor :source   # "unparsed" html source / todo: rename to content
-    attr_accessor :header
-    attr_accessor :content   # todo: rename to body??
-    attr_accessor :classes
-    attr_accessor :data
-  
-    def initialize( logger, source )
-      @logger = logger
-
-      @source = source  # "unparsed" html source / todo: rename to content
+    # NB: unparsed html source (use content_without_header
+    #  for content without option header)
       
-      @header  = nil
-      @content = nil
-      @classes = nil
+    attr_accessor :content
+    attr_accessor :content_without_header
+    attr_accessor :header
+    attr_accessor :classes
+  
+    def initialize( content, options )
+      @logger       = options.logger
+      @header_level = options.header_level
+      
+      @content = content
+      
+      @header                 = nil
+      @content_without_header = nil
+      @classes                = nil   # NB: style classes as all in one string
       @data    = {}
       
       parse()
@@ -27,7 +30,7 @@ module Slideshow
       ## pass 1) check for (css style) classes and data attributes
       ## check for css style classes
       from = 0
-      while( pos = @source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
+      while( pos = @content.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
         logger.debug "  adding css classes from pi >#{$1.downcase}<: >#{$2.strip}<"
 
         from = Regexp.last_match.end(0)  # continue search later from here
@@ -58,12 +61,19 @@ module Slideshow
       # tip test regex online at rubular.com
       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
 
-      if @source =~ /^(.*?)(<h1.*?>.*?<\/h1>)(.*)/m
+      if @header_level == 2
+        pattern = /^(.*?)(<h2.*?>.*?<\/h2>)(.*)/m
+      else # assume header level 1
+        pattern = /^(.*?)(<h1.*?>.*?<\/h1>)(.*)/m
+      end
+
+      if @content =~ pattern
         @header  = $2
-        @content = ($1 ? $1 : '') + ($3 ? $3 : '')
+        @content_without_header = ($1 ? $1 : '') + ($3 ? $3 : '')
         logger.debug "  adding slide with header (h1):\n#{@header}"
       else
-        @content = @source
+        @header = nil    # todo: set to '' empty string? why not?
+        @content_without_header = @content
         logger.debug "  adding slide with *no* header:\n#{@content}"
       end
     end  # method parse
@@ -85,13 +95,7 @@ module Slideshow
       buf << "<div class='slide "
       buf << classes    if classes
       buf << "'>\n"
-      
-      if header
-        buf << "#{header}\n"
-      end
-      
-      buf << content     if content
-      
+      buf << content
       buf << "</div>\n"
       buf
     end
@@ -99,16 +103,11 @@ module Slideshow
     def to_google_html5
       buf  = ""
       buf << "<div class='slide'>\n"
-
-      if header
-        buf << "<header>#{header}</header>\n"
-      end
-      
-      buf << "<section class='"
-      buf << classes      if classes
+      buf << "<header>#{header}</header>\n"   if header
+      buf << "<section "
+      buf << "class='#{classes}'"             if classes
       buf << "'>\n"
-      
-      buf << content      if content
+      buf << content_without_header           if content_without_header
       buf << "</section>\n"
       buf << "</div>\n"
       buf

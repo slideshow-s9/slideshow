@@ -9,6 +9,9 @@ class Config
 
   attr_reader :logger, :opts
 
+  def header_level
+    @opts.header_level
+  end
 
   # todo/fix: fix references after this move to here, that is, Config class
   # - used in syntax/uv_helper (use config.cache_dir to access?)

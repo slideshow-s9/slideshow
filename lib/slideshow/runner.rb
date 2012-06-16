@@ -83,39 +83,55 @@ def run( args )
   opt=OptionParser.new do |cmd|
     
     cmd.banner = "Usage: slideshow [options] name"
-    
+        
     cmd.on( '-o', '--output PATH', 'Output Path' ) { |path| opts.output_path = path }
-
-    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.generate = true }
     
-    cmd.on( "-t", "--template MANIFEST", "Template Manifest" ) do |t|
+    cmd.on( "-t", "--template MANIFEST", "Template Manifest (default is s6.txt)" ) do |t|
       # todo: do some checks on passed in template argument
       opts.manifest = t
     end
 
+
+  #  cmd.on( '--header NUM', 'Header Level (default is 1)' ) do |n|
+  #    opts.header_level = n.to_i
+  #  end
+
+    cmd.on( '--h1', 'Set Header Level to 1 (default)' ) { opts.header_level = 1 }
+    cmd.on( '--h2', 'Set Header Level to 2' ) { opts.header_level = 2 }
+
+
     # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
-    # ?? opts.on( "--version", "Show version" )  {}
         
     # ?? cmd.on( '-i', '--include PATH', 'Load Path' ) { |s| opts.put( 'include', s ) }
+
+    cmd.on( '-c', '--config PATH', 'Configuration Path (default is ~/.slideshow)' ) do |path|
+      opts.config_path = path
+    end
 
     cmd.on( '-f', '--fetch URI', 'Fetch Templates' ) do |uri|
       opts.fetch_uri = uri
     end
-    
-    cmd.on( '-c', '--config PATH', 'Configuration Path (default is ~/.slideshow)' ) do |path|
-      opts.config_path = path
-    end
+
+    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.generate = true }
     
     cmd.on( '-l', '--list', 'List Installed Templates' ) { opts.list = true }
 
     # todo: find different letter for debug trace switch (use v for version?)
     cmd.on( "-v", "--verbose", "Show debug trace" )  do
        logger.datetime_format = "%H:%H:%S"
-       logger.level = Logger::DEBUG      
+       logger.level = Logger::DEBUG
+    end
+    
+    ## todo: add --version
+
+    cmd.on( '--version', "Show version" ) do
+      puts Slideshow.generator
+      exit
     end
  
-    usage =<<EOS
-
+    cmd.on_tail( "-h", "--help", "Show this message" ) do
+         puts <<EOS
+         
 Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
 
 #{cmd.help}
@@ -138,10 +154,6 @@ Further information:
   http://slideshow.rubyforge.org
   
 EOS
- 
- 
-    cmd.on_tail( "-h", "--help", "Show this message" ) do
-         puts usage
          exit
     end
   end

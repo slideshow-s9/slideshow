@@ -3,6 +3,15 @@ module Slideshow
 
 class Opts
 
+  def header_level=(value)
+    @header_level = value.to_i
+  end
+  
+  def header_level
+    ## todo: check   0 is not nil?
+    @header_level || 1
+  end
+
   def generate=(value)
     @generate = value
   end

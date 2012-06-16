@@ -28,6 +28,22 @@ def add_slide_directive_before_h1( content )
   content
 end
 
+def add_slide_directive_before_h2( content )
+
+  slide_count = 0
+
+  content.gsub!( /<h2/ ) do |match|
+    slide_count += 1
+    "\n<!-- _S9SLIDE_ -->\n#{Regexp.last_match(0)}"
+  end
+  
+  puts "  Adding #{slide_count} slide breaks (using h2 rule)..."
+  
+  content
+end
+
+
+
 # add slide directive before div h1 (for pandoc-generated html)
 #
 # e.g. changes:
