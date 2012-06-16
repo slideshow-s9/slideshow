@@ -126,65 +126,24 @@ class Gen
     end
 
 
-    ## split slide source into header (optional) and content/body
-    ## plus check for (css style) classes and data attributes
-
     slides2 = []
     slides.each do |slide_source|
-      slide = Slide.new
-
-      ## check for css style classes
-      from = 0
-      while (pos = slide_source.index( /<!-- _S9(SLIDE|STYLE)_(.*?)-->/m, from ))
-        logger.debug "  adding css classes from pi #{$1.downcase}: #{$2.strip}"
-
-        from = Regexp.last_match.end(0)  # continue search later from here
-        
-        values = $2.strip.dup
-        
-        # remove data values (eg. x=-20 scale=4) and store in data hash
-        values.gsub!( /([-\w]+)[ \t]*=[ \t]*([-\w\.]+)/ ) do |_|
-          logger.debug "    adding data pair: key=>#{$1.downcase}< value=>#{$2}<"
-          slide.data[ $1.downcase.dup ] = $2.dup
-          " "  # replace w/ space
-        end
-        
-        values.strip!  # remove spaces  # todo: use squish or similar and check for empty string
-                
-        if slide.classes.nil?
-          slide.classes = values
-        else
-          slide.classes << " #{values}"
-        end
-      end
-       
-       # try to cut off header using non-greedy .+? pattern; tip test regex online at rubular.com
-       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
-       #    (e.g. extract h1 - do not assume it starts slide source)
-      if slide_source =~ /^\s*(<h1.*?>.*?<\/h\d>)\s*(.*)/m 
-        slide.header  = $1
-        slide.content = ($2 ? $2 : "")
-        logger.debug "  adding slide with header:\n#{slide.header}"
-      else
-        slide.content = slide_source
-        logger.debug "  adding slide with *no* header:\n#{slide.content}"
-      end
-      slides2 << slide
+      slides2 << Slide.new( logger, slide_source )
     end
 
      # for convenience create a string w/ all in-one-html
      #  no need to wrap slides in divs etc.
    
      content2 = ""
-     slides2.each do |slide|         
+     slides2.each do |slide|
         content2 << slide.to_classic_html
      end
    
     # make content2 and slide2 available to erb template
     # -- todo: cleanup variable names and use attr_readers for content and slide
   
-    @slides   = slides2     # strutured content 
-    @content  = content2   # content all-in-one    
+    @slides   = slides2     # strutured content
+    @content  = content2   # content all-in-one
   end
 
 
