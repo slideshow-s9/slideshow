@@ -194,29 +194,16 @@ class Gen
       logger.debug "oldcwd=#{oldcwd}"
       logger.debug "newcwd=#{newcwd}"
       Dir.chdir newcwd
-    end  
+    end
 
     puts "Preparing slideshow '#{basename}'..."
-                
-  if extname.empty? then
-    extname  = ".textile"   # default to .textile 
-    
-    config.known_extnames.each do |e|
-       logger.debug "File.exists? #{dirname}/#{basename}#{e}"
-       if File.exists?( "#{dirname}/#{basename}#{e}" ) then         
-          extname = e
-          logger.debug "extname=#{extname}"
-          break
-       end
-    end     
-  end
-
-  if config.known_markdown_extnames.include?( extname )
-    @markup_type = :markdown
+   
+  if config.known_textile_extnames.include?( extname )
+    @markup_type = :textile
   elsif config.known_rest_extnames.include?( extname )
     @markup_type = :rest
-  else
-    @markup_type = :textile
+  else  # default/fallback use markdown
+    @markup_type = :markdown
   end
   
   # shared variables for templates (binding)
