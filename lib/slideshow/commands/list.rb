@@ -2,7 +2,7 @@ module Slideshow
 
 class List
 
-  include Manifest   # gets us methods like installed_template_manifests, etc.
+  include Manifest
 
 ### fix: remove opts, use config (wrapped!!)
   
@@ -14,7 +14,6 @@ class List
 
   attr_reader :logger, :opts, :config
 
-
   def run
     manifests = installed_template_manifests
     
@@ -25,7 +24,6 @@ class List
       puts "  #{manifest[0]} (#{manifest[1]})"
     end
   end
-
 
 end # class List
 

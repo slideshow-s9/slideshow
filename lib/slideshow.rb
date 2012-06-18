@@ -35,6 +35,7 @@ class Env
 end # class Env
 
 require 'textutils'     # text filters and helpers
+require 'pakman'        # template pack manager
 
 
 # our own code

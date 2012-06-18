@@ -2,8 +2,6 @@ module Slideshow
 
 class Fetch
 
-  include Manifest   # gets us methods like installed_template_manifests, etc.
-
 ### fix: remove opts, use config (wrapped!!)
   
   def initialize( logger, opts, config )
@@ -14,16 +12,7 @@ class Fetch
 
   attr_reader :logger, :opts, :config
 
-  def fetch_file( dest, src )
-    
-     ## note: code moved to its own gem, that is, fetcher
-     ## see https://github.com/geraldb/fetcher
-    
-    # nb: in new method src comes first (and dest second - might be optional in the future)
-    Fetcher::Worker.new( logger ).copy( src, dest )
-  end
-  
-  
+
   def run
     logger.debug "fetch_uri=#{opts.fetch_uri}"
     
@@ -40,60 +29,23 @@ class Fetch
       end
       puts "  Mapping fetch shortcut '#{shortcut}' to: #{src}"
     end
-    
-    
+ 
     # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
     # src = 'http://github.com/geraldb/sandbox/raw/13d4fec0908fbfcc456b74dfe2f88621614b5244/s5blank/s5blank.txt'
     uri = URI.parse( src )
-  
     logger.debug "scheme: #{uri.scheme}, host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
-  
-    dirname  = File.dirname( uri.path )
+    
     basename = File.basename( uri.path, '.*' ) # e.g. fullerscreen     (without extension)
-    filename = File.basename( uri.path )       # e.g. fullerscreen.txt (with extension)
+    logger.debug "basename: #{basename}"  
 
-    logger.debug "dirname: #{dirname}"
-    logger.debug "basename: #{basename}, filename: #{filename}"
-
-    dlbase = "#{uri.scheme}://#{uri.host}:#{uri.port}#{dirname}"
-    pkgpath = File.expand_path( "#{config.config_dir}/templates/#{basename}" )
-  
-    logger.debug "dlpath: #{dlbase}"
-    logger.debug "pkgpath: #{pkgpath}"
-  
-    FileUtils.makedirs( pkgpath ) unless File.directory? pkgpath
-   
-    puts "Fetching template package '#{basename}'"
-    puts "  : from '#{dlbase}'"
-    puts "  : saving to '#{pkgpath}'"
-  
-    # download manifest
-    dest = "#{pkgpath}/#{filename}"
-
-    puts "  Downloading manifest '#{filename}'..."
-
-    fetch_file( dest, src )
-
-    manifest = load_manifest_core( dest )
-      
-    # download templates listed in manifest
-    manifest.each do |values|
-      values[1..-1].each do |file|
-      
-        dest = "#{pkgpath}/#{file}"
-
-        # make sure path exists
-        destpath = File.dirname( dest )
-        FileUtils.makedirs( destpath ) unless File.directory? destpath
-    
-        src = "#{dlbase}/#{file}"
-    
-        puts "  Downloading template '#{file}'..."
-        fetch_file( dest, src )
-      end
-    end   
-    puts "Done."
-  end  
+    pakpath = File.expand_path( "#{config.config_dir}/templates/#{basename}" )
+    logger.debug "pakpath: #{pakpath}"
+ 
+    ## note: code moved to its own gem, that is, pakman
+    ## see https://github.com/geraldb/pakman
+ 
+    Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+  end # method run
 
 
 end # class Fetch

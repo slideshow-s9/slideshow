@@ -2,7 +2,7 @@ module Slideshow
 
 class Gen
 
-  include Manifest   # gets us methods like installed_template_manifests, etc.
+  include Manifest
 
 ### fix: remove opts, use config (wrapped!!)
 
@@ -163,7 +163,7 @@ class Gen
     
     # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
     if File.exists?( manifest_path_or_name )
-      manifest = load_manifest( manifest_path_or_name )
+      manifest = Pakman::Manifest.load_file( manifest_path_or_name )
     else
       # check for builtin manifests
       manifests = installed_template_manifests
@@ -175,7 +175,7 @@ class Gen
         exit 2
       end
         
-      manifest = load_manifest( matches[0][1] )
+      manifest = Pakman::Manifest.load_file( matches[0][1] )
     end
   
 
@@ -249,6 +249,9 @@ class Gen
     post_processing_slides( content )
   end
 
+
+  ###
+  ## fix: move code into Pakman::Gen/Generator or Templater
 
   #### fix/todo:
   ##

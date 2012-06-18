@@ -17,11 +17,10 @@ Hoe.spec 'slideshow' do
     ['markdown','>= 0.4.0'],
     ['textutils','>= 0.2.0'],
     ['fetcher','>= 0.1.0'],
-    ['props','>= 0.2.0']
+    ['props','>= 0.2.0'],
+    ['pakman','>= 0.1.0']
   ]
-  
-  self.remote_rdoc_dir = 'doc'
-  
+    
   # switch extension to .rdoc for gihub formatting
   self.readme_file  = 'README.rdoc'
   self.history_file = 'History.rdoc'
