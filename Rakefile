@@ -20,9 +20,9 @@ Hoe.spec 'slideshow' do
     ['pakman','>= 0.1.0']
   ]
     
-  # switch extension to .rdoc for gihub formatting
-  self.readme_file  = 'README.rdoc'
-  self.history_file = 'History.rdoc'
+  # switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.markdown'
+  self.history_file = 'History.markdown'
   
   self.post_install_message =<<EOS
 ******************************************************************************

@@ -12,8 +12,18 @@ class Opts
     @header_level || 1
   end
 
-  def generate=(value)
-    @generate = value
+  def quick=(boolean)
+    @quick = boolean
+  end
+
+  def quick?
+    return false if @quick.nil?   # default generate flag is false
+    @quick == true
+  end
+
+
+  def generate=(boolean)
+    @generate = boolean
   end
 
   def generate?
@@ -21,8 +31,8 @@ class Opts
     @generate == true
   end
   
-  def list=(value)
-    @list = value
+  def list=(boolean)
+    @list = boolean
   end
   
   def list?

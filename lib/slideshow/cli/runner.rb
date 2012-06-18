@@ -115,8 +115,8 @@ def run( args )
     cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
     
     ## fix:/todo: add generator for quickstart
-    cmd.on( '-q', '--quick', 'Generate Quickstart Slide Show Sample') {  }
-    
+    cmd.on( '-q', '--quick', 'Generate Quickstart Slide Show Sample') { opts.quick = true }
+
 
     cmd.on( '-v', '--version', "Show version" ) do
       puts Slideshow.generator
@@ -167,6 +167,8 @@ EOS
     List.new( logger, opts, config ).run   ### todo: remove opts (merge access into config)
   elsif opts.generate?
     GenTemplates.new( logger, opts, config ).run  ###  todo: remove opts
+  elsif opts.quick?
+    Quick.new( logger, opts, config ).run  ### todo: remove opts
   elsif opts.fetch?
     Fetch.new( logger, opts, config ).run  ### todo: remove opts
   else

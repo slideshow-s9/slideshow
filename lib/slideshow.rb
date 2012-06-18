@@ -51,6 +51,8 @@ require 'slideshow/cli/commands/fetch'
 require 'slideshow/cli/commands/gen'
 require 'slideshow/cli/commands/gen_templates'
 require 'slideshow/cli/commands/list'
+require 'slideshow/cli/commands/quick'
+
 
 require 'slideshow/markup/textile'
 require 'slideshow/markup/markdown'
