@@ -14,25 +14,23 @@ class Runner
   attr_reader :logger, :opts, :config, :headers
 
 
-
-def load_plugins
-    
-  patterns = []
-  patterns << "#{config.config_dir}/lib/**/*.rb"
-  patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)
+  def load_plugins
+    patterns = []
+    patterns << "#{config.config_dir}/lib/**/*.rb"
+    patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)
   
-  patterns.each do |pattern|
-    pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
-    Dir.glob( pattern ) do |plugin|
-      begin
-        puts "Loading plugins in '#{plugin}'..."
-        require( plugin )
-      rescue Exception => e
-        puts "** error: failed loading plugins in '#{plugin}': #{e}"
+    patterns.each do |pattern|
+      pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
+      Dir.glob( pattern ) do |plugin|
+        begin
+          puts "Loading plugins in '#{plugin}'..."
+          require( plugin )
+        rescue Exception => e
+          puts "** error: failed loading plugins in '#{plugin}': #{e}"
+        end
       end
     end
-  end
-end
+  end  # method load_plugins
 
 
   def find_file_with_known_extension( fn )
@@ -52,7 +50,6 @@ end
 
 
   def find_files( file_or_dir_or_pattern )
-
     filtered_files = []
  
     ## for now process/assume only single file
@@ -72,21 +69,22 @@ end
       end
     end
     
-    filtered_files
-    
+    filtered_files 
   end # method find_files
 
 
 
 def run( args )
 
+  config.load
+
   opt=OptionParser.new do |cmd|
     
     cmd.banner = "Usage: slideshow [options] name"
         
-    cmd.on( '-o', '--output PATH', 'Output Path' ) { |path| opts.output_path = path }
+    cmd.on( '-o', '--output PATH', "Output Path (default is #{opts.output_path})" ) { |path| opts.output_path = path }
     
-    cmd.on( "-t", "--template MANIFEST", "Template Manifest (default is s6.txt)" ) do |t|
+    cmd.on( "-t", "--template MANIFEST", "Template Manifest (default is #{opts.manifest})" ) do |t|
       # todo: do some checks on passed in template argument
       opts.manifest = t
     end
@@ -104,30 +102,32 @@ def run( args )
         
     # ?? cmd.on( '-i', '--include PATH', 'Load Path' ) { |s| opts.put( 'include', s ) }
 
-    cmd.on( '-c', '--config PATH', 'Configuration Path (default is ~/.slideshow)' ) do |path|
-      opts.config_path = path
-    end
-
     cmd.on( '-f', '--fetch URI', 'Fetch Templates' ) do |uri|
       opts.fetch_uri = uri
     end
 
-    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (Using Built-In S6 Pack)' ) { opts.generate = true }
-    
     cmd.on( '-l', '--list', 'List Installed Templates' ) { opts.list = true }
 
-    # todo: find different letter for debug trace switch (use v for version?)
-    cmd.on( "-v", "--verbose", "Show debug trace" )  do
+    cmd.on( '-c', '--config PATH', "Configuration Path (default is #{opts.config_path})" ) do |path|
+      opts.config_path = path
+    end
+
+    cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
+    
+    ## fix:/todo: add generator for quickstart
+    cmd.on( '-q', '--quick', 'Generate Quickstart Slide Show Sample') {  }
+    
+
+    cmd.on( '-v', '--version', "Show version" ) do
+      puts Slideshow.generator
+      exit
+    end
+
+    cmd.on( "--verbose", "Show debug trace" )  do
        logger.datetime_format = "%H:%H:%S"
        logger.level = Logger::DEBUG
     end
     
-    ## todo: add --version
-
-    cmd.on( '--version', "Show version" ) do
-      puts Slideshow.generator
-      exit
-    end
  
     cmd.on_tail( "-h", "--help", "Show this message" ) do
          puts <<EOS
@@ -138,12 +138,13 @@ Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
 
 Examples:
   slideshow microformats
-  slideshow microformats.textile         # Process slides using Textile
-  slideshow microformats.text            # Process slides using Markdown
-  slideshow microformats.rst             # Process slides using reStructuredText
+  slideshow microformats.text            # Process slides using Markdown (#{config.known_markdown_extnames.join(', ')})
+  slideshow microformats.textile         # Process slides using Textile (#{config.known_textile_extnames.join(', ')})
+  slideshow microformats.rst             # Process slides using reStructuredText (#{config.known_rest_extnames.join(', ')})
   slideshow -o slides microformats       # Output slideshow to slides folder
 
 More examles:
+  slideshow -q                           # Generate quickstart slide show sample
   slideshow -g                           # Generate slide show templates using built-in S6 pack
 
   slideshow -l                           # List installed slide show templates
@@ -160,8 +161,6 @@ EOS
 
   opt.parse!( args )
   
-  config.load
-
   puts Slideshow.generator
 
   if opts.list?

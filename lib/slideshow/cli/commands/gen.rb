@@ -1,8 +1,11 @@
 module Slideshow
 
+## fix:/todo: move generation code out of command into its own class
+##   not residing/depending on cli
+
 class Gen
 
-  include Manifest
+  include ManifestHelper
 
 ### fix: remove opts, use config (wrapped!!)
 
@@ -163,7 +166,7 @@ class Gen
     
     # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
     if File.exists?( manifest_path_or_name )
-      manifest = Pakman::Manifest.load_file( manifest_path_or_name )
+      manifest = Pakman::Manifest.load_file( logger, manifest_path_or_name )
     else
       # check for builtin manifests
       manifests = installed_template_manifests
@@ -175,7 +178,7 @@ class Gen
         exit 2
       end
         
-      manifest = Pakman::Manifest.load_file( matches[0][1] )
+      manifest = Pakman::Manifest.load_file( logger, matches[0][1] )
     end
   
 

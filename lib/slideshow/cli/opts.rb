@@ -68,9 +68,9 @@ class Opts
   def config_path=(value)
     @config_path = value
   end
-  
+    
   def config_path
-    @config_path
+    @config_path || File.join( Env.home, '.slideshow' )
   end
     
   def output_path=(value)

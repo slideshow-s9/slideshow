@@ -40,17 +40,17 @@ require 'pakman'        # template pack manager
 
 # our own code
 require 'slideshow/version'
-require 'slideshow/opts'
 require 'slideshow/headers'
 require 'slideshow/config'
-require 'slideshow/manifest'
+require 'slideshow/manifest_helpers'
 require 'slideshow/slide'
-require 'slideshow/runner'
 
-require 'slideshow/commands/fetch'
-require 'slideshow/commands/gen'
-require 'slideshow/commands/gen_templates'
-require 'slideshow/commands/list'
+require 'slideshow/cli/opts'
+require 'slideshow/cli/runner'
+require 'slideshow/cli/commands/fetch'
+require 'slideshow/cli/commands/gen'
+require 'slideshow/cli/commands/gen_templates'
+require 'slideshow/cli/commands/list'
 
 require 'slideshow/markup/textile'
 require 'slideshow/markup/markdown'

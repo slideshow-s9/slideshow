@@ -1,8 +1,7 @@
 module Slideshow
 
 class GenTemplates
-  
-  include Manifest
+
 
 ### fix: remove opts, use config (wrapped!!)
 
@@ -33,6 +32,21 @@ class GenTemplates
     pakpath     = opts.output_path
     
     Pakman::Copier.new( logger ).copy_pak( manifestsrc, pakpath )
+  end
+
+private
+
+  def installed_generator_manifests
+    # 1) search gem/templates 
+
+    builtin_patterns = [
+      "#{Slideshow.root}/templates/*.txt.gen"
+    ]
+
+    ## note: code moved to its own gem, that is, pakman
+    ## see https://github.com/geraldb/pakman
+
+    Pakman::Finder.new( logger ).find_manifests( builtin_patterns )
   end
 
 end # class GenTemplates

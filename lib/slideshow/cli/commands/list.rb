@@ -2,7 +2,7 @@ module Slideshow
 
 class List
 
-  include Manifest
+  include ManifestHelper
 
 ### fix: remove opts, use config (wrapped!!)
   
@@ -18,10 +18,15 @@ class List
     manifests = installed_template_manifests
     
     puts ''
-    puts 'Installed templates include:'
+    puts 'Installed template packs in search path'
+    
+    installed_template_manifest_patterns.each_with_index do |pattern,i|
+      puts "    [#{i+1}] #{pattern}"
+    end
+    puts '  include:'
     
     manifests.each do |manifest|
-      puts "  #{manifest[0]} (#{manifest[1]})"
+      puts "%16s (%s)" % [manifest[0], manifest[1]]
     end
   end
 

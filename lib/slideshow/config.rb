@@ -22,12 +22,7 @@ class Config
 
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"
-      
-      if opts.config_path
-        @config_dir = opts.config_path
-      else
-        @config_dir = cache_dir
-      end
+      @config_dir = opts.config_path
     
       # make sure path exists
       FileUtils.makedirs( @config_dir ) unless File.directory? @config_dir
