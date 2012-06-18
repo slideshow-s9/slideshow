@@ -22,6 +22,16 @@ class Opts
   end
 
 
+  def plugins=(boolean)
+    @plugins = boolean
+  end
+
+  def plugins?
+    return false if @plugins.nil?   # default generate flag is false
+    @plugins == true
+  end
+
+
   def generate=(boolean)
     @generate = boolean
   end

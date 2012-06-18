@@ -2,6 +2,8 @@ module Slideshow
 
 class Runner
 
+  include PluginHelper
+
   def initialize
     @logger = Logger.new(STDOUT)
     @logger.level = Logger::INFO
@@ -12,25 +14,6 @@ class Runner
   end
 
   attr_reader :logger, :opts, :config, :headers
-
-
-  def load_plugins
-    patterns = []
-    patterns << "#{config.config_dir}/lib/**/*.rb"
-    patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)
-  
-    patterns.each do |pattern|
-      pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
-      Dir.glob( pattern ) do |plugin|
-        begin
-          puts "Loading plugins in '#{plugin}'..."
-          require( plugin )
-        rescue Exception => e
-          puts "** error: failed loading plugins in '#{plugin}': #{e}"
-        end
-      end
-    end
-  end  # method load_plugins
 
 
   def find_file_with_known_extension( fn )
@@ -117,6 +100,7 @@ def run( args )
     ## fix:/todo: add generator for quickstart
     cmd.on( '-q', '--quick', 'Generate Quickstart Slide Show Sample') { opts.quick = true }
 
+    cmd.on( '-p', '--plugins', '(Debug) List Plugin Scripts in Load Path' ) { opts.plugins = true }
 
     cmd.on( '-v', '--version', "Show version" ) do
       puts Slideshow.generator
@@ -165,6 +149,8 @@ EOS
 
   if opts.list?
     List.new( logger, opts, config ).run   ### todo: remove opts (merge access into config)
+  elsif opts.plugins?
+    Plugins.new( logger, opts, config ).run  ### todo: remove opts (merge access into config)
   elsif opts.generate?
     GenTemplates.new( logger, opts, config ).run  ###  todo: remove opts
   elsif opts.quick?

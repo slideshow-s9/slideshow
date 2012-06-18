@@ -43,6 +43,7 @@ require 'slideshow/version'
 require 'slideshow/headers'
 require 'slideshow/config'
 require 'slideshow/manifest_helpers'
+require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
 
 require 'slideshow/cli/opts'
@@ -51,6 +52,7 @@ require 'slideshow/cli/commands/fetch'
 require 'slideshow/cli/commands/gen'
 require 'slideshow/cli/commands/gen_templates'
 require 'slideshow/cli/commands/list'
+require 'slideshow/cli/commands/plugins'
 require 'slideshow/cli/commands/quick'
 
 

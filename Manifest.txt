@@ -10,6 +10,7 @@ lib/slideshow/cli/commands/fetch.rb
 lib/slideshow/cli/commands/gen.rb
 lib/slideshow/cli/commands/gen_templates.rb
 lib/slideshow/cli/commands/list.rb
+lib/slideshow/cli/commands/plugins.rb
 lib/slideshow/cli/commands/quick.rb
 lib/slideshow/cli/opts.rb
 lib/slideshow/cli/runner.rb
@@ -35,6 +36,7 @@ lib/slideshow/manifest_helpers.rb
 lib/slideshow/markup/markdown.rb
 lib/slideshow/markup/rest.rb
 lib/slideshow/markup/textile.rb
+lib/slideshow/plugin_helpers.rb
 lib/slideshow/slide.rb
 lib/slideshow/version.rb
 templates/s6.txt
