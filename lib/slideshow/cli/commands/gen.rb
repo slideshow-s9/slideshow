@@ -159,8 +159,9 @@ class Gen
     manifest_path_or_name = opts.manifest
     
     # add .txt file extension if missing (for convenience)
-    manifest_path_or_name << ".txt"   if File.extname( manifest_path_or_name ).empty?
-
+    if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false    
+      manifest_path_or_name << '.txt'
+    end
   
     logger.debug "manifest=#{manifest_path_or_name}"
     

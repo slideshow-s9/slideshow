@@ -28,6 +28,8 @@ class Fetch
         return
       end
       puts "  Mapping fetch shortcut '#{shortcut}' to: #{src}"
+    else
+      shortcut = nil    
     end
  
     # src = 'http://github.com/geraldb/slideshow/raw/d98e5b02b87ee66485431b1bee8fb6378297bfe4/code/templates/fullerscreen.txt'
@@ -45,8 +47,35 @@ class Fetch
     ## see https://github.com/geraldb/pakman
  
     Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
-  end # method run
+    
+    ## step 2) if shortcut exists (auto include quickstarter manifest w/ same name/key)
+    
+    if shortcut.present?
+      
+      src = config.map_quick_shortcut( shortcut )
+      return if scr.nil?   # no shortcut found; sorry; returning (nothing more to do)
+      
+      puts "  Mapping quick shortcut '#{shortcut}' to: #{src}"
+ 
+      uri = URI.parse( src )
+      logger.debug "scheme: #{uri.scheme}, host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
+    
+      # downcase basename w/ extension (remove .txt)
+      basename = File.basename( uri.path ).downcase.gsub('.txt', '') 
+      logger.debug "basename: #{basename}"  
 
+      #### fix: in find manifests
+      ## check for directories!!!
+      ## exclude directories in match
+
+      ## remove (.txt) in basename
+      pakpath = File.expand_path( "#{config.config_dir}/templates/#{basename}" )
+      logger.debug "pakpath: #{pakpath}"
+ 
+      Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+    end
+    
+  end # method run
 
 end # class Fetch
 

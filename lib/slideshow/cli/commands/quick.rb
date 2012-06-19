@@ -2,6 +2,8 @@ module Slideshow
 
 class Quick
 
+  include ManifestHelper
+
 ### fix: remove opts, use config (wrapped!!)
 
   def initialize( logger, opts, config )
@@ -68,34 +70,12 @@ class Quick
 
      
      ## remove (.txt) in basename
-    pakpath = File.expand_path( "#{config.config_dir}/quick/#{basename.gsub('.txt','')}.quick" )
+    pakpath = File.expand_path( "#{config.config_dir}/templates/#{basename.gsub('.txt','')}.quick" )
     logger.debug "pakpath: #{pakpath}"
 
  
     Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
   end # method fetch_pak
-
-private
-
-
-  def installed_quick_manifests
-   # 1) search config_dir/templates
-   # 2) search gem/templates 
- 
-    builtin_patterns = [
-      "#{Slideshow.root}/templates/*.txt.quick"
-    ]
-    config_patterns  = [
-      "#{config.config_dir}/quick/*.txt.quick",
-      "#{config.config_dir}/quick/*/*.txt.quick"
-    ]
-    
-    patterns = []
-    patterns += config_patterns
-    patterns += builtin_patterns
-
-    Pakman::Finder.new( logger ).find_manifests( patterns )
-  end
 
 end # class GenTemplates
 end # module Slideshow

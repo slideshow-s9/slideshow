@@ -90,7 +90,7 @@ class Opts
   end
     
   def manifest
-    @manifest || 's6.txt'
+    @manifest || 's6'
   end
   
   def config_path=(value)

@@ -22,6 +22,8 @@ require 'yaml'
 require 'cgi'
 
 # required gems
+require 'activesupport/all'
+
 require 'redcloth'          # default textile library
 require 'markdown'          # default markdown library
 require 'fetcher'           # fetch docs and blogs via http, https, etc.
