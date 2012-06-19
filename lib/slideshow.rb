@@ -22,7 +22,7 @@ require 'yaml'
 require 'cgi'
 
 # required gems
-require 'activesupport/all'
+require 'active_support/all'
 
 require 'redcloth'          # default textile library
 require 'markdown'          # default markdown library

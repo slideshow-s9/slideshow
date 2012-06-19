@@ -159,7 +159,7 @@ class Gen
     manifest_path_or_name = opts.manifest
     
     # add .txt file extension if missing (for convenience)
-    if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false    
+    if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false
       manifest_path_or_name << '.txt'
     end
   
