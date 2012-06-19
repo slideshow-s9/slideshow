@@ -89,3 +89,10 @@ fetch:
   deck.js: https://github.com/geraldb/slideshow-deck.js/raw/master/deck.js.txt
   impress.js: https://github.com/geraldb/slideshow-impress.js/raw/master/impress.js.txt
   shower: https://github.com/geraldb/slideshow-shower/raw/master/shower.txt
+
+###########################
+# shortcuts for quick starter templates
+quick:
+  slidy: https://github.com/geraldb/slideshow-slidy/raw/master/slidy.txt.quick
+  deck.js: https://github.com/geraldb/slideshow-deck.js/raw/master/deck.js.txt.quick
+  impress.js: https://github.com/geraldb/slideshow-impress.js/raw/master/impress.js.txt.quick

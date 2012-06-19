@@ -114,6 +114,11 @@ class Config
     @props.fetch_from_section( 'fetch', key, nil )
   end
 
+  def map_quick_shortcut( key )
+    ## todo: normalize key???
+    @props.fetch_from_section( 'quick', key, nil )
+  end
+
   def helper_renames
     ## NB: for now user cannot override/extent renames
     @props_builtin['helper']['renames']

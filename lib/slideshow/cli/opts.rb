@@ -21,6 +21,14 @@ class Opts
     @quick == true
   end
 
+  def quick_manifest=(value)
+    @quick_manifest = value
+  end
+  
+  def quick_manifest
+    @quick_manifest || 'welcome'
+  end
+
 
   def plugins=(boolean)
     @plugins = boolean

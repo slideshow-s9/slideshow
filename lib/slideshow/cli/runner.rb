@@ -98,7 +98,10 @@ def run( args )
     cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
     
     ## fix:/todo: add generator for quickstart
-    cmd.on( '-q', '--quick', 'Generate Quickstart Slide Show Sample') { opts.quick = true }
+    cmd.on( '-q', '--quick [MANIFEST]', "Generate Quickstart Slide Show Sample (default is #{opts.quick_manifest})") do |q|
+       opts.quick = true
+       opts.quick_manifest = q   if q.nil? == false
+    end
 
     cmd.on( '-p', '--plugins', '(Debug) List Plugin Scripts in Load Path' ) { opts.plugins = true }
 
