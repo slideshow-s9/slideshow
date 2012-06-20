@@ -14,21 +14,20 @@ class GenTemplates
   attr_reader :logger, :opts, :config
 
   def run
-    manifest_name = opts.manifest.gsub( '.txt', '' )  # remove (optional) .txt ending
+    manifest_name = opts.manifest
+    manifest_name = manifest_name.downcase.gsub( '.txt', '' )  # remove (optional) .txt ending
     logger.debug "manifest=#{manifest_name}"
     
-    manifests = installed_generator_manifests
-    
     # check for builtin generator manifests
-    matches = manifests.select { |m| m[0] == manifest_name+'.txt.gen' }
+    manifests = installed_generator_manifests.select { |m| m[0] == manifest_name+'.txt.gen' }
     
-    if matches.empty?
-      puts "*** error: unknown template manifest '#{manifest_name}'"
+    if manifests.empty?
+      puts "*** error: unknown generator template pack '#{manifest_name}'"
       # todo: list installed manifests
       exit 2
     end
         
-    manifestsrc = matches[0][1]
+    manifestsrc = manifests[0][1]
     pakpath     = opts.output_path
 
     logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )

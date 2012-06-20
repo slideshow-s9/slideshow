@@ -17,7 +17,7 @@ Hoe.spec 'slideshow' do
     ['markdown','>= 0.4.0'],
     ['textutils','>= 0.2.0'],
     ['props','>= 0.2.0'],
-    ['pakman','>= 0.2.0'],
+    ['pakman','>= 0.3.0'],
     ['activesupport', '>= 3.2.6']
   ]
     
