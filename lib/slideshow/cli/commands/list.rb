@@ -15,19 +15,39 @@ class List
   attr_reader :logger, :opts, :config
 
   def run
-    manifests = installed_template_manifests
+    home = Env.home
+    ## replace home w/ ~ (to make out more readable (shorter))
+    ## e.g. use gsub( home, '~' )
     
+    puts ''
+    puts 'Installed quickstarter packs in search path'
+
+    installed_quick_manifest_patterns.each_with_index do |pattern,i|      
+      puts "    [#{i+1}] #{pattern.gsub(home,'~')}"
+    end
+    puts '  include:'
+    
+    installed_quick_manifests.each do |manifest|
+      pakname      = manifest[0].gsub('.txt','').gsub('.quick','')
+      manifestpath = manifest[1].gsub(home,'~')
+      puts "%16s (%s)" % [pakname,manifestpath]
+    end
+
+
     puts ''
     puts 'Installed template packs in search path'
     
     installed_template_manifest_patterns.each_with_index do |pattern,i|
-      puts "    [#{i+1}] #{pattern}"
+      puts "    [#{i+1}] #{pattern.gsub(home,'~')}"
     end
     puts '  include:'
     
-    manifests.each do |manifest|
-      puts "%16s (%s)" % [manifest[0], manifest[1]]
+    installed_template_manifests.each do |manifest|
+      pakname      = manifest[0].gsub('.txt','')
+      manifestpath = manifest[1].gsub(home,'~')
+      puts "%16s (%s)" % [pakname,manifestpath]
     end
+    
   end
 
 end # class List

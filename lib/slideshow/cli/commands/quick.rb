@@ -15,20 +15,20 @@ class Quick
   attr_reader :logger, :opts, :config
 
   def run
-    manifest_name = opts.quick_manifest
+    manifest_name = opts.quick_manifest.gsub('.txt','').gsub('.quick','')  # make sure we get name w/o .quick and .txt extension
     
     ### todo:fix: always download quickstart templates (except welcome?)
     # how to make sure the won't go stale in the cache after the download?
     
     manifests = installed_quick_manifests
-    matches = manifests.select { |m| m[0] == manifest_name+'.txt.quick' }
+    matches = manifests.select { |m| (m[0] == manifest_name+'.txt.quick') || (m[0] == manifest_name+'.quick.txt') }
 
     if matches.empty?
-      fetch_pak( manifest_name ) 
+      fetch_pak( manifest_name )
       
       # retry
       manifests = installed_quick_manifests
-      matches = manifests.select { |m| m[0] == manifest_name+'.txt.quick' }
+      matches = manifests.select { |m| (m[0] == manifest_name+'.txt.quick') || (m[0] == manifest_name+'.quick.txt') }
       if matches.empty?
         puts "*** error: quickstart template #{manifest_name} not found"
         exit 2
@@ -43,6 +43,8 @@ class Quick
     Pakman::Copier.new( logger ).copy_pak( manifestsrc, pakpath )
   end
   
+  ## todo rename to fetch_quick_pak??
+  ##  share/use same code in fetch too??
   
   def fetch_pak( shortcut )
 
@@ -61,18 +63,11 @@ class Quick
     uri = URI.parse( src )
     logger.debug "scheme: #{uri.scheme}, host: #{uri.host}, port: #{uri.port}, path: #{uri.path}"
     
-    basename = File.basename( uri.path, '.*' ) # e.g. fullerscreen     (without extension)
-    logger.debug "basename: #{basename}"  
-
-     #### fix: in find manifests
-     ## check for directories!!!
-     ## exclude directories in match
-
-     
-     ## remove (.txt) in basename
-    pakpath = File.expand_path( "#{config.config_dir}/templates/#{basename.gsub('.txt','')}.quick" )
-    logger.debug "pakpath: #{pakpath}"
-
+    pakname = File.basename( uri.path ).downcase.gsub('.txt','')
+    pakpath = File.expand_path( "#{config.config_dir}/templates/#{pakname}" )
+    
+    logger.debug "pakname >#{pakname}<"
+    logger.debug "pakpath >#{pakpath}<"
  
     Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
   end # method fetch_pak
