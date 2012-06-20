@@ -68,6 +68,10 @@ class Gen
   end
 
 
+  ## fix:/todo: check if these get called
+  ##   from helpers
+  ##  fix: cleanup and remove
+
   def load_template( path ) 
     puts "  Loading template #{path}..."
     return File.read( path )
@@ -77,18 +81,6 @@ class Gen
     ERB.new( content ).result( the_binding )
   end
 
-  
-  def with_output_path( dest, output_path )
-    dest_full = File.expand_path( dest, output_path )
-    logger.debug "dest_full=#{dest_full}"
-      
-    # make sure dest path exists
-    dest_path = File.dirname( dest_full )
-    logger.debug "dest_path=#{dest_path}"
-    FileUtils.makedirs( dest_path ) unless File.directory? dest_path
-    dest_full
-  end
-  
   
 
   # move into a filter??
@@ -167,7 +159,7 @@ class Gen
     
     # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
     if File.exists?( manifest_path_or_name )
-      manifest = Pakman::Manifest.load_file( logger, manifest_path_or_name )
+      manifestsrc = manifest_path_or_name
     else
       # check for builtin manifests
       manifests = installed_template_manifests
@@ -179,7 +171,7 @@ class Gen
         exit 2
       end
         
-      manifest = Pakman::Manifest.load_file( logger, matches[0][1] )
+      manifestsrc = matches[0][1]
     end
   
 
@@ -254,44 +246,13 @@ class Gen
   end
 
 
-  ###
-  ## fix: move code into Pakman::Gen/Generator or Templater
 
-  #### fix/todo:
-  ##
-  ## check for .erb file extension for trigger for erb processing
+  pakpath     = opts.output_path
 
-  manifest.each do |entry|
-    outname = entry[0]
-    if outname.include? '__file__' # process
-      outname = outname.gsub( '__file__', basename )
-      puts "Preparing #{outname}..."
+  logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
+    
+  Pakman::Templater.new( logger ).copy_pak( manifestsrc, pakpath, binding, content )
 
-      out = File.new( with_output_path( outname, outpath ), "w+" )
-
-      out << render_template( load_template( entry[1] ), binding )
-      
-      if entry.size > 2 # more than one source file? assume header and footer with content added inbetween
-        out << content2 
-        out << render_template( load_template( entry[2] ), binding )
-      end
-
-      out.flush
-      out.close
-
-    else # just copy verbatim if target/dest has no __file__ in name
-      dest   = entry[0]
-      source = entry[1]
-
-  #### fix/todo:
-  ##
-  ## check for .erb file extension for trigger for erb processing
-
-      puts "Copying to #{dest} from #{source}..."
-      FileUtils.copy( source, with_output_path( dest, outpath ) )
-    end
-  end
-  
   
   ## pop/restore working folder/dir
   unless newcwd == oldcwd
