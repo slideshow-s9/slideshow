@@ -251,7 +251,7 @@ class Gen
 
   logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
     
-  Pakman::Templater.new( logger ).copy_pak( manifestsrc, pakpath, binding, basename, content )
+  Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, basename )
   
   ## pop/restore working folder/dir
   unless newcwd == oldcwd

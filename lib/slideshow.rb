@@ -1,4 +1,4 @@
-$KCODE = 'utf'
+# encoding: utf-8
 
 ###
 # NB: for local testing run like:

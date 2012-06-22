@@ -103,20 +103,13 @@ def run( args )
        opts.quick_manifest = q   if q.nil? == false
     end
 
-    cmd.on( '-p', '--plugins', '(Debug) List Plugin Scripts in Load Path' ) { opts.plugins = true }
-
     cmd.on( '-v', '--version', "Show version" ) do
       puts Slideshow.generator
       exit
     end
-
-    cmd.on( "--verbose", "Show debug trace" )  do
-       logger.datetime_format = "%H:%H:%S"
-       logger.level = Logger::DEBUG
-    end
     
  
-    cmd.on_tail( "-h", "--help", "Show this message" ) do
+    cmd.on( "-h", "--help", "Show this message" ) do
          puts <<EOS
          
 Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
@@ -144,6 +137,41 @@ Further information:
 EOS
          exit
     end
+    
+    cmd.on( '-p', '--plugins', '(Debug) List Plugin Scripts in Load Path' ) { opts.plugins = true }
+
+    cmd.on( '--about', "(Debug) Show more version info" ) do
+      puts <<EOS
+
+#{Slideshow.generator}
+
+Gems Versions:
+  - pakman #{Pakman::VERSION}
+  - fetcher #{Fetcher::VERSION}
+  - markdown #{Markdown::VERSION}
+  - textutils #{TextUtils::VERSION}
+  - props #{Props::VERSION}
+
+Slide Show Root: #{Slideshow.root}
+
+EOS
+
+# todo:
+# add verison for rubygems
+
+## todo: add more gem version info
+#- redcloth
+#- kramdown
+
+      exit
+    end
+
+
+    cmd.on( "--verbose", "(Debug) Show debug trace" )  do
+       logger.datetime_format = "%H:%H:%S"
+       logger.level = Logger::DEBUG
+    end
+        
   end
 
   opt.parse!( args )

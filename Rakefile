@@ -13,12 +13,12 @@ Hoe.spec 'slideshow' do
   self.email   = 'webslideshow@googlegroups.com'
   
   self.extra_deps = [
-    ['RedCloth','>= 4.2.9'],
     ['markdown','>= 0.4.0'],
     ['textutils','>= 0.2.0'],
     ['props','>= 0.2.0'],
-    ['pakman','>= 0.3.0'],
-    ['activesupport', '>= 3.2.6']
+    ['pakman','>= 0.4.0'],
+    ['activesupport', '>= 3.2.6'],
+    ['RedCloth','>= 4.2.9']
   ]
     
   # switch extension to .markdown for gihub formatting
