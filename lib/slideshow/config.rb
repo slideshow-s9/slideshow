@@ -32,7 +32,6 @@ class Config
   end
 
 
-
   def load
     
     # load builtin config file @  <gem>/config/slideshow.yml
@@ -63,6 +62,17 @@ class Config
       @props = @props_work = Props.load_file_with_erb( props_work_file, binding(), @props )
     end
   end
+
+  def dump  # dump settings for debugging
+    puts "Slideshow settings:"
+    @props_builtin.dump  if @props_builtin
+    @props_default.dump  if @props_default
+    @props_home.dump     if @props_home
+    @props_work.dump     if @props_work
+    
+    ## todo: add more config settings?
+  end
+
     
   def header( key )
     @props.fetch_from_section( 'headers', normalize_key( key ), nil )

@@ -13,9 +13,9 @@ Hoe.spec 'slideshow' do
   self.email   = 'webslideshow@googlegroups.com'
   
   self.extra_deps = [
-    ['markdown','>= 0.4.0'],
+    ['props','>= 1.0.0'],
+    ['markdown','>= 1.0.0'],
     ['textutils','>= 0.2.0'],
-    ['props','>= 0.2.0'],
     ['pakman','>= 0.4.0'],
     ['activesupport', '>= 3.2.6'],
     ['RedCloth','>= 4.2.9']

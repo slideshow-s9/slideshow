@@ -145,17 +145,28 @@ EOS
 
 #{Slideshow.generator}
 
-Gems Versions:
+Gems versions:
   - pakman #{Pakman::VERSION}
   - fetcher #{Fetcher::VERSION}
   - markdown #{Markdown::VERSION}
   - textutils #{TextUtils::VERSION}
   - props #{Props::VERSION}
 
-Slide Show Root: #{Slideshow.root}
+        Env home: #{Env.home}
+Slideshow config: #{config.config_dir}
+ Slideshow cache: #{config.cache_dir}
+  Slideshow root: #{Slideshow.root}
 
 EOS
 
+      # dump Slideshow settings
+      config.dump
+      puts
+      
+      # dump Markdown settings
+      Markdown.dump
+      puts
+      
 # todo:
 # add verison for rubygems
 
@@ -177,6 +188,16 @@ EOS
   opt.parse!( args )
   
   puts Slideshow.generator
+
+  if logger.level == Logger::DEBUG
+    # dump Slideshow settings
+    config.dump
+    puts
+      
+    # dump Markdown settings
+    Markdown.dump
+    puts
+  end
 
   if opts.list?
     List.new( logger, opts, config ).run   ### todo: remove opts (merge access into config)
