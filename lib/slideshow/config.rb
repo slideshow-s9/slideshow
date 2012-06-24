@@ -73,9 +73,23 @@ class Config
     ## todo: add more config settings?
   end
 
-    
+
   def header( key )
     @props.fetch_from_section( 'headers', normalize_key( key ), nil )
+  end
+
+  def default_fetch_shortcuts
+    fetch_shortcuts = @props_default.fetch( 'fetch', {} )
+    
+    fetch_shortcuts = fetch_shortcuts.clone
+    fetch_shortcuts.delete( 'fullerscreen' )  # obsolete (do not promote any longer)
+    fetch_shortcuts.delete( 'slippy' )  # needs update/maintainer anyone?
+    fetch_shortcuts.delete( 'shower' )  # needs update/maintainer anyone?
+
+    fetch_shortcuts.delete( 's6syntax' )  # better wait for next update
+    fetch_shortcuts.delete( 's6blank' )  # better wait for next update
+
+    fetch_shortcuts
   end
 
   def markdown_post_processing?( lib )

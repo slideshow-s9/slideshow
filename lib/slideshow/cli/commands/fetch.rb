@@ -14,9 +14,19 @@ class Fetch
 
 
   def run
-    logger.debug "fetch_uri=#{opts.fetch_uri}"
+    if opts.fetch_all?
+      config.default_fetch_shortcuts.keys.each do |shortcut|
+        fetch_pak( shortcut )
+      end
+    else
+      fetch_pak( opts.fetch_uri )
+    end
+  end
+
+private
+  def fetch_pak( src )
     
-    src = opts.fetch_uri
+    logger.debug "src=>#{src}<"
     
     ## check for builtin shortcut (assume no / or \) 
     if src.index( '/' ).nil? && src.index( '\\' ).nil?

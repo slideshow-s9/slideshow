@@ -89,6 +89,10 @@ def run( args )
       opts.fetch_uri = uri
     end
 
+    cmd.on( '--all', "Fetch Template Packs (#{config.default_fetch_shortcuts.keys.join(', ')})" ) do
+      opts.fetch_all = true
+    end
+
     cmd.on( '-l', '--list', 'List Installed Templates' ) { opts.list = true }
 
     cmd.on( '-c', '--config PATH', "Configuration Path (default is #{opts.config_path})" ) do |path|
@@ -207,7 +211,7 @@ EOS
     GenTemplates.new( logger, opts, config ).run  ###  todo: remove opts
   elsif opts.quick?
     Quick.new( logger, opts, config ).run  ### todo: remove opts
-  elsif opts.fetch?
+  elsif opts.fetch? || opts.fetch_all?
     Fetch.new( logger, opts, config ).run  ### todo: remove opts
   else
     load_plugins  # check for optional plugins/extension in ./lib folder
