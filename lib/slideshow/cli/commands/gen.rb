@@ -50,7 +50,7 @@ class Gen
       "\n\n<notextile>\n#{text}\n</notextile>\n"
     else
       text
-    end    
+    end
   end
   
   def guard_inline( text )
@@ -81,22 +81,27 @@ class Gen
     ERB.new( content ).result( the_binding )
   end
 
-  
+
 
   # move into a filter??
   def post_processing_slides( content )
     
-    # 1) add slide break  
+    # 1) add slide breaks
   
-    if (@markup_type == :markdown && Markdown.lib == 'pandoc-ruby') || @markup_type == :rest
-      content = add_slide_directive_before_div_h1( content )
-    else
-      if config.header_level == 2
-        content = add_slide_directive_before_h2( content )
-      else # assume level 1
-        content = add_slide_directive_before_h1( content )
+    if config.slide?  # only allow !SLIDE directives fo slide breaks?
+       # do nothing (no extra automagic slide breaks wanted)
+    else  
+      if (@markup_type == :markdown && Markdown.lib == 'pandoc-ruby') || @markup_type == :rest
+        content = add_slide_directive_before_div_h1( content )
+      else
+        if config.header_level == 2
+          content = add_slide_directive_before_h2( content )
+        else # assume level 1
+          content = add_slide_directive_before_h1( content )
+        end
       end
     end
+
 
     dump_content_to_file_debug_html( content )
 
@@ -106,43 +111,68 @@ class Gen
     slide_counter = 0
 
     slides       = []
-    slide_source = ""
+    slide_buf = ""
      
     content.each_line do |line|
-       if line.include?( '<!-- _S9SLIDE_' )  then
-          if slide_counter > 0 then   # found start of new slide (and, thus, end of last slide)
-            slides   << slide_source  # add slide to slide stack
-            slide_source = ""         # reset slide source buffer
+       if line.include?( '<!-- _S9SLIDE_' )
+          if slide_counter > 0   # found start of new slide (and, thus, end of last slide)
+            slides   << slide_buf  # add slide to slide stack
+            slide_buf = ""         # reset slide source buffer
+          else  # slide_counter == 0
+            # check for first slide with missing leading SLIDE directive (possible/allowed in takahashi, for example)
+            ##  remove html comments and whitspaces (still any content?)
+            ### more than just whitespace? assume its  a slide
+            if slide_buf.gsub(/<!--.*?-->/m, '').gsub( /[\n\r\t ]/, '').length > 0
+              logger.debug "add slide with missing leading slide directive >#{slide_buf}< with slide_counter == 0"
+              slides    << slide_buf
+              slide_buf = ""
+            else
+              logger.debug "skipping slide_buf >#{slide_buf}< with slide_counter == 0"
+            end
           end
           slide_counter += 1
        end
-       slide_source  << line
+       slide_buf  << line
     end
   
-    if slide_counter > 0 then
-      slides   << slide_source     # add slide to slide stack
-      slide_source = ""            # reset slide source buffer 
+    if slide_counter > 0
+      slides   << slide_buf     # add slide to slide stack
+      slide_buf = ""            # reset slide source buffer 
     end
 
 
     slides2 = []
-    slides.each do |slide_source|
-      slides2 << Slide.new( slide_source, config )
+    slides.each do |source|
+      slides2 << Slide.new( source, config )
     end
 
-     # for convenience create a string w/ all in-one-html
-     #  no need to wrap slides in divs etc.
+
+    puts "#{slides2.size} slides found:"
+    
+    slides2.each_with_index do |slide,i|
+      print "  [#{i+1}] "
+      if slide.header.present?
+        print slide.header
+      else
+        # remove html comments
+        print "-- no header -- | #{slide.content.gsub(/<!--.*?-->/m, '').gsub(/\n/,'$')[0..40]}"
+      end
+      puts
+    end
    
-     content2 = ""
-     slides2.each do |slide|
-        content2 << slide.to_classic_html
-     end
    
     # make content2 and slide2 available to erb template
     # -- todo: cleanup variable names and use attr_readers for content and slide
+
+    ### fix: use class SlideDeck or Deck?? for slides array?
+    
+    content2 = ""
+    slides2.each do |slide|
+      content2 << slide.to_classic_html
+    end
   
+    @content  = content2
     @slides   = slides2     # strutured content
-    @content  = content2   # content all-in-one
   end
 
 
@@ -227,6 +257,12 @@ class Gen
     mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
     content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
+
+
+  if config.takahashi?
+    content = takahashi_slide_breaks( content )
+  end
+
 
   # convert light-weight markup to hypertext
 

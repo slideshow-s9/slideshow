@@ -21,9 +21,6 @@ module Slideshow
     old_comments_percent_style( content )
   end
 
-
-
-
 def directives_bang_style_to_percent_style( content )
 
   # for compatibility allow !SLIDE/!STYLE as an alternative to %slide/%style-directive

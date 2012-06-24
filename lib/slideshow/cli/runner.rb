@@ -80,6 +80,14 @@ def run( args )
     cmd.on( '--h1', 'Set Header Level to 1 (default)' ) { opts.header_level = 1 }
     cmd.on( '--h2', 'Set Header Level to 2' ) { opts.header_level = 2 }
 
+    cmd.on( '--slide', 'Use only !SLIDE for slide breaks (Showoff Compatible)' ) do
+      opts.slide = true
+    end
+
+    cmd.on( '--takahashi', 'Allow // for slide breaks' ) do
+      opts.takahashi = true
+    end
+
 
     # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
         

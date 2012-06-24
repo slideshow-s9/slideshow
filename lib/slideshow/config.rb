@@ -12,6 +12,14 @@ class Config
   def header_level
     @opts.header_level
   end
+  
+  def slide?
+    @opts.slide?
+  end
+  
+  def takahashi?
+    @opts.takahashi?
+  end
 
   # todo/fix: fix references after this move to here, that is, Config class
   # - used in syntax/uv_helper (use config.cache_dir to access?)

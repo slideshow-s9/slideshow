@@ -12,6 +12,25 @@ class Opts
     @header_level || 1
   end
 
+  def slide=(boolean)
+    @slide = boolean
+  end
+
+  def slide?
+    return false if @slide.nil?   # default slide flag is false
+    @slide == true
+  end
+
+  def takahashi=(boolean)
+    @takahashi = boolean
+  end
+
+  def takahashi?
+    return false if @takahashi.nil?   # default takahashi flag is false
+    @takahashi == true
+  end
+
+
   def quick=(boolean)
     @quick = boolean
   end
