@@ -13,6 +13,7 @@ module Slideshow
     
     content.gsub!( /\b[ ]+\/{2}[ ]+\b/) do |match|
       inline_count += 1
+      ## todo: use slide('') directive helper?
       "\n\n<!-- _S9SLIDE_  -->\n\n"
     end
     
@@ -27,6 +28,7 @@ module Slideshow
     
     content.gsub!( /^[ ]*\/{2}[ ]*$/ ) do |match|
       line_count += 1
+      ## todo: use slide('') directive helper?
       "\n\n<!-- _S9SLIDE_  -->\n\n"
     end
 

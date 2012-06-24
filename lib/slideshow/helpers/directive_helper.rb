@@ -22,21 +22,22 @@ def css( &block )
 end
     
 def slide( params )
-  "<!-- _S9SLIDE_ #{params ? params : ''} -->"         
+  # note: to avoid runons with blocks (wrap in double newlines)
+  
+  "\n\n<!-- _S9SLIDE_ #{params ? params : ''} -->\n\n"
 end
 
 def style( params )
-  "<!-- _S9STYLE_ #{params ? params : ''} -->"         
+  # note: to avoid runons with blocks (wrap in double newlines)
+
+  "\n\n<!-- _S9STYLE_ #{params ? params : ''} -->\n\n"
 end
-    
-    
-  
+
+
 end # module DirectiveHelper
 end # module Slideshow
 
 class Slideshow::Gen
   include Slideshow::DirectiveHelper
 end
-
-
 

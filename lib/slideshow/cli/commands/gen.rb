@@ -48,6 +48,9 @@ class Gen
       # saveguard with notextile wrapper etc./no further processing needed
       # note: add leading newlines to avoid block-runons
       "\n\n<notextile>\n#{text}\n</notextile>\n"
+    elsif markup_type == :markdown
+      # wrap in newlines to avoid runons
+      "\n\n#{text}\n\n"
     else
       text
     end
