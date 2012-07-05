@@ -12,3 +12,6 @@ site/_site/
 samples/o/
 samples/3rd/o/
 
+# ignore sample html output 
+samples/*.html
+
