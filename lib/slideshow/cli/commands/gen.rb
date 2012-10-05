@@ -206,7 +206,9 @@ class Gen
         
       manifestsrc = matches[0][1]
     end
-  
+
+    # Reference src with absolute path, because this can be used with different pwd
+    manifestsrc = File.expand_path(manifestsrc)
 
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
