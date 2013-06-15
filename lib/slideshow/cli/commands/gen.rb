@@ -207,6 +207,9 @@ class Gen
       manifestsrc = matches[0][1]
     end
 
+    ### todo: use File.expand_path( xx, relative_to ) always with second arg
+    ##   do NOT default to cwd (because cwd will change!)
+    
     # Reference src with absolute path, because this can be used with different pwd
     manifestsrc = File.expand_path(manifestsrc)
 
@@ -215,7 +218,7 @@ class Gen
     logger.debug "outpath=#{outpath}"
     FileUtils.makedirs( outpath ) unless File.directory? outpath 
 
-    dirname  = File.dirname( fn )    
+    dirname  = File.dirname( fn )
     basename = File.basename( fn, '.*' )
     extname  = File.extname( fn )
     logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
@@ -225,7 +228,13 @@ class Gen
     
     newcwd  = File.expand_path( dirname )
     oldcwd  = File.expand_path( Dir.pwd )
-    
+
+    # check: assume pwd is always absolute?? check for home dir e.g. will use ~/ ?? or not?
+    # todo: use for File.expand_path
+    # fix: use ordir n srcdir etec instead of newcwd and oldcwd - 
+    srcdir_restore = File.expand_path( dirname )
+    orgdir_restore = File.expand_path( Dir.pwd )
+
     unless newcwd == oldcwd then
       logger.debug "oldcwd=#{oldcwd}"
       logger.debug "newcwd=#{newcwd}"
@@ -287,21 +296,42 @@ class Gen
   end
 
 
+  #### pak merge
+  #  nb: change cwd to template pak root
+
+  @pakdir = File.dirname( manifestsrc )  # template pak root - make availabe too in erb via binding
+  logger.debug "  pakdir=>#{@pakdir}<"
+
+  #  todo/fix: change current work dir (cwd) in pakman gem itself
+  #   for now lets do it here
+
+  logger.debug "changing cwd to pak dir - oldcwd=>#{Dir.pwd}<, newcwd=>#{@pakdir}<"
+  Dir.chdir( @pakdir )
+
 
   pakpath     = opts.output_path
+
+  # expand output path in current dir and make sure output path exists
+  pakpath = File.expand_path( pakpath, orgdir_restore )
+  logger.debug "pakpath=#{pakpath}"
+  FileUtils.makedirs( pakpath ) unless File.directory? pakpath
 
   logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
     
   Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, basename )
-  
-  ## pop/restore working folder/dir
+
+  logger.debug "restoring cwd to src dir - oldcwd=>#{Dir.pwd}<, newcwd=>#{srcdir_restore}<"
+  Dir.chdir( srcdir_restore )
+
+  ## pop/restore org (original) working folder/dir
   unless newcwd == oldcwd
-    logger.debug "oldcwd=>#{oldcwd}<, newcwd=>#{newcwd}<"
+    logger.debug "restoring cwd to org dir - oldcwd=>#{oldcwd}<, newcwd=>#{newcwd}<"
     Dir.chdir( oldcwd )
   end
 
   puts "Done."
-end
+end # method create_slideshow
+
 
 end # class Gen
 
