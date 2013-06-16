@@ -75,12 +75,14 @@ class Gen
   ##   from helpers
   ##  fix: cleanup and remove
 
-  def load_template( path ) 
+  def load_template( path )
+    puts "*** depreceated api - load_template() - use Pakman gem api"
     puts "  Loading template #{path}..."
     return File.read( path )
   end
   
   def render_template( content, the_binding )
+    puts "*** depreceated api - render_template() - use Pakman gem api"
     ERB.new( content ).result( the_binding )
   end
 

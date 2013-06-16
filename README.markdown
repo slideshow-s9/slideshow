@@ -1,6 +1,11 @@
-# Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby
+# Slide Show (S9) - A Free Web Alternative to PowerPoint and Keynote in Ruby
 
-* [`slideshow.rubyforge.org`](http://slideshow.rubyforge.org)
+* docu   :: [slideshow-s9.github.io](http://slideshow-s9.github.io)
+* source :: [github.com/geraldb/slideshow](https://github.com/geraldb/slideshow)
+* bugs   :: [github.com/geraldb/slideshow/issues](https://github.com/geraldb/slideshow/issues)
+* gem    :: [rubygems.org/gems/slideshow](https://rubygems.org/gems/slideshow)
+* rdoc   :: [rubydoc.info/gems/slideshow](http://rubydoc.info/gems/slideshow)
+
 
 ## DESCRIPTION
 
@@ -11,7 +16,7 @@ The Slide Show (S9) project also collects and welcomes themes and ships
 
 ## SYNOPSIS
 
-    Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
+    Slide Show (S9) is a free web alternative to PowerPoint or Keynote in Ruby
     
     Usage: slideshow [options] name
       -o, --output PATH                Output Path (default is .)

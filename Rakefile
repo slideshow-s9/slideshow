@@ -2,13 +2,12 @@ require 'hoe'
 require './lib/slideshow/version.rb'
 
 Hoe.spec 'slideshow' do
-  
+
   self.version = Slideshow::VERSION
-  
-  self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
-  self.urls     = ['http://slideshow.rubyforge.org']
-  
-  
+
+  self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and Keynote in Ruby'
+  self.urls     = ['http://slideshow-s9.github.io']
+
   self.author  = 'Gerald Bauer'
   self.email   = 'webslideshow@googlegroups.com'
   
@@ -18,9 +17,10 @@ Hoe.spec 'slideshow' do
     ['textutils','>= 0.2.0'],
     ['pakman','>= 0.4.0'],
     ['activesupport', '>= 3.2.6'],
-    ['RedCloth','>= 4.2.9']
+    ['RedCloth','>= 4.2.9'],
+    ['logutils','>=0.6.0']
   ]
-    
+
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.markdown'
   self.history_file = 'History.markdown'

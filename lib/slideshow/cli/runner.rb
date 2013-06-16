@@ -124,7 +124,7 @@ def run( args )
     cmd.on( "-h", "--help", "Show this message" ) do
          puts <<EOS
          
-Slide Show (S9) is a free web alternative to PowerPoint or KeyNote in Ruby
+Slide Show (S9) is a free web alternative to PowerPoint or Keynote in Ruby
 
 #{cmd.help}
 
@@ -144,8 +144,8 @@ More examles:
   slideshow -t s5blank microformats      # Use your own slide show templates (e.g. s5blank)
 
 Further information:
-  http://slideshow.rubyforge.org
-  
+  http://slideshow-s9.github.io
+
 EOS
          exit
     end

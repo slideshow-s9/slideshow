@@ -77,10 +77,10 @@ class Opts
     @list == true
   end
 
- def fetch_all=(boolean)
+  def fetch_all=(boolean)
     @fetch_all = boolean
   end
-  
+
   def fetch_all?
     return false if @fetch_all.nil?  # default fetch all flag is false
     @fetch_all == true
