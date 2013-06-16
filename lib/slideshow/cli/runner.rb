@@ -11,6 +11,9 @@ class Runner
     @opts    = Opts.new
     @config  = Config.new( @opts )
     @headers = Headers.new( @config )
+    
+    ## todo/fix: move into slideshow loader script - why? why not?
+    LogUtils::Logger.root.level = :info
   end
 
   attr_reader :opts, :config, :headers

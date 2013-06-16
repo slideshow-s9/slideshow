@@ -52,7 +52,7 @@ def dump_content_to_file_debug_text( content )
   #   - opts
   #   - outdir
 
-  return content   unless logger.level == Logger::DEBUG
+  return content   unless opts.verbose?
 
   outname = "#{outdir}/#{@name}.debug.text"
 

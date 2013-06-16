@@ -23,7 +23,7 @@ class Gen     ## todo: rename command to build
   end
 
   attr_reader :usrdir   # original working dir (user called slideshow from)
-  attr_reader :srcdir, outdir, pakdir    # NB: "initalized" in create_slideshow
+  attr_reader :srcdir, :outdir, :pakdir    # NB: "initalized" in create_slideshow
 
 
   attr_reader :opts, :config, :headers
