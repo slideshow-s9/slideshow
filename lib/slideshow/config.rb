@@ -1,13 +1,14 @@
 module Slideshow
 
 class Config
-  
-  def initialize( logger, opts )
-    @logger = logger
+
+  include LogUtils::Logging
+
+  def initialize( opts )
     @opts   = opts
   end
 
-  attr_reader :logger, :opts
+  attr_reader :opts
 
   def header_level
     @opts.header_level

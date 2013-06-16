@@ -2,17 +2,18 @@ module Slideshow
 
 class Plugins
 
+  include LogUtils::Logging
+
   include PluginHelper
 
 ### fix: remove opts, use config (wrapped!!)
   
-  def initialize( logger, opts, config )
-    @logger  = logger
+  def initialize( opts, config )
     @opts    = opts
     @config  = config
   end
 
-  attr_reader :logger, :opts, :config
+  attr_reader :opts, :config
 
   def run
     puts ''

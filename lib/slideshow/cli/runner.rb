@@ -2,18 +2,18 @@ module Slideshow
 
 class Runner
 
+  include LogUtils::Logging
+
   include PluginHelper
 
-  def initialize
-    @logger = Logger.new(STDOUT)
-    @logger.level = Logger::INFO
 
+  def initialize
     @opts    = Opts.new
-    @config  = Config.new( @logger, @opts )
+    @config  = Config.new( @opts )
     @headers = Headers.new( @config )
   end
 
-  attr_reader :logger, :opts, :config, :headers
+  attr_reader :opts, :config, :headers
 
 
   def find_file_with_known_extension( fn )
@@ -191,17 +191,17 @@ EOS
 
 
     cmd.on( "--verbose", "(Debug) Show debug trace" )  do
-       logger.datetime_format = "%H:%H:%S"
-       logger.level = Logger::DEBUG
+       LogUtils::Logger.root.level = :debug
+       opts.verbose = true
     end
-        
+
   end
 
   opt.parse!( args )
   
   puts Slideshow.generator
 
-  if logger.level == Logger::DEBUG
+  if opts.verbose?
     # dump Slideshow settings
     config.dump
     puts
@@ -212,15 +212,15 @@ EOS
   end
 
   if opts.list?
-    List.new( logger, opts, config ).run   ### todo: remove opts (merge access into config)
+    List.new( opts, config ).run   ### todo: remove opts (merge access into config)
   elsif opts.plugins?
-    Plugins.new( logger, opts, config ).run  ### todo: remove opts (merge access into config)
+    Plugins.new( opts, config ).run  ### todo: remove opts (merge access into config)
   elsif opts.generate?
-    GenTemplates.new( logger, opts, config ).run  ###  todo: remove opts
+    GenTemplates.new( opts, config ).run  ###  todo: remove opts
   elsif opts.quick?
-    Quick.new( logger, opts, config ).run  ### todo: remove opts
+    Quick.new( opts, config ).run  ### todo: remove opts
   elsif opts.fetch? || opts.fetch_all?
-    Fetch.new( logger, opts, config ).run  ### todo: remove opts
+    Fetch.new( opts, config ).run  ### todo: remove opts
   else
     load_plugins  # check for optional plugins/extension in ./lib folder
 
@@ -228,7 +228,7 @@ EOS
       files = find_files( arg )
       files.each do |file| 
        ### fix/todo: reset/clean headers
-        Gen.new( logger, opts, config, headers ).create_slideshow( file )
+        Gen.new( opts, config, headers ).create_slideshow( file )
       end
     end
   end

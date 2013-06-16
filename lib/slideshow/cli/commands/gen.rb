@@ -1,22 +1,32 @@
+# encoding: utf-8
+
 module Slideshow
 
 ## fix:/todo: move generation code out of command into its own class
 ##   not residing/depending on cli
 
-class Gen
+class Gen     ## todo: rename command to build
+
+  include LogUtils::Logging
 
   include ManifestHelper
 
 ### fix: remove opts, use config (wrapped!!)
 
-  def initialize( logger, opts, config, headers )
-    @logger  = logger
+  def initialize( opts, config, headers )
     @opts    = opts
     @config  = config
     @headers = headers
+    
+    ## todo: check if we need to use expand_path - Dir.pwd always absolute (check ~/user etc.)
+    @usrdir = File.expand_path( Dir.pwd )  # save original (current) working directory 
   end
 
-  attr_reader :logger, :opts, :config, :headers
+  attr_reader :usrdir   # original working dir (user called slideshow from)
+  attr_reader :srcdir, outdir, pakdir    # NB: "initalized" in create_slideshow
+
+
+  attr_reader :opts, :config, :headers
   attr_reader :session      # give helpers/plugins a session-like hash
 
   attr_reader :markup_type  # :textile, :markdown, :rest
@@ -213,12 +223,12 @@ class Gen
     ##   do NOT default to cwd (because cwd will change!)
     
     # Reference src with absolute path, because this can be used with different pwd
-    manifestsrc = File.expand_path(manifestsrc)
+    manifestsrc = File.expand_path( manifestsrc, usrdir )
 
     # expand output path in current dir and make sure output path exists
-    outpath = File.expand_path( opts.output_path ) 
-    logger.debug "outpath=#{outpath}"
-    FileUtils.makedirs( outpath ) unless File.directory? outpath 
+    @outdir = File.expand_path( opts.output_path, usrdir )
+    logger.debug "setting outdir to >#{outdir}<"
+    FileUtils.makedirs( outdir ) unless File.directory? outdir
 
     dirname  = File.dirname( fn )
     basename = File.basename( fn, '.*' )
@@ -227,20 +237,13 @@ class Gen
 
     # change working dir to sourcefile dir
     # todo: add a -c option to commandline? to let you set cwd?
-    
-    newcwd  = File.expand_path( dirname )
-    oldcwd  = File.expand_path( Dir.pwd )
 
-    # check: assume pwd is always absolute?? check for home dir e.g. will use ~/ ?? or not?
-    # todo: use for File.expand_path
-    # fix: use ordir n srcdir etec instead of newcwd and oldcwd - 
-    srcdir_restore = File.expand_path( dirname )
-    orgdir_restore = File.expand_path( Dir.pwd )
+    @srcdir = File.expand_path( dirname, usrdir )
+    logger.debug "setting srcdir to >#{srcdir}<"
 
-    unless newcwd == oldcwd then
-      logger.debug "oldcwd=#{oldcwd}"
-      logger.debug "newcwd=#{newcwd}"
-      Dir.chdir newcwd
+    unless usrdir == srcdir
+      logger.debug "changing cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
+      Dir.chdir srcdir
     end
 
     puts "Preparing slideshow '#{basename}'..."
@@ -302,33 +305,28 @@ class Gen
   #  nb: change cwd to template pak root
 
   @pakdir = File.dirname( manifestsrc )  # template pak root - make availabe too in erb via binding
-  logger.debug "  pakdir=>#{@pakdir}<"
+  logger.debug " setting pakdir to >#{pakdir}<"
 
   #  todo/fix: change current work dir (cwd) in pakman gem itself
   #   for now lets do it here
 
-  logger.debug "changing cwd to pak dir - oldcwd=>#{Dir.pwd}<, newcwd=>#{@pakdir}<"
-  Dir.chdir( @pakdir )
+  logger.debug "changing cwd to pak - new >#{pakdir}<, old >#{Dir.pwd}<"
+  Dir.chdir( pakdir )
 
 
-  pakpath     = opts.output_path
+  pakpath     = outdir
 
-  # expand output path in current dir and make sure output path exists
-  pakpath = File.expand_path( pakpath, orgdir_restore )
-  logger.debug "pakpath=#{pakpath}"
-  FileUtils.makedirs( pakpath ) unless File.directory? pakpath
+  logger.debug( "manifestsrc >#{manifestsrc}<, pakpath >#{pakpath}<" )
 
-  logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
-    
   Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, basename )
 
-  logger.debug "restoring cwd to src dir - oldcwd=>#{Dir.pwd}<, newcwd=>#{srcdir_restore}<"
-  Dir.chdir( srcdir_restore )
+  logger.debug "restoring cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
+  Dir.chdir( srcdir )
 
   ## pop/restore org (original) working folder/dir
-  unless newcwd == oldcwd
-    logger.debug "restoring cwd to org dir - oldcwd=>#{oldcwd}<, newcwd=>#{newcwd}<"
-    Dir.chdir( oldcwd )
+  unless usrdir == srcdir
+    logger.debug "restoring cwd to usr - new >#{usrdir}<, old >#{Dir.pwd}<"
+    Dir.chdir( usrdir )
   end
 
   puts "Done."

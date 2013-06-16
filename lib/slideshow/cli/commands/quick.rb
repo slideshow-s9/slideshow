@@ -2,17 +2,18 @@ module Slideshow
 
 class Quick
 
+  include LogUtils::Logging
+
   include ManifestHelper
 
 ### fix: remove opts, use config (wrapped!!)
 
-  def initialize( logger, opts, config )
-    @logger  = logger
+  def initialize( opts, config )
     @opts    = opts
     @config  = config
   end
 
-  attr_reader :logger, :opts, :config
+  attr_reader :opts, :config
 
   def run
     manifest_name = opts.quick_manifest.gsub('.txt','').gsub('.quick','')  # make sure we get name w/o .quick and .txt extension

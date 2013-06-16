@@ -6,14 +6,18 @@ module Slideshow
 
 def dump_content_to_file_debug_text_erb( content )
 
-  return content   unless logger.level == Logger::DEBUG
+  # NB: using attribs from mixed in class
+  #   - opts
+  #   - outdir
 
-  outname = "#{@name}.debug.text.erb"
+  return content   unless opts.verbose?
+
+  outname = "#{outdir}/#{@name}.debug.text.erb"
 
   puts "  Dumping content before erb merge to #{outname}..."
 
   File.open( outname, 'w' ) do |f|
-    f.write( content )	
+    f.write( content )
   end
 
   content
@@ -23,14 +27,18 @@ end
 
 def dump_content_to_file_debug_html( content )
 
-  return content   unless logger.level == Logger::DEBUG
+  # NB: using attribs from mixed in class
+  #   - opts
+  #   - outdir
 
-  outname = "#{@name}.debug.html"
+  return content   unless opts.verbose?
+
+  outname = "#{outdir}/#{@name}.debug.html"
 
   puts "  Dumping content before html post processing to #{outname}..."
 
   File.open( outname, 'w' ) do |f|
-    f.write( content )	
+    f.write( content )
   end
 
   content
@@ -40,14 +48,18 @@ end
 
 def dump_content_to_file_debug_text( content )
 
+  # NB: using attribs from mixed in class
+  #   - opts
+  #   - outdir
+
   return content   unless logger.level == Logger::DEBUG
 
-  outname = "#{@name}.debug.text"
+  outname = "#{outdir}/#{@name}.debug.text"
 
   puts "  Dumping content before text-to-html conversion to #{outname}..."
 
   File.open( outname, 'w' ) do |f|
-    f.write( content )	
+    f.write( content )
   end
 
   content

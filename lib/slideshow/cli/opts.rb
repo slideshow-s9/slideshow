@@ -30,6 +30,15 @@ class Opts
     @takahashi == true
   end
 
+  def verbose=(boolean)   # add: alias for debug ??
+    @verbose = boolean
+  end
+
+  def verbose?
+    return false if @verbose.nil?   # default verbose/debug flag is false
+    @verbose == true
+  end
+
 
   def quick=(boolean)
     @quick = boolean

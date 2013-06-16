@@ -3,14 +3,13 @@
 ###
 # NB: for local testing run like:
 #
-# 1.8.x: ruby -Ilib -rrubygems lib/slideshow.rb
 # 1.9.x: ruby -Ilib lib/slideshow.rb
 
 
 # core and stlibs
 require 'optparse'
 require 'erb'
-require 'logger'
+require 'logger'               # todo: remove!! replaced by logutils gem
 require 'fileutils'
 require 'pp'
 require 'uri'
@@ -23,6 +22,8 @@ require 'cgi'
 
 # required gems
 require 'active_support/all'
+
+require 'logutils'       # logger utils library
 
 require 'redcloth'          # default textile library
 require 'markdown'          # default markdown library
