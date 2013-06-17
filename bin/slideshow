@@ -3,3 +3,4 @@
 require 'slideshow'
 
 Slideshow.main
+

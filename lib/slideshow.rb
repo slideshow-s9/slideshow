@@ -94,7 +94,7 @@ module Slideshow
   end
 
 
-  def self.main
+  def self.main_old
     
     # allow env variable to set RUBYOPT-style default command line options
     #   e.g. -o slides -t <your_template_manifest_here>
@@ -106,6 +106,12 @@ module Slideshow
     
     Runner.new.run(args)
   end
+
+  def self.main
+    require 'slideshow/cli/main'
+    ## Runner.new.run(ARGV) - old code
+  end
+
 
 end # module Slideshow
 
