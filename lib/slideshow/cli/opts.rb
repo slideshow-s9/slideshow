@@ -3,6 +3,24 @@ module Slideshow
 
 class Opts
 
+  def merge_gli_options!( options={} )
+    @header_level = 1   if options[:h1] == true
+    @header_level = 2   if options[:h2] == true
+    
+    @slide     = true   if options[:slide] == true
+    @takahashi = true   if options[:slide] == true
+    
+    @verbose = true     if options[:verbose] == true
+    
+    @fetch_all = true   if options[:all] == true
+    
+    @config_path = options[:config]    if options[:config].present?
+    @output_path = options[:output]    if options[:output].present?
+    
+    @manifest  =   options[:template]  if options[:template].present?
+  end
+
+
   def header_level=(value)
     @header_level = value.to_i
   end
@@ -40,14 +58,6 @@ class Opts
   end
 
 
-  def quick=(boolean)
-    @quick = boolean
-  end
-
-  def quick?
-    return false if @quick.nil?   # default generate flag is false
-    @quick == true
-  end
 
   def quick_manifest=(value)
     @quick_manifest = value
@@ -68,24 +78,6 @@ class Opts
   end
 
 
-  def generate=(boolean)
-    @generate = boolean
-  end
-
-  def generate?
-    return false if @generate.nil?   # default generate flag is false
-    @generate == true
-  end
-  
-  def list=(boolean)
-    @list = boolean
-  end
-  
-  def list?
-    return false if @list.nil?  # default list flag is false
-    @list == true
-  end
-
   def fetch_all=(boolean)
     @fetch_all = boolean
   end
@@ -95,17 +87,6 @@ class Opts
     @fetch_all == true
   end
 
-  def fetch_uri=(value)
-    @fetch_uri = value
-  end
-
-  def fetch_uri
-    @fetch_uri || '-fetch uri required-'
-  end
-  
-  def fetch?
-    @fetch_uri.nil? ? false : true
-  end
 
 
   def includes=(value)

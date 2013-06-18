@@ -14,18 +14,13 @@ class Fetch
   attr_reader :opts, :config
 
 
-  def run
-    if opts.fetch_all?
-      config.default_fetch_shortcuts.keys.each do |shortcut|
-        fetch_pak( shortcut )
-      end
-    else
-      fetch_pak( opts.fetch_uri )
+  def fetch_all
+    config.default_fetch_shortcuts.keys.each do |shortcut|
+      fetch( shortcut )
     end
   end
 
-private
-  def fetch_pak( src )
+  def fetch( src )
     
     logger.debug "src=>#{src}<"
     
