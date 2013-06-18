@@ -50,7 +50,6 @@ require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
 
 require 'slideshow/cli/opts'
-require 'slideshow/cli/runner'
 require 'slideshow/cli/commands/fetch'
 require 'slideshow/cli/commands/gen'
 require 'slideshow/cli/commands/gen_templates'

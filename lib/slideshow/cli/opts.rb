@@ -17,7 +17,10 @@ class Opts
     @config_path = options[:config]    if options[:config].present?
     @output_path = options[:output]    if options[:output].present?
     
-    @manifest  =   options[:template]  if options[:template].present?
+    @manifest       =   options[:template]  if options[:template].present?
+    
+    ## NB: will use :template option too
+    @quick_manifest =   options[:template]  if options[:template].present?
   end
 
 
@@ -68,15 +71,6 @@ class Opts
   end
 
 
-  def plugins=(boolean)
-    @plugins = boolean
-  end
-
-  def plugins?
-    return false if @plugins.nil?   # default generate flag is false
-    @plugins == true
-  end
-
 
   def fetch_all=(boolean)
     @fetch_all = boolean
@@ -101,7 +95,8 @@ class Opts
   def has_includes?
     @includes.nil? ? false : true
   end
-  
+
+
   def manifest=(value)
     @manifest = value
   end
@@ -109,7 +104,8 @@ class Opts
   def manifest
     @manifest || 's6'
   end
-  
+
+
   def config_path=(value)
     @config_path = value
   end
@@ -117,11 +113,11 @@ class Opts
   def config_path
     @config_path || File.join( Env.home, '.slideshow' )
   end
-    
+
   def output_path=(value)
     @output_path = value
   end
-  
+
   def output_path
     @output_path || '.'
   end

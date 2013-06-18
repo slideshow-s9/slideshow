@@ -3,11 +3,11 @@
 
 require 'gli'
 
+require 'slideshow/cli/main_utils'
 
- 
+
 include GLI::App
-  
- 
+
 program_desc 'Slide Show (S9) - a free web alternative to PowerPoint and Keynote in Ruby'
 
 version Slideshow::VERSION
@@ -53,113 +53,6 @@ Further information:
 EOS
 
 
-class PluginLoader
-  include LogUtils::Logging
-  include Slideshow::PluginHelper  # e.g. gets us load_plugins machinery
-
-  def initialize( config )
-    @config = config
-  end
-
-  attr_reader :config
-end
-
-
-class FileFinder
-  include LogUtils::Logging
-
-  def initialize( config )
-    @config = config
-  end
-  
-  attr_reader :config
-
-  def find_file_with_known_extension( fn )
-    dirname  = File.dirname( fn )
-    basename = File.basename( fn, '.*' )
-    extname  = File.extname( fn )
-    logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
-
-    config.known_extnames.each do |e|
-      newname = File.join( dirname, "#{basename}#{e}" )
-      logger.debug "File.exists? #{newname}"
-      return newname if File.exists?( newname )
-    end  # each extension (e)
-      
-    nil   # not found; return nil
-  end
-
-
-  def find_files( file_or_dir_or_pattern )
-    filtered_files = []
- 
-    ## for now process/assume only single file
-    
-    ## (check for missing extension)
-    if File.exists?( file_or_dir_or_pattern )
-      file = file_or_dir_or_pattern
-      logger.debug "  adding file '#{file}'..."
-      filtered_files << file
-    else  # check for existing file w/ missing extension
-      file = find_file_with_known_extension( file_or_dir_or_pattern )
-      if file.nil?
-        puts "  skipping missing file '#{file_or_dir_or_pattern}{#{config.known_extnames.join(',')}}'..."
-      else
-        logger.debug "  adding file '#{file}'..."
-        filtered_files << file
-      end
-    end
-    
-    filtered_files 
-  end # method find_files
-end # class FileFinder
-
-
-class SysInfo
-  def initialize( config )
-    @config = config
-  end
-  
-  attr_reader :config
-  
-  def dump
-  puts <<EOS
-
-#{Slideshow.generator}
-
-Gems versions:
-  - pakman #{Pakman::VERSION}
-  - fetcher #{Fetcher::VERSION}
-  - markdown #{Markdown::VERSION}
-  - textutils #{TextUtils::VERSION}
-  - props #{Props::VERSION}
-
-        Env home: #{Env.home}
-Slideshow config: #{config.config_dir}
- Slideshow cache: #{config.cache_dir}
-  Slideshow root: #{Slideshow.root}
-
-EOS
-
-  # dump Slideshow settings
-  config.dump
-  puts
-      
-  # dump Markdown settings
-  Markdown.dump
-  puts
-      
-  # todo:
-  # add verison for rubygems
-
-  ## todo: add more gem version info
-  #- redcloth
-  #- kramdown
-  end
-end # class SysInfo
-
-
-
 ## "global" options (switches/flags)
 
 desc '(Debug) Show debug messages'
@@ -178,6 +71,16 @@ flag [:c, :config]
 desc 'Build slideshow'
 arg_name 'FILE', multiple: true   ## todo/fix: check multiple will not print typeo???
 command [:build, :b] do |c|
+
+  #  cmd.on( '--header NUM', 'Header Level (default is 1)' ) do |n|
+  #    opts.header_level = n.to_i
+  #  end
+
+
+  # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
+        
+  # ?? cmd.on( '-i', '--include PATH', 'Load Path' ) { |s| opts.put( 'include', s ) }
+
 
   c.desc 'Set Header Level to 1 (default)'
   c.switch [:h1], negatable: false  # todo: add :1 if it works e.g. -1 why? why not??
@@ -254,13 +157,32 @@ command [:install,:i] do |c|
 end
 
 
-arg_name 'MANIFEST', multiple: true, optional: true   ## todo/fix: check optional ignored, multiple too -typo? why?
+######
+# add command :g,:gen,:generate ??? why? why not?  better just git clone repos
+#  or use command copy?
+#
+#   cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
+#
+#  GenTemplates.new( opts, config ).run  ###  todo: remove opts
+
+
+desc 'Generate quick starter sample'
 command [:new,:n] do |c|
+
+  c.desc 'Output Path'
+  c.arg_name 'PATH'
+  c.default_value opts.output_path
+  c.flag [:o,:output]
+
+  c.desc 'Template Manifest'
+  c.arg_name 'MANIFEST'
+  c.default_value opts.quick_manifest
+  c.flag [:t, :template]
+
 
   c.action do |g,o,args|
     logger.debug 'hello from new command'
 
-    ## todo: check if args.length = 0
     ##  use quick_manifest (default) otherwise pass along/use args
     Slideshow::Quick.new( opts, config ).run  ### todo: remove opts
 
@@ -277,10 +199,12 @@ command [:about,:a] do |c|
   end
 end
 
-
+desc '(Debug) List plugin scripts in load path'
 command [:plugins,:plugin,:p] do |c|
   c.action do
     logger.debug 'hello from plugin command'
+
+    Slideshow::Plugins.new( opts, config ).run  ### todo: remove opts (merge access into config)
   end
 end
 
@@ -317,12 +241,12 @@ pre do |g,c,o,args|
     puts
   end
 
-  logger.debug "Executing #{c.name}"   
+  logger.debug "   executing command #{c.name}"
   true
 end
 
 post do |global,c,o,args|
-  logger.debug "Executed #{c.name}"
+  logger.debug "   executed command #{c.name}"
   true
 end
 
@@ -330,10 +254,12 @@ end
 on_error do |e|
   puts
   puts "*** error: #{e.message}"
+  puts
 
   ## todo/fix: find a better way to print; just raise exception e.g. raise e  - why? why not??
-  puts e.backtrace.inspect  if opts.verbose?
-  
+  ## puts e.backtrace.inspect  if opts.verbose?
+  raise e   if opts.verbose?
+
   false # skip default error handling
 end
 
