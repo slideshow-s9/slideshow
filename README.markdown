@@ -14,38 +14,105 @@ using a wiki-style markup language that's easy-to-write and easy-to-read.
 The Slide Show (S9) project also collects and welcomes themes and ships
 "out-of-the-gem" with built-in support for "loss-free" gradient vector graphics themes.
 
-## SYNOPSIS
+~~~
+SYNOPSIS
+    slideshow [global options] command [command options] [arguments...]
 
-    Slide Show (S9) is a free web alternative to PowerPoint or Keynote in Ruby
-    
-    Usage: slideshow [options] name
-      -o, --output PATH                Output Path (default is .)
-      -t, --template MANIFEST          Template Manifest (default is s6.txt)
-          --h1                         Set Header Level to 1 (default)
-          --h2                         Set Header Level to 2
-      -f, --fetch URI                  Fetch Templates
-      -l, --list                       List Installed Templates
-      -c, --config PATH                Configuration Path (default is ~/.slideshow)
-      -g, --generate                   Generate Slide Show Templates (using built-in S6 Pack)
-      -q, --quick                      Generate Quickstart Slide Show Sample
-      -v, --version                    Show version
-          --verbose                    Show debug trace
-      -h, --help                       Show this message
+VERSION
+    2.0.0
 
-    Examples:
-      slideshow microformats
-      slideshow microformats.text            # Process slides using Markdown
-      slideshow microformats.textile         # Process slides using Textile
-      slideshow microformats.rst             # Process slides using reStructuredText
-      slideshow -o slides microformats       # Output slideshow to slides folder
-    
-    More examles:
-      slideshow -q                           # Generate quickstart slide show sample
-      slideshow -g                           # Generate slide show templates using built-in S6 pack
-      
-      slideshow -l                           # List installed slide show templates
-      slideshow -f s5blank                   # Fetch (install) S5 blank starter template from internet
-      slideshow -t s5blank microformats      # Use your own slide show templates (e.g. s5blank)
+GLOBAL OPTIONS
+    -c, --config=PATH - Configuration Path (default: ~/.slideshow)
+    --verbose         - (Debug) Show debug messages
+    --version         - Show version
+
+COMMANDS
+    build, b           - Build slideshow
+    install, i         - Install template pack
+    list, ls, l        - List installed template packs
+    new, n             - Generate quick starter sample
+    about, a           - (Debug) Show more version info
+    help               - Shows a list of commands or help for one command
+~~~
+
+
+### `build` Command
+
+~~~
+NAME
+    build - Build slideshow
+
+SYNOPSIS
+    slideshow [global options] build [command options] FILE
+
+COMMAND OPTIONS
+    --h1                    - Set Header Level to 1 (default)
+    --h2                    - Set Header Level to 2
+    --takahashi             - Allow // for slide breaks
+    --slide                 - Use only !SLIDE for slide breaks (Showoff Compatible)
+    -o, --output=PATH       - Output Path (default: .)
+    -t, --template=MANIFEST - Template Manifest (default: s6)
+
+EXAMPLES
+    slideshow build microformats
+    slideshow build microformats.text            # Process slides using Markdown
+    slideshow build microformats.textile         # Process slides using Textile
+    slideshow build microformats.rst             # Process slides using reStructuredText
+    slideshow build microformats -o slides       # Output slideshow to slides folder
+    slideshow build microformats -t s5blank      # Use your own slide show templates (e.g. s5blank)
+~~~
+
+
+### `list` Command
+
+~~~
+NAME
+    list - List installed template packs
+
+SYNOPSIS
+    slideshow [global options] list [command options] 
+
+EXAMPLES
+    slideshow list
+    slideshow ls
+~~~
+
+
+### `install` Command
+
+~~~
+NAME
+    install - Install template pack
+
+SYNOPSIS
+    slideshow [global options] install [command options] MANIFEST
+
+COMMAND OPTIONS
+    -a, --all - Template Packs (s5blank, s5themes, slidy, g5, csss, deck.js, impress.js)
+
+EXAMPLES
+    slideshow install impress.js
+    slideshow https://raw.github.com/.../impress.js.txt
+~~~
+
+
+### `new` Command
+
+~~~
+NAME
+    new - Generate quick starter sample
+
+SYNOPSIS
+    slideshow [global options] new [command options] 
+
+COMMAND OPTIONS
+    -o, --output=PATH       - Output Path (default: .)
+    -t, --template=MANIFEST - Template Manifest (default: welcome)
+
+EXAMPLES
+    slideshow new
+    slideshow new -t impress.js
+~~~
 
 
 ## INSTALL
