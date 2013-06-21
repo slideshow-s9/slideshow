@@ -95,12 +95,23 @@ EOS
   # dump Markdown settings
   Markdown.dump
   puts
-      
+
   # todo:
   # add verison for rubygems
 
   ## todo: add more gem version info
   #- redcloth
   #- kramdown
+
+      
+    dump_load_path   # helps debugging pluggin loading (e.g. Ruby 1.9.2> no longer includes ./ in load path)
   end
+
+  def dump_load_path
+    puts 'load path:'
+    $LOAD_PATH.each_with_index do |path,i|
+      puts "  [#{i+1}] #{path}"
+    end
+  end
+
 end # class SysInfo

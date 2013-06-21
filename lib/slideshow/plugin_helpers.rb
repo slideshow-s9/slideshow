@@ -29,8 +29,10 @@ module PluginHelper
       pattern.gsub!( '\\', '/')  # normalize path; make sure all path use / only
       Dir.glob( pattern ) do |plugin|
         begin
-          puts "Loading plugins in '#{plugin}'..."
-          require( plugin )
+          ## NB: use full_path - since Ruby 1.9.2 - ./ no longer included in load path for security
+          plugin_fullpath = File.expand_path( plugin )  # nb: will use Dir.pwd (e.g. ./) as second arg
+          puts "Loading plugins in '#{plugin}' (#{plugin_fullpath})..."
+          require( plugin_fullpath )
         rescue Exception => e
           puts "** error: failed loading plugins in '#{plugin}': #{e}"
         end

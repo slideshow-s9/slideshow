@@ -29,7 +29,9 @@ class Plugins
       puts "    -- none --"
     else
       plugins.each do |plugin|
-        puts "    #{plugin}"
+        ## NB: use full_path - since Ruby 1.9.2 - ./ no longer included in load path for security
+        plugin_fullpath = File.expand_path( plugin )
+        puts "    #{plugin} (#{plugin_fullpath})"
       end
     end
   end
