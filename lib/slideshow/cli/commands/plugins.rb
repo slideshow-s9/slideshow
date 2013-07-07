@@ -16,14 +16,18 @@ class Plugins
   attr_reader :opts, :config
 
   def run
+    home = Env.home
+    ## replace home w/ ~ (to make out more readable (shorter))
+    ## e.g. use gsub( home, '~' )
+
     puts ''
     puts 'Plugin scripts on the load path'
     
     find_plugin_patterns.each_with_index do |pattern,i|
-      puts "    [#{i+1}] #{pattern}"
+      puts "    [#{i+1}] #{pattern.gsub(home,'~')}"
     end
     puts '  include:'
-    
+
     plugins = find_plugins
     if plugins.empty?
       puts "    -- none --"
@@ -31,7 +35,7 @@ class Plugins
       plugins.each do |plugin|
         ## NB: use full_path - since Ruby 1.9.2 - ./ no longer included in load path for security
         plugin_fullpath = File.expand_path( plugin )
-        puts "    #{plugin} (#{plugin_fullpath})"
+        puts "    #{plugin.gsub(home,'~')} (#{plugin_fullpath})"
       end
     end
   end

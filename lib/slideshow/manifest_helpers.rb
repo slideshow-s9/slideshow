@@ -3,7 +3,30 @@ module Slideshow
 module ManifestHelper
 
   ## shared methods for handling manifest lookups
-  
+
+  def installed_plugin_manifest_patterns
+    # 1) search ./plugins
+    # 2) search config_dir/plugins
+
+    config_patterns  = [
+      "#{config.config_dir}/plugins/*.{txt.plugin,plugin.txt}",
+      "#{config.config_dir}/plugins/*/*.{txt.plugin,plugin.txt}"
+    ]
+    current_patterns = [
+      "plugins/*.{txt.plugin,plugin.txt}",
+      "plugins/*/*.{txt.plugin,plugin.txt}"
+    ]
+    
+    patterns = []
+    patterns += current_patterns
+    patterns += config_patterns
+  end
+
+  def installed_plugin_manifests  # quickstarter templates
+    Pakman::Finder.new( logger ).find_manifests( installed_plugin_manifest_patterns )
+  end
+
+
   def installed_template_manifest_patterns
     # 1) search ./templates
     # 2) search config_dir/templates

@@ -4,7 +4,24 @@ module PluginHelper
 
   def find_plugin_patterns
     patterns = []
+
+    ###
+    #  todo/fix: only include rb files listed in plugin manifests!
+    #  - for now load all ruby files in plugins folder
+
+    patterns << "#{config.config_dir}/plugins/**/*.rb"
+
+    ######
+    # also allow "ad-hoc" plugins e.g. no manifest required (not installed)
+    #   just ruby scripts in lib in config folder or working folder
+
     patterns << "#{config.config_dir}/lib/**/*.rb"
+
+    #########
+    #  todo/fix: only include rb files listed in plugin manifest (see above!)
+
+    patterns << 'plugins/**/*.rb'
+
     patterns << 'lib/**/*.rb' unless Slideshow.root == File.expand_path( '.' )  # don't include lib if we are in repo (don't include slideshow/lib)    
     patterns
   end

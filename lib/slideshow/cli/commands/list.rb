@@ -19,7 +19,21 @@ class List
     home = Env.home
     ## replace home w/ ~ (to make out more readable (shorter))
     ## e.g. use gsub( home, '~' )
-    
+
+    puts ''
+    puts 'Installed plugins in search path'
+
+    installed_plugin_manifest_patterns.each_with_index do |pattern,i|
+      puts "    [#{i+1}] #{pattern.gsub(home,'~')}"
+    end
+    puts '  include:'
+
+    installed_plugin_manifests.each do |manifest|
+      pakname      = manifest[0].gsub('.txt','').gsub('.plugin','')
+      manifestpath = manifest[1].gsub(home,'~')
+      puts "%16s (%s)" % [pakname,manifestpath]
+    end
+
     puts ''
     puts 'Installed quickstarter packs in search path'
 
