@@ -49,12 +49,21 @@ class Quick
   
   def fetch_pak( shortcut )
 
-    src = config.map_quick_shortcut( shortcut )
+    sources = config.map_quick_shortcut( shortcut )
       
-    if src.nil?
-      puts "*** error: no mapping found for quick shortcut '#{shortcut}'."
+    if sources.empty?
+      puts "*** error: no mapping found for shortcut '#{shortcut}'."
       exit 2
     end
+
+    sources = sources.select { |s| s.include?('.txt.quick') || s.include?('.quick.txt') }
+
+    if sources.empty?
+      puts "*** error: no quick mapping found for shortcut '#{shortcut}'."
+      exit 2
+    end
+
+    src = sources[0]
     
     puts "  Mapping quick shortcut '#{shortcut}' to: #{src}"
   

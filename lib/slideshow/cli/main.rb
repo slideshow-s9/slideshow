@@ -140,7 +140,7 @@ desc 'Install template pack'
 arg_name 'MANIFEST', multiple: true
 command [:install,:i] do |c|
 
-  c.desc "Template Packs (#{config.default_fetch_shortcuts.keys.join(', ')})"
+  c.desc "Template Packs (#{config.default_fetch_shortcuts.join(', ')})"
   c.switch [:a,:all], negatable: false
 
   c.action do |g,o,args|
@@ -153,6 +153,18 @@ command [:install,:i] do |c|
     args.each do |arg|
       Slideshow::Fetch.new( opts, config ).fetch( arg )  ## todo: remove opts merge into config
     end
+  end
+end
+
+
+desc "Update shortcut index for template packs 'n' plugins"
+command [:update,:u] do |c|
+
+  c.action do |g,o,args|
+    logger.debug 'hello from update command'
+
+    # todo: move update to its own command
+    Slideshow::Fetch.new( opts, config ).update()
   end
 end
 

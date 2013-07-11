@@ -71,28 +71,3 @@ rest:
   extnames: [ .rst, .rest ]
 
 # NB: markdown now configured in markdown.yml (using markdown gem)
-
-
-#############################
-# shortcuts for fetching template packs & plugins
-#   map shortcut to URI
-fetch:
-  s6syntax: https://raw.github.com/slideshow-s9/slideshow-s6-syntax-highlighter/master/s6syntax.txt
-  s6blank: https://raw.github.com/slideshow-s9/slideshow-s6-blank/master/s6blank.txt
-  s5blank: https://raw.github.com/slideshow-s9/slideshow-s5-blank/master/s5blank.txt
-  s5themes: https://raw.github.com/slideshow-s9/slideshow-s5-themes/master/s5themes.txt
-  slidy: https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt
-  g5: https://raw.github.com/slideshow-s9/slideshow-google-html5-slides/master/g5.txt
-  csss: https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt
-  deck.js: https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt
-  impress.js: https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt
-  shower: https://raw.github.com/slideshow-s9/slideshow-shower/master/shower.txt
-  analytics: https://raw.github.com/slideshow-s9/analytics/master/analytics.txt.plugin
-
-###########################
-# shortcuts for quick starter templates
-quick:
-  slidy: https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt.quick
-  deck.js: https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt.quick
-  impress.js: https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt.quick
-  csss: https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt.quick

@@ -1,0 +1,49 @@
+###############################
+# copy from -> https://github.com/slideshow-s9/update/blob/master/index.yml
+#
+#  issue
+#    slideshow update
+#  to update index
+
+
+##############################################################
+# Slide Show (S9) Update Index for Template Packs 'n' Plugins
+
+
+#############
+# shortcuts for fetching template packs (w/ optional quick starter templates) 
+#   map shortcut to URI
+
+s6blank: https://raw.github.com/slideshow-s9/slideshow-s6-blank/master/s6blank.txt
+
+s6syntax: https://raw.github.com/slideshow-s9/slideshow-s6-syntax-highlighter/master/s6syntax.txt
+
+s5blank: https://raw.github.com/slideshow-s9/slideshow-s5-blank/master/s5blank.txt
+
+s5themes: https://raw.github.com/slideshow-s9/slideshow-s5-themes/master/s5themes.txt
+
+g5: https://raw.github.com/slideshow-s9/slideshow-google-html5-slides/master/g5.txt
+
+slidy:
+- https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt
+- https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt.quick
+
+csss:
+- https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt
+- https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt.quick
+
+deck.js:
+- https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt
+- https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt.quick
+
+impress.js:
+- https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt
+- https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt.quick
+
+shower: https://raw.github.com/slideshow-s9/slideshow-shower/master/shower.txt
+
+
+##################
+# plugins
+
+analytics: https://raw.github.com/slideshow-s9/analytics/master/analytics.txt.plugin

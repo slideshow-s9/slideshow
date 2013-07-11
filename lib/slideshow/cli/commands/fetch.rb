@@ -15,47 +15,59 @@ class Fetch
 
 
   def fetch_all
-    config.default_fetch_shortcuts.keys.each do |shortcut|
+    config.default_fetch_shortcuts.each do |shortcut|
       fetch( shortcut )
     end
   end
 
-  def fetch( src )
+
+  def update   # update shortcut index
+    dest =  config.shortcut_index_file
     
-    logger.debug "src=>#{src}<"
+    destfull = File.expand_path( dest )
+    destpath = File.dirname( destfull )
+    FileUtils.makedirs( destpath ) unless File.directory?( destpath )
+
+    logger.debug "destfull=>#{destfull}<"
+    logger.debug "destpath=>#{destpath}<"
+    
+    ## todo/fix: use a config setting for index url (do NOT hard core)
+    src = 'https://raw.github.com/slideshow-s9/update/master/slideshow.index.yml'
+
+    puts "Updating shortcut index - downloading '#{src}'..."
+    ::Fetcher::Worker.new( logger ).copy( src, destfull )
+  end
+
+
+  def fetch( shortcut_or_source )
+
+    logger.debug "fetch >#{shortcut_or_source}<"
     
     ## check for builtin shortcut (assume no / or \) 
-    if src.index( '/' ).nil? && src.index( '\\' ).nil?
-      shortcut = src.dup
-      src = config.map_fetch_shortcut( src )
+    if shortcut_or_source.index( '/' ).nil? && shortcut_or_source.index( '\\' ).nil?
+      shortcut = shortcut_or_source
+      sources = config.map_fetch_shortcut( shortcut )
 
-      if src.nil?
-        puts "** Error: No mapping found for fetch shortcut '#{shortcut}'."
+      if sources.empty?
+        puts "** Error: No mapping found for shortcut '#{shortcut}'."
         return
       end
-      puts "  Mapping fetch shortcut '#{shortcut}' to: #{src}"
+      puts "  Mapping fetch shortcut '#{shortcut}' to: #{sources.join(',')}"
     else
-      shortcut = nil
+      sources = [shortcut_or_source]  # pass arg through unmapped
     end
 
-    ## if manifest includes .plugin assume it's a plugin
-    if src.include?( '.plugin' )
-      fetch_plugin( src )
-    else # otherwise assume it's a template pack
-      fetch_template( src )
-    
-      ###################################
-      ## step 2) if shortcut exists (auto include quickstarter manifest w/ same name/key)
-    
-      if shortcut.present?
+    sources.each do |source|
       
-        src = config.map_quick_shortcut( shortcut )
-        return if src.nil?   # no shortcut found; sorry; returning (nothing more to do)
-      
-        puts "  Mapping quick shortcut '#{shortcut}' to: #{src}"
-
-        fetch_quick( src )
+      ## if manifest includes .plugin assume it's a plugin
+      if source.include?( '.txt.plugin' ) || source.include?( '.plugin.txt' )
+        fetch_plugin( source )
+      elsif source.include?( '.txt.quick' ) || source.include?( '.quick.txt' )
+        fetch_quick( source )
+      else # otherwise assume it's a template pack
+        fetch_template( source )
       end
+
     end
 
   end # method run

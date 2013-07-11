@@ -22,6 +22,7 @@ class Config
     @opts.takahashi?
   end
 
+
   # todo/fix: fix references after this move to here, that is, Config class
   # - used in syntax/uv_helper (use config.cache_dir to access?)
   
@@ -41,6 +42,72 @@ class Config
   end
 
 
+  def shortcut_index_file
+    ## e.g. ~/slideshow.index.yml
+    File.join( Env.home, 'slideshow.index.yml' )
+  end
+
+
+  def load_shortcuts
+    # load default index/registry for shortcuts
+    props_shortcuts_default_file = File.join( Slideshow.root, 'config', 'slideshow.index.yml' )
+    @props_shortcuts = @props_shortcuts_default = Props.load_file( props_shortcuts_default_file )
+
+    # check for update (slideshow.index.yml) in home folder
+
+    props_shortcuts_home_file = File.join( Env.home, 'slideshow.index.yml' )
+    if File.exists?( props_shortcuts_home_file )
+      puts "Loading shortcut index from '#{props_shortcuts_home_file}'..."
+      @props_shortcuts = @props_shortcuts_home = Props.load_file( props_shortcuts_home_file, @props_shortcuts )
+    end
+    
+    # todo: add props from (optional) fetch section from 'standard' props (e.g. props[:fetch])
+    #  - allows user to add own shortcuts in slideshow.yml settings
+  end
+
+
+  def map_fetch_shortcut( key )
+    # NB: always returns an array!!!  0,1 or more entries
+    # - no value - return empty ary
+    
+    ## todo: normalize key???
+    value = @props.fetch_from_section( 'fetch', key, @props_shortcuts.fetch( key, nil ))
+
+    if value.nil?
+      []
+    elsif value.kind_of?( String )
+      [value]
+    else  # assume it's an array already;  ## todo: check if it's an array
+      value
+    end
+  end
+
+
+  def default_fetch_shortcuts
+    ## NB: used by install --all
+
+    ['s6blank',
+     's6syntax',
+     's5blank',
+     's5themes',
+     'g5',
+     'slidy',
+     'deck.js',
+     'impress.js',
+     'analytics'
+    ]
+    
+    ## todo: use @props_shortcuts keys
+    #  and use
+    #
+    # fetch_shortcuts = fetch_shortcuts.clone
+    # fetch_shortcuts.delete( 'fullerscreen' )  # obsolete (do not promote any longer)
+    # fetch_shortcuts.delete( 'slippy' )  # needs update/maintainer anyone?
+    # fetch_shortcuts.delete( 'shower' )  # needs update/maintainer anyone?
+    # etc. to strip keys for all install
+  end
+
+
   def load
     
     # load builtin config file @  <gem>/config/slideshow.yml
@@ -50,7 +117,6 @@ class Config
     #     user cannot override builtin settings (only defaults see below)
     props_builtin_file  = File.join( Slideshow.root, 'config', 'slideshow.builtin.yml' )
     @props_builtin = Props.load_file( props_builtin_file )
-
 
     props_default_file  = File.join( Slideshow.root, 'config', 'slideshow.yml' )
     @props = @props_default = Props.load_file_with_erb( props_default_file, binding() )
@@ -70,6 +136,9 @@ class Config
       puts "Loading settings from '#{props_work_file}'..."
       @props = @props_work = Props.load_file_with_erb( props_work_file, binding(), @props )
     end
+    
+    # load shortcuts
+    load_shortcuts
   end
 
   def dump  # dump settings for debugging
@@ -79,6 +148,11 @@ class Config
     @props_home.dump     if @props_home
     @props_work.dump     if @props_work
     
+    puts "Slideshow shortcuts:"
+    @props_shortcuts_default.dump  if @props_shortcuts_default
+    @props_shortcuts_home.dump     if @props_shortcuts_home
+    ## todo: add props from 'standard' props via fetch key
+    
     ## todo: add more config settings?
   end
 
@@ -87,19 +161,6 @@ class Config
     @props.fetch_from_section( 'headers', normalize_key( key ), nil )
   end
 
-  def default_fetch_shortcuts
-    fetch_shortcuts = @props_default.fetch( 'fetch', {} )
-    
-    fetch_shortcuts = fetch_shortcuts.clone
-    fetch_shortcuts.delete( 'fullerscreen' )  # obsolete (do not promote any longer)
-    fetch_shortcuts.delete( 'slippy' )  # needs update/maintainer anyone?
-    fetch_shortcuts.delete( 'shower' )  # needs update/maintainer anyone?
-
-    fetch_shortcuts.delete( 's6syntax' )  # better wait for next update
-    fetch_shortcuts.delete( 's6blank' )  # better wait for next update
-
-    fetch_shortcuts
-  end
 
   def markdown_post_processing?( lib )
     ## todo: normalize key/lib???
@@ -140,16 +201,6 @@ class Config
   
   def google_analytics_code
     @props.fetch_from_section( 'analytics', 'google', nil )
-  end
-  
-  def map_fetch_shortcut( key )
-    ## todo: normalize key???
-    @props.fetch_from_section( 'fetch', key, nil )
-  end
-
-  def map_quick_shortcut( key )
-    ## todo: normalize key???
-    @props.fetch_from_section( 'quick', key, nil )
   end
 
   def helper_renames

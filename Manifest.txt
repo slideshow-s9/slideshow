@@ -4,6 +4,7 @@ README.markdown
 Rakefile
 bin/slideshow
 config/slideshow.builtin.yml
+config/slideshow.index.yml
 config/slideshow.yml
 lib/slideshow.rb
 lib/slideshow/cli/commands/fetch.rb
