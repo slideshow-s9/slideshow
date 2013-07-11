@@ -49,7 +49,7 @@ class Quick
   
   def fetch_pak( shortcut )
 
-    sources = config.map_quick_shortcut( shortcut )
+    sources = config.map_fetch_shortcut( shortcut )
       
     if sources.empty?
       puts "*** error: no mapping found for shortcut '#{shortcut}'."
