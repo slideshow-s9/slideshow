@@ -27,6 +27,7 @@ require 'logutils'       # logger utils library
 
 require 'redcloth'          # default textile library
 require 'markdown'          # default markdown library
+require 'wikicloth'         # default mediawiki library
 require 'fetcher'           # fetch docs and blogs via http, https, etc.
 
 require 'props'             # manage settings/env
@@ -60,6 +61,8 @@ require 'slideshow/cli/commands/quick'
 
 require 'slideshow/markup/textile'
 require 'slideshow/markup/markdown'
+require 'slideshow/markup/mediawiki'
+
 
 # load built-in (required) helpers/plugins
 require 'slideshow/helpers/text_helper'

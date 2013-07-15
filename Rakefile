@@ -17,9 +17,10 @@ Hoe.spec 'slideshow' do
     ['textutils','>= 0.2.0'],
     ['pakman','>= 0.4.0'],
     ['activesupport', '>= 3.2.6'],
-    ['RedCloth','>= 4.2.9'],
     ['logutils','>= 0.6.0'],
-    ['gli', '>= 2.5.6']
+    ['gli', '>= 2.5.6'],
+    ['RedCloth','>= 4.2.9'],   # textile markup egine
+    ['wikicloth', '>= 0.8.0']    # mediawiki markup engine
   ]
 
   # switch extension to .markdown for gihub formatting
@@ -28,6 +29,15 @@ Hoe.spec 'slideshow' do
   
   self.post_install_message =<<EOS
 ******************************************************************************
+
+Tip: Try installing some template packs. Example:
+
+  $ slideshow install impress.js
+  
+  or
+  
+  $ slideshow install deck.js
+
 
 Questions? Comments? Send them along to the mailing list.
 https://groups.google.com/group/webslideshow

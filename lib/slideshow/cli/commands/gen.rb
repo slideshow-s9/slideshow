@@ -29,15 +29,17 @@ class Gen     ## todo: rename command to build
   attr_reader :opts, :config, :headers
   attr_reader :session      # give helpers/plugins a session-like hash
 
-  attr_reader :markup_type  # :textile, :markdown, :rest
-  
-  # uses configured markup processor (textile,markdown,rest) to generate html
+  attr_reader :markup_type  # :textile, :markdown, :mediawiki, :rest
+
+  # uses configured markup processor (textile,markdown,rest,mediawiki) to generate html
   def text_to_html( content )
     content = case @markup_type
       when :markdown
         markdown_to_html( content )
       when :textile
         textile_to_html( content )
+      when :mediawiki
+        mediawiki_to_html( content )
       when :rest
         rest_to_html( content )
     end
@@ -49,10 +51,13 @@ class Gen     ## todo: rename command to build
     #   thus, to avoid runs - use guard_block (add a leading newline to avoid getting include in block that goes before)
     
     # todo/fix: remove wrap_markup; replace w/ guard_text
-    #   why: text might be css, js, not just html      
+    #   why: text might be css, js, not just html
+    
+    ## todo: add print depreciation warning
+    
     wrap_markup( text )
   end
-   
+
   def guard_block( text )
     if markup_type == :textile
       # saveguard with notextile wrapper etc./no further processing needed
@@ -61,6 +66,8 @@ class Gen     ## todo: rename command to build
     elsif markup_type == :markdown
       # wrap in newlines to avoid runons
       "\n\n#{text}\n\n"
+    elsif markup_type == :mediawiki
+      "\n\n<nowiki>\n#{text}\n</nowiki>\n"
     else
       text
     end
@@ -79,23 +86,6 @@ class Gen     ## todo: rename command to build
       text
     end
   end
-
-
-  ## fix:/todo: check if these get called
-  ##   from helpers
-  ##  fix: cleanup and remove
-
-  def load_template( path )
-    puts "*** depreceated api - load_template() - use Pakman gem api"
-    puts "  Loading template #{path}..."
-    return File.read( path )
-  end
-  
-  def render_template( content, the_binding )
-    puts "*** depreceated api - render_template() - use Pakman gem api"
-    ERB.new( content ).result( the_binding )
-  end
-
 
 
   # move into a filter??
@@ -252,6 +242,8 @@ class Gen     ## todo: rename command to build
     @markup_type = :textile
   elsif config.known_rest_extnames.include?( extname )
     @markup_type = :rest
+  elsif config.known_mediawiki_extnames.include?( extname )
+    @markup_type = :mediawiki
   else  # default/fallback use markdown
     @markup_type = :markdown
   end

@@ -70,4 +70,7 @@ textile:
 rest:
   extnames: [ .rst, .rest ]
 
+mediawiki:
+  extnames: [ .wiki, .mediawiki, .mw ]
+
 # NB: markdown now configured in markdown.yml (using markdown gem)
