@@ -31,7 +31,6 @@ lib/slideshow/helpers/step_helper.rb
 lib/slideshow/helpers/syntax/coderay_helper.rb
 lib/slideshow/helpers/syntax/sh_helper.rb
 lib/slideshow/helpers/syntax/uv_helper.rb
-lib/slideshow/helpers/table_helper.rb
 lib/slideshow/helpers/text_helper.rb
 lib/slideshow/manifest_helpers.rb
 lib/slideshow/markup/markdown.rb

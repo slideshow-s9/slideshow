@@ -65,7 +65,6 @@ require 'slideshow/markup/textile'
 # load built-in (required) helpers/plugins
 require 'slideshow/helpers/text_helper'
 require 'slideshow/helpers/capture_helper'
-require 'slideshow/helpers/table_helper'
 require 'slideshow/helpers/step_helper'
 require 'slideshow/helpers/background_helper'
 require 'slideshow/helpers/source_helper'

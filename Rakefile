@@ -18,7 +18,7 @@ Hoe.spec 'slideshow' do
     ['pakman','>= 0.4.0'],
     ['activesupport', '>= 3.2.6'],
     ['logutils','>= 0.6.0'],
-    ['gli', '>= 2.5.6'],
+    ['gli', '>= 2.5.6']
     ## ['wikicloth', '>= 0.8.0']  make it a soft dependency   # mediawiki markup engine
     ## ['RedCloth','>= 4.2.9']    make it a soft dependency   # textile markup engine
   ]
@@ -40,11 +40,11 @@ Tip: Try some new template packs. Example:
   
   and use like
   
-  $ slideshow build welcome.txt -t impress.js
+  $ slideshow build welcome.text -t impress.js
   
   or
   
-  $ slideshow build welcome.txt -t deck.js
+  $ slideshow build welcome.text -t deck.js
 
 
 Questions? Comments? Send them along to the mailing list.
