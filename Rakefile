@@ -19,8 +19,8 @@ Hoe.spec 'slideshow' do
     ['activesupport', '>= 3.2.6'],
     ['logutils','>= 0.6.0'],
     ['gli', '>= 2.5.6'],
-    ['RedCloth','>= 4.2.9'],   # textile markup egine
-    ['wikicloth', '>= 0.8.0']    # mediawiki markup engine
+    ## ['wikicloth', '>= 0.8.0']  make it a soft dependency   # mediawiki markup engine
+    ## ['RedCloth','>= 4.2.9']    make it a soft dependency   # textile markup engine
   ]
 
   # switch extension to .markdown for gihub formatting
@@ -30,13 +30,21 @@ Hoe.spec 'slideshow' do
   self.post_install_message =<<EOS
 ******************************************************************************
 
-Tip: Try installing some template packs. Example:
+Tip: Try some new template packs. Example:
 
   $ slideshow install impress.js
   
   or
   
   $ slideshow install deck.js
+  
+  and use like
+  
+  $ slideshow build welcome.txt -t impress.js
+  
+  or
+  
+  $ slideshow build welcome.txt -t deck.js
 
 
 Questions? Comments? Send them along to the mailing list.

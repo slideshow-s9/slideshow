@@ -24,7 +24,24 @@ module Slideshow
   end 
 
 
-  def textile_to_html( content )    
+  def setup_textile_engine
+    return if @textile_engine_setup
+    logger.debug 'require redcloth  -- load textile library'
+    require 'redcloth'          # default textile library
+    @textile_engine_setup = true
+  rescue LoadError
+    puts "You're missing a library required for Textile to Hypertext conversion. Please run:"
+    puts "   $ gem install RedCloth"
+    #  check: raise exception instead of exit e.g
+    #  raise FatalException.new( 'Missing library dependency: RedCloth' )
+    exit 1
+  end
+
+
+  def textile_to_html( content )
+    
+    setup_textile_engine()   # optinal lib; extra; load only textile lib if used (soft dependency)
+    
     puts "  Converting Textile-text (#{content.length} bytes) to HTML..."
     
     # JRuby workaround for RedCloth 4 multi-byte character bug
