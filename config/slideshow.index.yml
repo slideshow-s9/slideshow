@@ -41,6 +41,12 @@ impress.js:
 shower: https://raw.github.com/slideshow-s9/slideshow-shower/master/shower.txt
 
 
+reveal.js: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
+
+# alias - rename manifest to reveal.js.txt -- possible?
+reveal: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
+
+
 ##############
 # Plugins
 

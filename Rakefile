@@ -13,9 +13,9 @@ Hoe.spec 'slideshow' do
 
   self.extra_deps = [
     ['props','>= 1.0.0'],
-    ['markdown','>= 1.0.0'],
-    ['textutils','>= 0.2.0'],
-    ['pakman','>= 0.4.0'],
+    ['markdown','>= 1.1.1'],
+    ['textutils','>= 0.6.8'],
+    ['pakman','>= 0.5.0'],
     ['activesupport', '>= 3.2.6'],
     ['logutils','>= 0.6.0'],
     ['gli', '>= 2.5.6']
@@ -34,18 +34,21 @@ Tip: Try some new template packs. Example:
 
   $ slideshow install impress.js
   
-  or
+or
   
   $ slideshow install deck.js
   
-  and use like
+and use like
   
   $ slideshow build welcome.text -t impress.js
   
-  or
+or
   
   $ slideshow build welcome.text -t deck.js
-
+ 
+or add some extra (plugins) helpers (left, right, etc). Example:
+  
+  $ slideshow install plugins
 
 Questions? Comments? Send them along to the mailing list.
 https://groups.google.com/group/webslideshow

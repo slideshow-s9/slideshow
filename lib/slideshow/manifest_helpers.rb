@@ -23,7 +23,7 @@ module ManifestHelper
   end
 
   def installed_plugin_manifests  # quickstarter templates
-    Pakman::Finder.new( logger ).find_manifests( installed_plugin_manifest_patterns )
+    Pakman::Finder.new.find_manifests( installed_plugin_manifest_patterns )
   end
 
 
@@ -64,9 +64,9 @@ module ManifestHelper
       '*/*.{txt.quick,quick.txt}'
     ]
   
-    Pakman::Finder.new( logger ).find_manifests( installed_template_manifest_patterns, excludes )
+    Pakman::Finder.new.find_manifests( installed_template_manifest_patterns, excludes )
   end
-  
+
 
   def installed_quick_manifest_patterns
     # 1) search config_dir/templates
@@ -86,9 +86,9 @@ module ManifestHelper
   end
 
   def installed_quick_manifests  # quickstarter templates
-    Pakman::Finder.new( logger ).find_manifests( installed_quick_manifest_patterns )
+    Pakman::Finder.new.find_manifests( installed_quick_manifest_patterns )
   end
-  
+
 
 end # module Manifest
 end # module Slideshow

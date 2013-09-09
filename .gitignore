@@ -1,17 +1,6 @@
-# ignore komodo project files
-*.kpf
-
 # ignore generated folders 
 pkg/
 doc/
 
-# ignore jekyll generated output
-site/_site/
 
-# ignore samples output folders
-samples/o/
-samples/3rd/o/
-
-# ignore sample html output 
-samples/*.html
 

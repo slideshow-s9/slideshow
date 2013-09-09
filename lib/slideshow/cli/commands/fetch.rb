@@ -35,7 +35,7 @@ class Fetch
     src = 'https://raw.github.com/slideshow-s9/update/master/slideshow.index.yml'
 
     puts "Updating shortcut index - downloading '#{src}'..."
-    ::Fetcher::Worker.new( logger ).copy( src, destfull )
+    ::Fetcher::Worker.new.copy( src, destfull )
   end
 
 
@@ -85,7 +85,7 @@ class Fetch
     logger.debug "packname >#{pakname}<"
     logger.debug "pakpath >#{pakpath}<"
   
-    Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+    Pakman::Fetcher.new.fetch_pak( src, pakpath )
   end
 
   def fetch_quick( src )
@@ -99,7 +99,7 @@ class Fetch
     logger.debug "pakname >#{pakname}<"
     logger.debug "pakpath >#{pakpath}<"
  
-    Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+    Pakman::Fetcher.new.fetch_pak( src, pakpath )
   end
 
   def fetch_plugin( src )
@@ -113,7 +113,7 @@ class Fetch
     logger.debug "pakname >#{pakname}<"
     logger.debug "pakpath >#{pakpath}<"
  
-    Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+    Pakman::Fetcher.new.fetch_pak( src, pakpath )
   end
 
 end # class Fetch

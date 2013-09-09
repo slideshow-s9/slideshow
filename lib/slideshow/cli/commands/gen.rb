@@ -310,7 +310,7 @@ class Gen     ## todo: rename command to build
 
   logger.debug( "manifestsrc >#{manifestsrc}<, pakpath >#{pakpath}<" )
 
-  Pakman::Templater.new( logger ).merge_pak( manifestsrc, pakpath, binding, basename )
+  Pakman::Templater.new.merge_pak( manifestsrc, pakpath, binding, basename )
 
   logger.debug "restoring cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
   Dir.chdir( srcdir )

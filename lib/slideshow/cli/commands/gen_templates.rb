@@ -1,5 +1,11 @@
 module Slideshow
 
+
+#### fix:
+#  move to attic - no longer used/needed - old code ??
+#    just clone template repos or use zip or use ~/.slideshow  folder
+
+
 class GenTemplates
 
 
@@ -33,7 +39,7 @@ class GenTemplates
 
     logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
     
-    Pakman::Copier.new( logger ).copy_pak( manifestsrc, pakpath )
+    Pakman::Copier.new.copy_pak( manifestsrc, pakpath )
   end
 
 private
@@ -45,7 +51,7 @@ private
       "#{Slideshow.root}/templates/*.txt.gen"
     ]
 
-    Pakman::Finder.new( logger ).find_manifests( patterns )
+    Pakman::Finder.new.find_manifests( patterns )
   end
 
 end # class GenTemplates

@@ -41,9 +41,9 @@ class Quick
  
     logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
     
-    Pakman::Copier.new( logger ).copy_pak( manifestsrc, pakpath )
+    Pakman::Copier.new.copy_pak( manifestsrc, pakpath )
   end
-  
+
   ## todo rename to fetch_quick_pak??
   ##  share/use same code in fetch too??
   
@@ -79,7 +79,7 @@ class Quick
     logger.debug "pakname >#{pakname}<"
     logger.debug "pakpath >#{pakpath}<"
  
-    Pakman::Fetcher.new( logger ).fetch_pak( src, pakpath )
+    Pakman::Fetcher.new.fetch_pak( src, pakpath )
   end # method fetch_pak
 
 end # class GenTemplates
