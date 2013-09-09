@@ -169,15 +169,6 @@ command [:update,:u] do |c|
 end
 
 
-######
-# add command :g,:gen,:generate ??? why? why not?  better just git clone repos
-#  or use command copy?
-#
-#   cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
-#
-#  GenTemplates.new( opts, config ).run  ###  todo: remove opts
-
-
 desc 'Generate quick starter sample'
 command [:new,:n] do |c|
 

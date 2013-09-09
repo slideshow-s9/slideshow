@@ -1,4 +1,5 @@
-# ignore generated folders 
+# ignore generated folders
+
 pkg/
 doc/
 

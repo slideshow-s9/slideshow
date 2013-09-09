@@ -1,10 +1,13 @@
+######
+# add command :g,:gen,:generate ??? why? why not?  better just git clone repos
+#  or use command copy?
+#
+#   cmd.on( '-g', '--generate',  'Generate Slide Show Templates (using built-in S6 Pack)' ) { opts.generate = true }
+#
+#  GenTemplates.new( opts, config ).run  ###  todo: remove opts
+
+
 module Slideshow
-
-
-#### fix:
-#  move to attic - no longer used/needed - old code ??
-#    just clone template repos or use zip or use ~/.slideshow  folder
-
 
 class GenTemplates
 
