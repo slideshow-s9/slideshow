@@ -1,10 +1,11 @@
 # Slide Show (S9) - A Free Web Alternative to PowerPoint and Keynote in Ruby
 
 * docu   :: [slideshow-s9.github.io](http://slideshow-s9.github.io)
-* source :: [github.com/geraldb/slideshow](https://github.com/geraldb/slideshow)
-* bugs   :: [github.com/geraldb/slideshow/issues](https://github.com/geraldb/slideshow/issues)
+* source :: [github.com/slideshow-s9/slideshow](https://github.com/slideshow-s9/slideshow)
+* bugs   :: [github.com/slideshow-s9/slideshow/issues](https://github.com/slideshow-s9/slideshow/issues)
 * gem    :: [rubygems.org/gems/slideshow](https://rubygems.org/gems/slideshow)
 * rdoc   :: [rubydoc.info/gems/slideshow](http://rubydoc.info/gems/slideshow)
+* forum  :: [groups.google.com/group/webslideshow](http://groups.google.com/group/webslideshow)
 
 
 ## DESCRIPTION

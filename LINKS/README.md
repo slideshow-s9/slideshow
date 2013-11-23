@@ -16,8 +16,8 @@
 
 ### Alternatives, More Presentation/Slideshow Projects
 
-* [More Slideshow Projects in Ruby](RUBY.md)
-* [More Slideshow Projects in JavaScript](JS.md)
+* [More Slideshow Projects in Ruby](RUBY.md), [Part II](RUBY-LIBS.md)
+* [More Slideshow Projects in JavaScript](JS.md), [Part II](JS-LIBS.md)
 * [More Slideshow Projects in C](C.md)
 * [More Slideshow Links](MORE.md)
 
