@@ -111,6 +111,34 @@ def background( *args  )
   "<!-- _S9STYLE_ #{clazz} -->\n"
 end 
 
+def foreground( *args  )
+  
+ # make everyting optional; use it like: 
+ #   foreground( code, opts={} )
+  
+  # check for optional hash for options
+  opts = args.last.kind_of?(Hash) ? args.pop : {}
+
+  # check for optional style rule code
+  code = args.last.kind_of?(String) ? args.pop : '' 
+    
+  clazz = opts[:class] || ( 's9'+code.strip.gsub( /[(), ]/, '_' ).gsub( /_{2,}/, '_').gsub( /[^-\w]/, '' ) )
+  
+  # 1) add foreground rule to css 
+  # e.g. .simple { foreground: #fff; }
+  
+  unless code.empty?
+    puts "  Adding CSS for foreground style rule..."  
+    content_for( :css, <<-EOS )
+      .#{clazz} { color: #{code}; }
+    EOS
+  end
+  
+  # 2) add processing instruction to get style class added to slide 
+
+  puts "  Adding HTML PI for foreground style class '#{clazz}'..."    
+  "<!-- _S9STYLE_ #{clazz} -->\n"
+end 
     
   
 end # module BackgroundHelper
