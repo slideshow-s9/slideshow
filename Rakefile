@@ -24,9 +24,9 @@ Hoe.spec 'slideshow' do
   ]
 
   # switch extension to .markdown for gihub formatting
-  self.readme_file  = 'README.markdown'
-  self.history_file = 'History.markdown'
-  
+  self.readme_file  = 'README.md'
+  self.history_file = 'HISTORY.md'
+
   self.post_install_message =<<EOS
 ******************************************************************************
 

@@ -1,15 +1,8 @@
 # encoding: utf-8
 
-###
-# NB: for local testing run like:
-#
-# 1.9.x: ruby -Ilib lib/slideshow.rb
-
 
 # core and stlibs
-require 'optparse'
 require 'erb'
-require 'logger'               # todo: remove!! replaced by logutils gem
 require 'fileutils'
 require 'pp'
 require 'uri'
@@ -23,12 +16,12 @@ require 'cgi'
 # required gems
 require 'active_support/all'
 
+require 'props'             # manage settings/env
 require 'logutils'       # logger utils library
 
 require 'markdown'          # default markdown library
 require 'fetcher'           # fetch docs and blogs via http, https, etc.
 
-require 'props'             # manage settings/env
 
 class Env
   def self.slideshowopt
@@ -41,19 +34,18 @@ require 'pakman'        # template pack manager
 
 
 # our own code
-require 'slideshow/version'
+require 'slideshow/version'   # note: let version always go first
 require 'slideshow/headers'
 require 'slideshow/config'
 require 'slideshow/manifest_helpers'
 require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
 
-require 'slideshow/cli/opts'
-require 'slideshow/cli/commands/fetch'
-require 'slideshow/cli/commands/gen'
-require 'slideshow/cli/commands/list'
-require 'slideshow/cli/commands/plugins'
-require 'slideshow/cli/commands/quick'
+require 'slideshow/commands/fetch'
+require 'slideshow/commands/gen'
+require 'slideshow/commands/list'
+require 'slideshow/commands/plugins'
+require 'slideshow/commands/quick'
 
 
 require 'slideshow/markup/markdown'
@@ -79,38 +71,6 @@ require 'slideshow/filters/debug_filter'
 require 'slideshow/filters/slide_filter'
 
 
-module Slideshow
-
-  def self.root
-    "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
-  end
-  
-  # version string for generator meta tag (includes ruby version)
-  def self.generator
-    "Slide Show (S9) #{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
-  end
-
-
-  def self.main_old
-    
-    # allow env variable to set RUBYOPT-style default command line options
-    #   e.g. -o slides -t <your_template_manifest_here>
-    slideshowopt = Env.slideshowopt
-    
-    args = []
-    args += slideshowopt.split if slideshowopt
-    args += ARGV.dup
-    
-    Runner.new.run(args)
-  end
-
-  def self.main
-    require 'slideshow/cli/main'
-    ## Runner.new.run(ARGV) - old code
-  end
-
-
-end # module Slideshow
 
 # load built-in (optional) helpers/plugins/engines
 #   If a helper fails to load, simply ingnore it
@@ -130,5 +90,3 @@ BUILTIN_OPT_HELPERS.each do |helper|
     ;
   end
 end
-
-Slideshow.main if __FILE__ == $0
