@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Slideshow
 
 class Fetch
@@ -30,9 +32,9 @@ class Fetch
 
     logger.debug "destfull=>#{destfull}<"
     logger.debug "destpath=>#{destpath}<"
-    
+
     ## todo/fix: use a config setting for index url (do NOT hard core)
-    src = 'https://raw.github.com/slideshow-s9/update/master/slideshow.index.yml'
+    src = 'https://raw.github.com/slideshow-s9/registry/master/slideshow.index.yml'
 
     puts "Updating shortcut index - downloading '#{src}'..."
     ::Fetcher::Worker.new.copy( src, destfull )

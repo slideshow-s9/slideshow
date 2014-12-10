@@ -83,89 +83,89 @@
 * Move templates folder to top-level (out of lib/)
 * Minor code clean-up
 
-=== 0.7.7	/ 2009-03-02
+=== 0.7.7 / 2009-03-02
 
 * Added new helpers for syntax highlighting (using ultraviolet and coderay gems)
 
-=== 0.7.6	/ 2009-02-24
+=== 0.7.6 / 2009-02-24
 
 * Added plugin/helpers support
 * Added include and content_for helpers
 * Added __SKIP__/__END__ pragmas
 
-=== 0.7.5	/ 2009-02-19
+=== 0.7.5 / 2009-02-19
 
 * Updated s6 templates (added support for steps/incrementals)
 
-=== 0.7.4	/ 2009-02-06
+=== 0.7.4 / 2009-02-06
 
 * Added sample template package generation for S5 v11 blank package
 
-=== 0.7.3	/ 2009-02-04
+=== 0.7.3 / 2009-02-04
 
 * Added check for installed markdown libs/gems
 * Added support for rdiscount, rpeg-markdown libs/gems
 
-=== 0.7.2	/ 2009-01-27
+=== 0.7.2 / 2009-01-27
 
 * Added support for output directory switch -o/--output and relative or absolute source file [Thanks Jorge L. Cangas]
 
-=== 0.7.1	/ 2009-01-26
+=== 0.7.1 / 2009-01-26
 
 * Fixed newline in manifests for file paths on unix bug
 
-=== 0.7	/ 2009-01-26
+=== 0.7 / 2009-01-26
 
 * Adding support for custom template packages using manifests
 
-=== 0.6.1	/ 2008-08-31
+=== 0.6.1 / 2008-08-31
 
 * Fixed gradient header bug [Thanks Suraj N. Kurapati]
 
-=== 0.6	/ 2008-08-26
+=== 0.6 / 2008-08-26
 
 * Added support for custom templates
 
-=== 0.5.2	/ 2008-07-23
+=== 0.5.2 / 2008-07-23
 
 * Pumped RedCloth gem dependency to use new 4.0 release
 
-=== 0.5.1	/ 2008-07-08
+=== 0.5.1 / 2008-07-08
 
 * Added support for S6 JavaScript slide shows as new default
 
-=== 0.5	/ 2008-07-03
+=== 0.5 / 2008-07-03
 
 * Added support for S5
 
-=== 0.4.2	/ 2008-05-20
+=== 0.4.2 / 2008-05-20
 
 * Added escaping of code blocks and unescaping of html entities in highlighted code
 
-=== 0.4.1	/ 2008-05-19
+=== 0.4.1 / 2008-05-19
 
 * {{{ and }}} shortcuts now supported standing in for <pre class='code'> and </pre>
 * Added patch for h1 pattern
 
-=== 0.4	/ 2008-05-17
+=== 0.4 / 2008-05-17
 
 * Added support for code syntax highlighting using Ultraviolet gem [Thanks zimbatm]
 
-=== 0.3.1	/ 2008-05-17
+=== 0.3.1 / 2008-05-17
 
 * Switched markdown processor to maruku gem [Thanks zimbatm]
 * Fix gem executable install for unix systems [Thanks zimbatm]
 
-=== 0.3	/ 2008-03-09
+=== 0.3 / 2008-03-09
 
 * Added support for Markdown using BlueCloth
 * Moved all templates into templates folder processed using erb (embedded ruby)
 
-=== 0.2 /	2008-02-26
+=== 0.2 / 2008-02-26
 
 * Added theming support using svg gradients
 * Added compatibility support for Opera Show (no browser plugin/addon required)
 
-=== 0.1	/ 2008-02-17
+=== 0.1 / 2008-02-17
 
 * Everything is new. First release

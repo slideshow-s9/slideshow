@@ -3,15 +3,17 @@
 
 # core and stlibs
 require 'erb'
-require 'fileutils'
 require 'pp'
+require 'date'
+require 'ostruct'
+require 'yaml'
+require 'json'
 require 'uri'
 require 'net/http'
 require 'net/https'
-require 'ostruct'
-require 'date'
-require 'yaml'
 require 'cgi'
+require 'fileutils'
+
 
 # required gems
 require 'active_support/all'
@@ -90,3 +92,7 @@ BUILTIN_OPT_HELPERS.each do |helper|
     ;
   end
 end
+
+
+# say hello
+puts Slideshow.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

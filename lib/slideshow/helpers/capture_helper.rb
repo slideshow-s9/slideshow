@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # Originally based on code from Rails and Merb; adapted from Webby.
 
 module Slideshow

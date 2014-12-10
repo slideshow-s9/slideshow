@@ -2,7 +2,7 @@
 # Slide Show (S9) Update Index for Template Packs, Quick Starter Samples 'n' Plugins
 
 # find the latest version online at
-#  - https://github.com/slideshow-s9/update
+#  - https://github.com/slideshow-s9/registry
 #
 #  use  $ slideshow update     -- for automatic update e.g. download the latest slideshow.index.yml file
 
@@ -12,33 +12,34 @@
 #   maps shortcut to URI
 
 
-s6blank: https://raw.github.com/slideshow-s9/slideshow-s6-blank/master/s6blank.txt
+s6blank: https://raw.github.com/slideshow-templates/slideshow-s6-blank/master/s6blank.txt
 
-s6syntax: https://raw.github.com/slideshow-s9/slideshow-s6-syntax-highlighter/master/s6syntax.txt
+s6syntax: https://raw.github.com/slideshow-templates/slideshow-s6-syntax-highlighter/master/s6syntax.txt
 
-s5blank: https://raw.github.com/slideshow-s9/slideshow-s5-blank/master/s5blank.txt
+s5blank: https://raw.github.com/slideshow-templates/slideshow-s5-blank/master/s5blank.txt
 
-s5themes: https://raw.github.com/slideshow-s9/slideshow-s5-themes/master/s5themes.txt
+s5themes: https://raw.github.com/slideshow-templates/slideshow-s5-themes/master/s5themes.txt
 
-g5: https://raw.github.com/slideshow-s9/slideshow-google-html5-slides/master/g5.txt
+g5: https://raw.github.com/slideshow-templates/slideshow-google-html5-slides/master/g5.txt
 
 slidy:
-- https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt
-- https://raw.github.com/slideshow-s9/slideshow-slidy/master/slidy.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-slidy/master/slidy.txt
+- https://raw.github.com/slideshow-templates/slideshow-slidy/master/slidy.txt.quick
 
 csss:
-- https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt
-- https://raw.github.com/slideshow-s9/slideshow-csss/master/csss.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-csss/master/csss.txt
+- https://raw.github.com/slideshow-templates/slideshow-csss/master/csss.txt.quick
 
 deck.js:
-- https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt
-- https://raw.github.com/slideshow-s9/slideshow-deck.js/master/deck.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt.quick
 
 impress.js:
-- https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt
-- https://raw.github.com/slideshow-s9/slideshow-impress.js/master/impress.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt.quick
 
-shower: https://raw.github.com/slideshow-s9/slideshow-shower/master/shower.txt
+shower: https://raw.github.com/slideshow-templates/slideshow-shower/master/shower.txt
+
 
 
 reveal.js: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
@@ -50,16 +51,17 @@ reveal: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.t
 ##############
 # Plugins
 
-analytics: https://raw.github.com/slideshow-s9/analytics/master/analytics.txt.plugin
+analytics: https://raw.github.com/slideshow-s9/slideshow-plugins/master/analytics/analytics.txt.plugin
 
-tables: https://raw.github.com/slideshow-s9/tables/master/tables.txt.plugin
+tables: https://raw.github.com/slideshow-s9/slideshow-plugins/master/tables/tables.txt.plugin
 
-snippets: https://raw.github.com/slideshow-s9/snippets/master/snippets.txt.plugin
+snippets: https://raw.github.com/slideshow-s9/slideshow-plugins/master/snippets/snippets.txt.plugin
 
 plugins:
-- https://raw.github.com/slideshow-s9/analytics/master/analytics.txt.plugin
-- https://raw.github.com/slideshow-s9/tables/master/tables.txt.plugin
-- https://raw.github.com/slideshow-s9/snippets/master/snippets.txt.plugin
+- https://raw.github.com/slideshow-s9/slideshow-plugins/master/analytics/analytics.txt.plugin
+- https://raw.github.com/slideshow-s9/slideshow-plugins/master/tables/tables.txt.plugin
+- https://raw.github.com/slideshow-s9/slideshow-plugins/master/snippets/snippets.txt.plugin
+
 
 #############################
 # Quick Starter Stamples

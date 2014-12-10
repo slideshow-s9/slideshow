@@ -1,3 +1,6 @@
+# encoding: utf-8
+
+
 module Slideshow
 
 module ManifestHelper
@@ -32,9 +35,10 @@ module ManifestHelper
     # 2) search config_dir/templates
     # 3) search gem/templates
 
-    builtin_patterns = [
-      "#{Slideshow.root}/templates/*.txt"
-    ]
+    # Note: only include builtin patterns if slideshow-templates gem included/required (it's optional)
+    builtin_patterns = []
+    builtin_patterns << "#{SlideshowTemplates.root}/templates/*.txt"  if defined?( SlideshowTemplates )
+
     config_patterns  = [
       "#{config.config_dir}/templates/*.txt",
       "#{config.config_dir}/templates/*/*.txt"
@@ -43,9 +47,9 @@ module ManifestHelper
       "templates/*.txt",
       "templates/*/*.txt"     # todo: use all in one line? {*.txt,*/*.txt} does it work?
     ]
-    
+
     patterns = []
-    patterns += current_patterns  unless Slideshow.root == File.expand_path( '.' )  # don't include working dir if we test code from repo (don't include slideshow/templates)
+    patterns += current_patterns
     patterns += config_patterns
     patterns += builtin_patterns
   end
@@ -71,15 +75,16 @@ module ManifestHelper
   def installed_quick_manifest_patterns
     # 1) search config_dir/templates
     # 2) search gem/templates 
- 
-    builtin_patterns = [
-      "#{Slideshow.root}/templates/*.{txt.quick,quick.txt}"
-    ]
+
+    # Note: only include builtin patterns if slideshow-templates gem included/required (it's optional)
+    builtin_patterns = []
+    builtin_patterns << "#{SlideshowTemplates.root}/templates/*.{txt.quick,quick.txt}"  if defined?( SlideshowTemplates )
+
     config_patterns  = [
       "#{config.config_dir}/templates/*.{txt.quick,quick.txt}",
       "#{config.config_dir}/templates/*/*.{txt.quick,quick.txt}"
     ]
-    
+
     patterns = []
     patterns += config_patterns
     patterns += builtin_patterns
