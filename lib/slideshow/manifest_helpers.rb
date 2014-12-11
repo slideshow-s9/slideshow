@@ -45,7 +45,8 @@ module ManifestHelper
     ]
     current_patterns = [
       "templates/*.txt",
-      "templates/*/*.txt"     # todo: use all in one line? {*.txt,*/*.txt} does it work?
+      "templates/*/*.txt",     # todo: use all in one line? {*.txt,*/*.txt} does it work?
+      "node_modules/*/*.txt",  # note: add support for npm installs - use/make slideshow required in name? for namespace in the future???
     ]
 
     patterns = []
@@ -85,7 +86,12 @@ module ManifestHelper
       "#{config.config_dir}/templates/*/*.{txt.quick,quick.txt}"
     ]
 
+    current_patterns = [
+      "node_modules/*/*.{txt.quick,quick.txt}",  # note: add support for npm installs - use/make slideshow required in name? for namespace in the future???
+    ]
+
     patterns = []
+    patterns += current_patterns
     patterns += config_patterns
     patterns += builtin_patterns
   end
