@@ -27,11 +27,11 @@ lib/slideshow/helpers/syntax/sh_helper.rb
 lib/slideshow/helpers/syntax/uv_helper.rb
 lib/slideshow/helpers/text_helper.rb
 lib/slideshow/manifest_helpers.rb
-lib/slideshow/markup/markdown.rb
-lib/slideshow/markup/mediawiki.rb
-lib/slideshow/markup/rest.rb
-lib/slideshow/markup/textile.rb
+lib/slideshow/markdown.rb
 lib/slideshow/models.rb
 lib/slideshow/plugin_helpers.rb
 lib/slideshow/slide.rb
 lib/slideshow/version.rb
+test/helper.rb
+test/test_kramdown.rb
+test/test_version.rb

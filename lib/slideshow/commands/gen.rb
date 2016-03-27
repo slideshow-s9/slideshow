@@ -265,10 +265,10 @@ class Gen     ## todo: rename command to build
   ###########################################
   ## fix: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   ## todo: setup hash for binding
-  ctx = { 'name':    @name,
-          'headers': @headers, 
-          'content': @content,
-          'slides':  @slides,       # strutured content - use LiquidDrop - why? why not?
+  ctx = { 'name'    => @name,
+          'headers' => @headers, 
+          'content' => @content,
+          'slides'  => @slides,       # strutured content - use LiquidDrop - why? why not?
           ## add content_for hash
           ## and some more -- ??
         }     
