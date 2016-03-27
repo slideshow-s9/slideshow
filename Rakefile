@@ -11,17 +11,15 @@ Hoe.spec 'slideshow-models' do
   self.urls     = ['https://github.com/slideshow-s9/slideshow-models']
 
   self.author  = 'Gerald Bauer'
-  self.email   = 'webslideshow@googlegroups.com'
+  self.email   = 'wwwmake@googlegroups.com'
 
   self.extra_deps = [
     ['props',     '>= 1.1.2'],
     ['logutils',  '>= 0.6.1'],
-    ['markdown',  '>= 1.2.0'],
+    ['kramdown',  '>= 1.10.0'],
     ['textutils', '>= 0.10.0'],
-    ['pakman',    '>= 0.5.0'],
+    ['pakman',    '>= 0.6.0'],
     ['activesupport'],
-    ## ['wikicloth', '>= 0.8.0']  make it a soft dependency   # mediawiki markup engine
-    ## ['RedCloth','>= 4.2.9']    make it a soft dependency   # textile markup engine
   ]
 
   # switch extension to .markdown for gihub formatting

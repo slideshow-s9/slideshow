@@ -19,11 +19,8 @@ require 'fileutils'
 require 'active_support/all'
 
 require 'props'             # manage settings/env
-require 'logutils'       # logger utils library
-
-require 'markdown'          # default markdown library
+require 'logutils'          # logger utils library
 require 'fetcher'           # fetch docs and blogs via http, https, etc.
-
 
 class Env
   def self.slideshowopt
@@ -34,6 +31,8 @@ end # class Env
 require 'textutils'     # text filters and helpers
 require 'pakman'        # template pack manager
 
+require 'kramdown'          # default markdown library
+
 
 # our own code
 require 'slideshow/version'   # note: let version always go first
@@ -42,17 +41,13 @@ require 'slideshow/config'
 require 'slideshow/manifest_helpers'
 require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
+require 'slideshow/markdown'
 
 require 'slideshow/commands/fetch'
 require 'slideshow/commands/gen'
 require 'slideshow/commands/list'
 require 'slideshow/commands/plugins'
 require 'slideshow/commands/quick'
-
-
-require 'slideshow/markup/markdown'
-require 'slideshow/markup/mediawiki'
-require 'slideshow/markup/textile'
 
 
 # load built-in (required) helpers/plugins
@@ -82,7 +77,6 @@ require 'slideshow/filters/slide_filter'
 BUILTIN_OPT_HELPERS = [
   'slideshow/helpers/syntax/uv_helper.rb',
   'slideshow/helpers/syntax/coderay_helper.rb',
-  'slideshow/markup/rest.rb',
 ]
 
 BUILTIN_OPT_HELPERS.each do |helper| 
