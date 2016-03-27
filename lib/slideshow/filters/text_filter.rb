@@ -12,12 +12,7 @@ module Slideshow
 
   alias_method :old_comments_percent_style, :comments_percent_style
 
-  def comments_percent_style( content )
-
-    # skip filter for pandoc
-    # - pandoc uses % for its own markdown extension
-    return content  if @markup_type == :markdown && Markdown.lib == 'pandoc-ruby'
-    
+  def comments_percent_style( content )    
     old_comments_percent_style( content )
   end
 
@@ -41,14 +36,7 @@ def directives_bang_style_to_percent_style( content )
 end
 
 def directives_percent_style( content )
-
-  # skip filter for pandoc
-  # - pandoc uses % for its own markdown extension
-  # - don't process % pass it along/through to pandoc
-
-  return content  if @markup_type == :markdown && Markdown.lib == 'pandoc-ruby'
-    
-    
+        
   directive_unparsed  = 0
   directive_expr      = 0
   directive_block_beg = 0
