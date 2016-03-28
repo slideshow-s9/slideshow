@@ -10,19 +10,12 @@ class Config
     @opts   = opts
   end
 
+  ## todo: allow (direct) access to opts - why? why not? 
   attr_reader :opts
 
-  def header_level
-    @opts.header_level
-  end
-  
-  def slide?
-    @opts.slide?
-  end
-  
-  def takahashi?
-    @opts.takahashi?
-  end
+  def header_level()  @opts.header_level; end
+  def slide?()        @opts.slide?;       end
+  def takahashi?()    @opts.takahashi?;   end
 
 
   # todo/fix: fix references after this move to here, that is, Config class

@@ -11,13 +11,11 @@ class Gen     ## todo: rename command to build
 
   include ManifestHelper
 
-### fix: remove opts, use config (wrapped!!)
 
-  def initialize( opts, config, headers )
-    @opts    = opts
+  def initialize( config )
     @config  = config
-    @headers = headers
-    
+    @headers = Headers.new( config )    
+
     ## todo: check if we need to use expand_path - Dir.pwd always absolute (check ~/user etc.)
     @usrdir = File.expand_path( Dir.pwd )  # save original (current) working directory 
   end
@@ -26,7 +24,7 @@ class Gen     ## todo: rename command to build
   attr_reader :srcdir, :outdir, :pakdir    # NB: "initalized" in create_slideshow
 
 
-  attr_reader :opts, :config, :headers
+  attr_reader :config, :headers
   attr_reader :session      # give helpers/plugins a session-like hash
 
  

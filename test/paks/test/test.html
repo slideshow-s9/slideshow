@@ -1,0 +1,27 @@
+---
+---
+
+<html>
+  <head>
+    <title>pakman Test Template</title>
+  </head>
+  <body>
+    
+   <h1>Hello pakman</h1>    
+
+   <h3>Headers</h3>
+   
+   <ul>
+    <li>author: {{ headers.author }}</li>
+    <li>title:  {{ headers.title }}</li>
+    </ul>
+
+  <h3>Slides</h3>   
+      
+   {% for slide in slides %}
+     <div>{{ slide.content }}</div>
+     <div>{{ slide.header }}</div>       
+   {% endfor %}
+    
+  </body>
+</html>

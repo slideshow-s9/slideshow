@@ -36,8 +36,9 @@ require 'kramdown'          # default markdown library
 
 # our own code
 require 'slideshow/version'   # note: let version always go first
-require 'slideshow/headers'
+require 'slideshow/opts'
 require 'slideshow/config'
+require 'slideshow/headers'
 require 'slideshow/manifest_helpers'
 require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
