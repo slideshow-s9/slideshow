@@ -12,9 +12,13 @@ class TestVersion < MiniTest::Test
 
 def test_version
   
+  puts "version:"
   puts Slideshow.version
+  puts "root:"
   puts Slideshow.root
+  puts "generator:"
   puts Slideshow.generator
+  puts "banner:"
   puts Slideshow.banner
   
   assert true
