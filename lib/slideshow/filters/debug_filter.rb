@@ -11,7 +11,7 @@ def dump_content_to_file_debug_text_erb( content )
   #   - opts
   #   - outdir
 
-  return content   unless opts.verbose?
+  return content   unless config.verbose?
 
   outname = "#{outdir}/#{@name}.debug.text.erb"
 
@@ -32,7 +32,7 @@ def dump_content_to_file_debug_html( content )
   #   - opts
   #   - outdir
 
-  return content   unless opts.verbose?
+  return content   unless config.verbose?
 
   outname = "#{outdir}/#{@name}.debug.html"
 
@@ -53,7 +53,7 @@ def dump_content_to_file_debug_text( content )
   #   - opts
   #   - outdir
 
-  return content   unless opts.verbose?
+  return content   unless config.verbose?
 
   outname = "#{outdir}/#{@name}.debug.text"
 

@@ -10,11 +10,6 @@ module Slideshow
 
   include TextUtils::Filter    # include comments_percent_style, skip_end_directive, etc. filters 
 
-  alias_method :old_comments_percent_style, :comments_percent_style
-
-  def comments_percent_style( content )    
-    old_comments_percent_style( content )
-  end
 
 def directives_bang_style_to_percent_style( content )
 

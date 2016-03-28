@@ -10,12 +10,16 @@ class Config
     @opts   = opts
   end
 
-  ## todo: allow (direct) access to opts - why? why not? 
-  attr_reader :opts
+  ## -- todo: allow (direct) access to opts - why? why not? 
+  ## attr_reader :opts
 
+  def manifest()      @opts.manifest;     end
   def header_level()  @opts.header_level; end
   def slide?()        @opts.slide?;       end
   def takahashi?()    @opts.takahashi?;   end
+  def test?()         @opts.test?;        end    ## in test mode (yes/no) - will (auto-)include test templates
+  def verbose?()      @opts.verbose?;     end
+  def output_path()   @opts.output_path;  end
 
 
   # todo/fix: fix references after this move to here, that is, Config class
@@ -27,7 +31,7 @@ class Config
 
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"
-      @config_dir = opts.config_path
+      @config_dir = @opts.config_path
     
       # make sure path exists
       FileUtils.makedirs( @config_dir ) unless File.directory? @config_dir

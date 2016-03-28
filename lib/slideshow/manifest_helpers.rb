@@ -39,6 +39,9 @@ module ManifestHelper
     builtin_patterns = []
     builtin_patterns << "#{SlideshowTemplates.root}/templates/*.txt"  if defined?( SlideshowTemplates )
 
+    test_patterns = []
+    test_patterns << "#{Slideshow.root}/test/templates/*/*.txt"
+
     config_patterns  = [
       "#{config.config_dir}/templates/*.txt",
       "#{config.config_dir}/templates/*/*.txt"
@@ -51,6 +54,7 @@ module ManifestHelper
 
     patterns = []
     patterns += current_patterns
+    patterns += test_patterns      if config.test?    ## (auto-)add test templates in test mode
     patterns += config_patterns
     patterns += builtin_patterns
   end

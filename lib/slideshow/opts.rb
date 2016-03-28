@@ -35,12 +35,21 @@ class Opts
   def verbose=(boolean)   # add: alias for debug ??
     @verbose = boolean
   end
-
+  
   def verbose?
     return false if @verbose.nil?   # default verbose/debug flag is false
     @verbose == true
   end
 
+
+  def test=(boolean)
+    @test = boolean
+  end
+
+  def test?
+    return false if @test.nil?   # default verbose/debug flag is false
+    @test == true
+  end
 
 
   def quick_manifest=(value)

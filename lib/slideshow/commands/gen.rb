@@ -147,7 +147,7 @@ class Gen     ## todo: rename command to build
 
   def create_slideshow( fn )
 
-    manifest_path_or_name = opts.manifest
+    manifest_path_or_name = config.manifest
     
     # add .txt file extension if missing (for convenience)
     if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false
@@ -180,7 +180,7 @@ class Gen     ## todo: rename command to build
     manifestsrc = File.expand_path( manifestsrc, usrdir )
 
     # expand output path in current dir and make sure output path exists
-    @outdir = File.expand_path( opts.output_path, usrdir )
+    @outdir = File.expand_path( config.output_path, usrdir )
     logger.debug "setting outdir to >#{outdir}<"
     FileUtils.makedirs( outdir ) unless File.directory? outdir
 
