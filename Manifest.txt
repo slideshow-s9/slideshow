@@ -11,6 +11,7 @@ lib/slideshow/commands/list.rb
 lib/slideshow/commands/plugins.rb
 lib/slideshow/commands/quick.rb
 lib/slideshow/config.rb
+lib/slideshow/drops.rb
 lib/slideshow/filters/debug_filter.rb
 lib/slideshow/filters/headers_filter.rb
 lib/slideshow/filters/slide_filter.rb
@@ -29,9 +30,14 @@ lib/slideshow/helpers/text_helper.rb
 lib/slideshow/manifest_helpers.rb
 lib/slideshow/markdown.rb
 lib/slideshow/models.rb
+lib/slideshow/opts.rb
 lib/slideshow/plugin_helpers.rb
 lib/slideshow/slide.rb
 lib/slideshow/version.rb
 test/helper.rb
+test/samples/test.md
+test/templates/test/test.html
+test/templates/test/test.txt
+test/test_gen.rb
 test/test_kramdown.rb
 test/test_version.rb

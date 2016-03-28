@@ -14,19 +14,28 @@
    <ul>
     <li>author: {{ headers.author }}</li>
     <li>title:  {{ headers.title }}</li>
+    <li>email:  {{ headers.email }}</li>
+    <li>footer:     {{ headers.footer }}</li>
+    <li>subfooter:  {{ headers.subfooter }}</li>
+    <li>authorxxx: {{ headers.authorxxx }}</li>  <!-- check missing keys too -->
    </ul>
 
   <ul>
     <li>author: {{ headers['author'] }}</li>
     <li>title:  {{ headers['title'] }}</li>
+    <li>authorxxx: {{ headers['authorxxx'] }}</li>  <!-- check missing keys too -->
   </ul>
 
   <h3>Slides</h3>   
       
    {% for slide in slides %}
-     <div>{{ slide.content }}</div>
      <div>{{ slide.header }}</div>       
+     <div>{{ slide.content_without_header }}</div>
    {% endfor %}
+    
+   <!-- begin (all-in-one) content -->
+     {{ content }}
+   <!-- end (all-in-one) content -->
     
   </body>
 </html>

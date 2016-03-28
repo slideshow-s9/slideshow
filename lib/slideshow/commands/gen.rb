@@ -264,10 +264,10 @@ class Gen     ## todo: rename command to build
   ## fix: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   ## todo: setup hash for binding
   ctx = { 'name'    => @name,
-          'headers' => @headers, 
+          'headers' => HeadersDrop.new( @headers ), 
           'content' => @content,
-          'slides'  => @slides,       # strutured content - use LiquidDrop - why? why not?
-          ## add content_for hash
+          'slides'  => @slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
+          ## todo/fix: add content_for hash
           ## and some more -- ??
         }     
 

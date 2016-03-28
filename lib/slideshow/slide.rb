@@ -14,6 +14,9 @@ module Slideshow
     attr_accessor :header
     attr_accessor :classes
   
+     
+    ### def to_drop() SlideDrop.new( self ); end  -- add - why? why not??
+  
     def initialize( content, options )
       @logger       = options.logger
       @header_level = options.header_level

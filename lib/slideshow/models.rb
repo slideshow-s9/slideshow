@@ -43,6 +43,7 @@ require 'slideshow/manifest_helpers'
 require 'slideshow/plugin_helpers'
 require 'slideshow/slide'
 require 'slideshow/markdown'
+require 'slideshow/drops'
 
 require 'slideshow/commands/fetch'
 require 'slideshow/commands/gen'
