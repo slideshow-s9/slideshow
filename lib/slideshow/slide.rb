@@ -4,7 +4,7 @@ module Slideshow
 
   class Slide
 
-    attr_accessor :logger
+    include LogUtils::Logging
 
     # NB: unparsed html source (use content_without_header
     #  for content without option header)
@@ -17,9 +17,9 @@ module Slideshow
      
     ### def to_drop() SlideDrop.new( self ); end  -- add - why? why not??
   
-    def initialize( content, options )
-      @logger       = options.logger
-      @header_level = options.header_level
+    def initialize( content, opts )
+      ## options
+      @header_level = opts.header_level
       
       @content = content
       
@@ -85,6 +85,8 @@ module Slideshow
 
 
     def data_attributes
+      return nil if @data.empty?   ## note: return nil for empty hash
+      
       buf = ""
       @data.each do | key,value |
         buf << "data-#{key}='#{value}' "
