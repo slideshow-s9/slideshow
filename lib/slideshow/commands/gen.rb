@@ -201,6 +201,9 @@ class Gen     ## todo: rename command to build
     end
 
     puts "Preparing slideshow '#{basename}'..."
+   
+  ###  todo/fix:
+  ##  reset headers too - why? why not?
      
   # shared variables for templates (binding)
   @content_for = {}  # reset content_for hash
@@ -220,6 +223,7 @@ class Gen     ## todo: rename command to build
   
   config.text_filters.each do |filter|
     mn = filter.tr( '-', '_' ).to_sym  # construct method name (mn)
+    puts "  run filter #{mn}..."
     content = send( mn, content )   # call filter e.g.  include_helper_hack( content )  
   end
 
@@ -269,7 +273,26 @@ class Gen     ## todo: rename command to build
           'slides'  => @slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
           ## todo/fix: add content_for hash
           ## and some more -- ??
-        }     
+        }
+  
+  ## add content_for entries e.g.
+  ##    content_for :js  =>  more_content_for_js or content_for_js or extra_js etc.
+  ##  for now allow all three aliases
+
+  puts "content_for:"
+  pp @content_for
+
+  @content_for.each do |k,v|
+    puts "  (auto-)add content_for >#{k.to_s}< to ctx:"
+    puts v
+    ctx[ "more_content_for_#{k}"] = v
+    ctx[ "content_for_#{k}" ] = v
+    ctx[ "extra_#{k}" ] = v
+  end
+  
+  puts "ctx:"
+  pp ctx
+
 
   Pakman::LiquidTemplater.new.merge_pak( manifestsrc, pakpath, ctx, basename )
 

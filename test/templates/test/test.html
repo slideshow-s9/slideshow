@@ -4,6 +4,13 @@
 <html>
   <head>
     <title>pakman Test Template</title>
+    {{ more_content_for_head }}
+    
+    <style>
+       {{ more_content_for_css }}
+       {{ content_for_css }}
+       {{ extra_css }}
+    </style>
   </head>
   <body>
     
@@ -36,6 +43,10 @@
    <!-- begin (all-in-one) content -->
      {{ content }}
    <!-- end (all-in-one) content -->
+
+    <script>
+       {{ more_content_for_js }}
+    </script>
     
   </body>
 </html>

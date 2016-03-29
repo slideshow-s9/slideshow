@@ -29,5 +29,26 @@ def test_gen_test
   assert true
 end  # method test_gen
 
+
+def test_gen_test_content_for
+
+   opts    = Slideshow::Opts.new
+   
+   opts.test         = true     # (auto-)includes templates from /test/templates
+   opts.verbose      = true     # turn on (verbose) debug output
+   opts.manifest     = 'test'
+   opts.output_path  = "#{Slideshow.root}/tmp/#{Time.now.to_i}"
+
+   config  = Slideshow::Config.new( opts )
+   config.load
+   config.dump
+  
+   g = Slideshow::Gen.new( config )
+   g.create_slideshow( "#{Slideshow.root}/test/samples/test_content_for.md" )
+  
+  assert true
+end  # method test_gen
+
+
 end # class TestGen
 
