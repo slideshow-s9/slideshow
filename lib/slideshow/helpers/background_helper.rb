@@ -113,6 +113,7 @@ def background( *args  )
   "<!-- _S9STYLE_ #{clazz} -->\n"
 end 
 
+
 def color( *args  )
   
  # make everyting optional; use it like: 

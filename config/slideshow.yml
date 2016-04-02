@@ -45,9 +45,15 @@ analytics:
 
 
 ########################################################3
-### text/markup (textile, markdown) processing config
+### text/markup/markdown processing config
 
 # filters to run before markup processing
+
+##
+#  check: use _ or -  (can use both?)
+#  document here (if auto-converter)
+#  note: ruby names CANNOT use dash (-) e.g. must be converted to underscore (_)
+
 filters:
   - skip-end-directive
   - directives_bang_style_to_percent_style
@@ -58,19 +64,6 @@ filters:
   - erb-rename-helper-hack
   - dump_content_to_file_debug_text_erb
   - erb
-  - code-block-curly-style
   - dump_content_to_file_debug_text
 
 
-# markup (textile, markdown, rest) config
-
-textile:
-  extnames: [ .textile, .t ]
-
-rest:
-  extnames: [ .rst, .rest ]
-
-mediawiki:
-  extnames: [ .wiki, .mediawiki, .mw ]
-
-# NB: markdown now configured in markdown.yml (using markdown gem)

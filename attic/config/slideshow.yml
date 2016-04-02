@@ -1,0 +1,17 @@
+# markup (textile, markdown, rest) config
+
+textile:
+  extnames: [ .textile, .t ]
+
+rest:
+  extnames: [ .rst, .rest ]
+
+mediawiki:
+  extnames: [ .wiki, .mediawiki, .mw ]
+
+# NB: markdown now configured in markdown.yml (using markdown gem)
+
+
+######### filters
+  - code-block-curly-style   ## was used for textile (only)
+

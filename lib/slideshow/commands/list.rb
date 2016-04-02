@@ -8,14 +8,12 @@ class List
 
   include ManifestHelper
 
-### fix: remove opts, use config (wrapped!!)
   
-  def initialize( opts, config )
-    @opts    = opts
+  def initialize( config )
     @config  = config
   end
 
-  attr_reader :opts, :config
+  attr_reader :config
 
   def run
     home = Env.home

@@ -4,16 +4,14 @@ module Slideshow
 
 class Fetch
 
-### fix: remove opts, use config (wrapped!!)
   
   include LogUtils::Logging
   
-  def initialize( opts, config )
-    @opts    = opts
+  def initialize( config )
     @config  = config
   end
 
-  attr_reader :opts, :config
+  attr_reader :config
 
 
   def fetch_all

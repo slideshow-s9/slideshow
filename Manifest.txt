@@ -20,7 +20,6 @@ lib/slideshow/headers.rb
 lib/slideshow/helpers/background_helper.rb
 lib/slideshow/helpers/capture_helper.rb
 lib/slideshow/helpers/directive_helper.rb
-lib/slideshow/helpers/markdown_helper.rb
 lib/slideshow/helpers/source_helper.rb
 lib/slideshow/helpers/step_helper.rb
 lib/slideshow/helpers/syntax/coderay_helper.rb

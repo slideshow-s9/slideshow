@@ -11,7 +11,7 @@ def step( opts={}, &blk )
   text = capture_erb(&blk)
       
   before  = "<!-- begin step #{opts.inspect} -->\n"
-  before << "<div class='step' markdown='block'>\n"
+  before << "<div class='step' markdown='1'>\n"
   
   after   = "</div>\n"  
   after  << "<!-- end step -->\n"

@@ -8,17 +8,14 @@ class Quick
 
   include ManifestHelper
 
-### fix: remove opts, use config (wrapped!!)
-
-  def initialize( opts, config )
-    @opts    = opts
+  def initialize( config )
     @config  = config
   end
 
-  attr_reader :opts, :config
+  attr_reader :config
 
   def run
-    manifest_name = opts.quick_manifest.gsub('.txt','').gsub('.quick','')  # make sure we get name w/o .quick and .txt extension
+    manifest_name = config.quick_manifest.gsub('.txt','').gsub('.quick','')  # make sure we get name w/o .quick and .txt extension
     
     ### todo:fix: always download quickstart templates (except welcome?)
     # how to make sure the won't go stale in the cache after the download?
@@ -39,7 +36,7 @@ class Quick
     end
     
     manifestsrc = matches[0][1]
-    pakpath     = opts.output_path
+    pakpath     = config.output_path
  
     logger.debug( "manifestsrc=>#{manifestsrc}<, pakpath=>#{pakpath}<" )
     
