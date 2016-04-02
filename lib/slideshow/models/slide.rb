@@ -17,9 +17,9 @@ module Slideshow
      
     ### def to_drop() SlideDrop.new( self ); end  -- add - why? why not??
   
-    def initialize( content, opts )
+    def initialize( content, header_level: 1 )
       ## options
-      @header_level = opts.header_level
+      @header_level = header_level
       
       @content = content
       

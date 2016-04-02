@@ -56,95 +56,6 @@ class Gen     ## todo: rename command to build
   end
 
 
-  # move into a filter??
-  def post_processing_slides( content )
-    
-    # 1) add slide breaks
-  
-    if config.slide?  # only allow !SLIDE directives fo slide breaks?
-       # do nothing (no extra automagic slide breaks wanted)
-    else  
-      if config.header_level == 2
-        content = add_slide_directive_before_h2( content )
-      else # assume level 1
-        content = add_slide_directive_before_h1( content )
-      end
-    end
-
-
-    dump_content_to_file_debug_html( content )
-
-    # 2) use generic slide break processing instruction to
-    #   split content into slides
-
-    slide_counter = 0
-
-    slides       = []
-    slide_buf = ""
-     
-    content.each_line do |line|
-       if line.include?( '<!-- _S9SLIDE_' )
-          if slide_counter > 0   # found start of new slide (and, thus, end of last slide)
-            slides   << slide_buf  # add slide to slide stack
-            slide_buf = ""         # reset slide source buffer
-          else  # slide_counter == 0
-            # check for first slide with missing leading SLIDE directive (possible/allowed in takahashi, for example)
-            ##  remove html comments and whitspaces (still any content?)
-            ### more than just whitespace? assume its  a slide
-            if slide_buf.gsub(/<!--.*?-->/m, '').gsub( /[\n\r\t ]/, '').length > 0
-              logger.debug "add slide with missing leading slide directive >#{slide_buf}< with slide_counter == 0"
-              slides    << slide_buf
-              slide_buf = ""
-            else
-              logger.debug "skipping slide_buf >#{slide_buf}< with slide_counter == 0"
-            end
-          end
-          slide_counter += 1
-       end
-       slide_buf  << line
-    end
-  
-    if slide_counter > 0
-      slides   << slide_buf     # add slide to slide stack
-      slide_buf = ""            # reset slide source buffer 
-    end
-
-
-    slides2 = []
-    slides.each do |source|
-      slides2 << Slide.new( source, config )
-    end
-
-
-    puts "#{slides2.size} slides found:"
-    
-    slides2.each_with_index do |slide,i|
-      print "  [#{i+1}] "
-      if slide.header.present?
-        print slide.header
-      else
-        # remove html comments
-        print "-- no header -- | #{slide.content.gsub(/<!--.*?-->/m, '').gsub(/\n/,'$')[0..40]}"
-      end
-      puts
-    end
-   
-   
-    # make content2 and slide2 available to erb template
-    # -- todo: cleanup variable names and use attr_readers for content and slide
-
-    ### fix: use class SlideDeck or Deck?? for slides array?
-    
-    content2 = ""
-    slides2.each do |slide|
-      content2 << slide.to_classic_html
-    end
-  
-    @content  = content2
-    @slides   = slides2     # strutured content
-  end
-
-
   def create_slideshow( fn )
 
     manifest_path_or_name = config.manifest
@@ -239,12 +150,13 @@ class Gen     ## todo: rename command to build
 
 
   # post-processing
+  deck = Deck.new( content, header_level: config.header_level,
+                            use_slide:    config.slide? )
 
-  # make content2 and slide2 available to erb template
-    # -- todo: cleanup variable names and use attr_readers for content and slide
-  
-  # sets @content (all-in-one string) and @slides (structured content; split into slides)
-  post_processing_slides( content )
+
+  ### todo/fix: move merge to its own
+  ##     class e.g. commands/merge.rb or something
+  ##     or use Merger - why? why not?
 
 
   #### pak merge
@@ -269,8 +181,8 @@ class Gen     ## todo: rename command to build
   ## todo: setup hash for binding
   ctx = { 'name'    => @name,
           'headers' => HeadersDrop.new( @headers ), 
-          'content' => @content,
-          'slides'  => @slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
+          'content' => deck.content,
+          'slides'  => deck.slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
           ## todo/fix: add content_for hash
           ## and some more -- ??
         }

@@ -12,7 +12,6 @@ class TestSlide < MiniTest::Test
 
 def test_slide1
   
-  opts = Slideshow::Opts.new
   
   content =<<EOS
 <h1 id="test-header-1">test header 1</h1>
@@ -20,7 +19,7 @@ def test_slide1
 <p>test content 1</p>
 EOS
   
-  slide = Slideshow::Slide.new( content, opts )
+  slide = Slideshow::Slide.new( content, header_level: 1 )
   
   puts "header:"
   pp slide.header

@@ -30,12 +30,14 @@ lib/slideshow/helpers/text_helper.rb
 lib/slideshow/manifest_helpers.rb
 lib/slideshow/markdown.rb
 lib/slideshow/models.rb
+lib/slideshow/models/deck.rb
+lib/slideshow/models/slide.rb
 lib/slideshow/opts.rb
 lib/slideshow/plugin_helpers.rb
-lib/slideshow/slide.rb
 lib/slideshow/version.rb
 test/helper.rb
 test/samples/test.md
+test/samples/test_content_for.md
 test/templates/test/test.html
 test/templates/test/test.txt
 test/test_gen.rb
