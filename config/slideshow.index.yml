@@ -12,7 +12,7 @@
 #   maps shortcut to URI
 
 
-s6blank: https://raw.github.com/slideshow-templates/slideshow-s6-blank/master/s6blank.txt
+s6blank: https://raw.github.com/slideshow-templates/slideshow-s6-blank/gh-pages/s6blank.txt
 
 s6syntax: https://raw.github.com/slideshow-templates/slideshow-s6-syntax-highlighter/master/s6syntax.txt
 
@@ -31,12 +31,12 @@ csss:
 - https://raw.github.com/slideshow-templates/slideshow-csss/master/csss.txt.quick
 
 deck.js:
-- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt
-- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/gh-pages/deck.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/gh-pages/deck.js.txt.quick
 
 impress.js:
-- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt
-- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/gh-pages/impress.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/gh-pages/impress.js.txt.quick
 
 shower: https://raw.github.com/slideshow-templates/slideshow-shower/master/shower.txt
 
