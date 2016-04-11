@@ -37,7 +37,7 @@ def uv_worker( code, opts )
   if uv_themes[ theme ].nil?
     uv_themes[ theme ] = true
     
-    theme_content = File.read( "#{config.cache_dir}/css/#{theme}.css" )
+    theme_content = File.read_utf8( "#{config.cache_dir}/css/#{theme}.css" )
 
     theme_out =  %{/* styles for ultraviolet code syntax highlighting theme '#{theme}' */\n\n}
     theme_out << theme_content

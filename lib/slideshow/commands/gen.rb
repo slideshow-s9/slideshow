@@ -128,7 +128,7 @@ class Gen     ## todo: rename command to build
 
   logger.debug "inname=#{inname}"
     
-  content = File.read( inname )
+  content = File.read_utf8( inname )
 
   # run text filters
   

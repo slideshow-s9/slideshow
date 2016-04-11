@@ -5,7 +5,7 @@ module Slideshow
   
 def s9_include( name, opts = {} )
   puts "  Including '#{name}'..." 
-  content = File.read( name )
+  content = File.read_utf8( name )
 end
 
 
@@ -49,7 +49,7 @@ end
 
 def find_content_from( name, part )
   begin
-    content = File.read( name )
+    content = File.read_utf8( name )
 
     # note: for now content with no parts selected gets filtered too and (part) marker lines get removed from source
     lines = find_part_lines_in( content, part )
