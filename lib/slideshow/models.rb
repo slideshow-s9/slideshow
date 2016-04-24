@@ -48,6 +48,7 @@ require 'slideshow/drops'
 
 require 'slideshow/commands/fetch'
 require 'slideshow/commands/gen'
+require 'slideshow/commands/merge'
 require 'slideshow/commands/list'
 require 'slideshow/commands/plugins'
 require 'slideshow/commands/quick'

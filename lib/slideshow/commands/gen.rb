@@ -9,8 +9,6 @@ class Gen     ## todo: rename command to build
 
   include LogUtils::Logging
 
-  include ManifestHelper
-
 
   def initialize( config )
     @config  = config
@@ -21,7 +19,7 @@ class Gen     ## todo: rename command to build
   end
 
   attr_reader :usrdir   # original working dir (user called slideshow from)
-  attr_reader :srcdir, :outdir, :pakdir    # NB: "initalized" in create_slideshow
+  attr_reader :srcdir, :outdir    # NB: "initalized" in create_slideshow
 
 
   attr_reader :config, :headers
@@ -57,38 +55,6 @@ class Gen     ## todo: rename command to build
 
 
   def create_slideshow( fn )
-
-    manifest_path_or_name = config.manifest
-    
-    # add .txt file extension if missing (for convenience)
-    if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false
-      manifest_path_or_name << '.txt'
-    end
-  
-    logger.debug "manifest=#{manifest_path_or_name}"
-    
-    # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
-    if File.exists?( manifest_path_or_name )
-      manifestsrc = manifest_path_or_name
-    else
-      # check for builtin manifests
-      manifests = installed_template_manifests
-      matches = manifests.select { |m| m[0] == manifest_path_or_name } 
-
-      if matches.empty?
-        puts "*** error: unknown template manifest '#{manifest_path_or_name}'"
-        # todo: list installed manifests
-        exit 2
-      end
-        
-      manifestsrc = matches[0][1]
-    end
-
-    ### todo: use File.expand_path( xx, relative_to ) always with second arg
-    ##   do NOT default to cwd (because cwd will change!)
-    
-    # Reference src with absolute path, because this can be used with different pwd
-    manifestsrc = File.expand_path( manifestsrc, usrdir )
 
     # expand output path in current dir and make sure output path exists
     @outdir = File.expand_path( config.output_path, usrdir )
@@ -154,62 +120,7 @@ class Gen     ## todo: rename command to build
                             use_slide:    config.slide? )
 
 
-  ### todo/fix: move merge to its own
-  ##     class e.g. commands/merge.rb or something
-  ##     or use Merger - why? why not?
 
-
-  #### pak merge
-  #  nb: change cwd to template pak root
-
-  @pakdir = File.dirname( manifestsrc )  # template pak root - make availabe too in erb via binding
-  logger.debug " setting pakdir to >#{pakdir}<"
-
-  #  todo/fix: change current work dir (cwd) in pakman gem itself
-  #   for now lets do it here
-
-  logger.debug "changing cwd to pak - new >#{pakdir}<, old >#{Dir.pwd}<"
-  Dir.chdir( pakdir )
-
-
-  pakpath     = outdir
-
-  logger.debug( "manifestsrc >#{manifestsrc}<, pakpath >#{pakpath}<" )
-
-  ###########################################
-  ## fix: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ## todo: setup hash for binding
-  ctx = { 'name'    => @name,
-          'headers' => HeadersDrop.new( @headers ), 
-          'content' => deck.content,
-          'slides'  => deck.slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
-          ## todo/fix: add content_for hash
-          ## and some more -- ??
-        }
-  
-  ## add content_for entries e.g.
-  ##    content_for :js  =>  more_content_for_js or content_for_js or extra_js etc.
-  ##  for now allow all three aliases
-
-  puts "content_for:"
-  pp @content_for
-
-  @content_for.each do |k,v|
-    puts "  (auto-)add content_for >#{k.to_s}< to ctx:"
-    puts v
-    ctx[ "more_content_for_#{k}"] = v
-    ctx[ "content_for_#{k}" ] = v
-    ctx[ "extra_#{k}" ] = v
-  end
-  
-  puts "ctx:"
-  pp ctx
-
-
-  Pakman::LiquidTemplater.new.merge_pak( manifestsrc, pakpath, ctx, basename )
-
-  logger.debug "restoring cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
-  Dir.chdir( srcdir )
 
   ## pop/restore org (original) working folder/dir
   unless usrdir == srcdir
@@ -217,10 +128,22 @@ class Gen     ## todo: rename command to build
     Dir.chdir( usrdir )
   end
 
-  puts "Done."
+  ## note: merge for now requires resetting to
+  ##         original working dir (user called slideshow from)
+  merge = Merge.new( config )
+  merge.merge( deck,
+               outdir,
+               headers,
+               @name,
+               basename,
+               @content_for )
+
+
+  puts 'Done.'
 end # method create_slideshow
 
 
 end # class Gen
 
 end # class Slideshow
+

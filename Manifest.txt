@@ -8,6 +8,7 @@ config/slideshow.yml
 lib/slideshow/commands/fetch.rb
 lib/slideshow/commands/gen.rb
 lib/slideshow/commands/list.rb
+lib/slideshow/commands/merge.rb
 lib/slideshow/commands/plugins.rb
 lib/slideshow/commands/quick.rb
 lib/slideshow/config.rb
