@@ -2,15 +2,15 @@
 
 ###
 #  to run use
-#     ruby -I ./lib -I ./test test/test_gen.rb
+#     ruby -I ./lib -I ./test test/test_build.rb
 
 
 require 'helper'
 
 
-class TestGen < MiniTest::Test
+class TestBuild < MiniTest::Test
 
-def test_gen_test
+def test_build_test
 
    opts    = Slideshow::Opts.new
    
@@ -23,14 +23,14 @@ def test_gen_test
    config.load
    config.dump
   
-   g = Slideshow::Gen.new( config )
+   g = Slideshow::Build.new( config )
    g.create_slideshow( "#{Slideshow.root}/test/samples/test.md" )
   
   assert true
-end  # method test_gen
+end  # method test_build
 
 
-def test_gen_test_content_for
+def test_build_test_content_for
 
    opts    = Slideshow::Opts.new
    
@@ -43,12 +43,12 @@ def test_gen_test_content_for
    config.load
    config.dump
   
-   g = Slideshow::Gen.new( config )
+   g = Slideshow::Build.new( config )
    g.create_slideshow( "#{Slideshow.root}/test/samples/test_content_for.md" )
   
   assert true
-end  # method test_gen
+end  # method test_build
 
 
-end # class TestGen
+end # class TestBuild
 

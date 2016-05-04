@@ -4,12 +4,14 @@ README.md
 Rakefile
 config/slideshow.index.yml
 config/slideshow.yml
+lib/slideshow/commands/build.rb
 lib/slideshow/commands/fetch.rb
 lib/slideshow/commands/gen.rb
 lib/slideshow/commands/list.rb
 lib/slideshow/commands/merge.rb
 lib/slideshow/commands/plugins.rb
 lib/slideshow/commands/quick.rb
+lib/slideshow/commands/update.rb
 lib/slideshow/config.rb
 lib/slideshow/drops.rb
 lib/slideshow/filters/debug_filter.rb
@@ -39,7 +41,7 @@ test/samples/test.md
 test/samples/test_content_for.md
 test/templates/test/test.html
 test/templates/test/test.txt
-test/test_gen.rb
+test/test_build.rb
 test/test_kramdown.rb
 test/test_slide.rb
 test/test_version.rb
