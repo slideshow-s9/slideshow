@@ -21,24 +21,6 @@ class Fetch
   end
 
 
-  def update   # update shortcut index
-    dest =  config.shortcut_index_file
-    
-    destfull = File.expand_path( dest )
-    destpath = File.dirname( destfull )
-    FileUtils.makedirs( destpath ) unless File.directory?( destpath )
-
-    logger.debug "destfull=>#{destfull}<"
-    logger.debug "destpath=>#{destpath}<"
-
-    ## todo/fix: use a config setting for index url (do NOT hard core)
-    src = 'https://raw.github.com/slideshow-s9/registry/master/slideshow.index.yml'
-
-    puts "Updating shortcut index - downloading '#{src}'..."
-    ::Fetcher::Worker.new.copy( src, destfull )
-  end
-
-
   def fetch( shortcut_or_source )
 
     logger.debug "fetch >#{shortcut_or_source}<"
