@@ -11,6 +11,11 @@ module Slideshow
   include TextUtils::Filter    # include comments_percent_style, skip_end_directive, etc. filters 
 
 
+  DIRECTIVES_UNPARSED = [ 'slide', 'style' ]
+  DIRECTIVES_RENAMES  = [ 'include', 'class' ]
+  DIRECTIVES_EXPRS    = [ 'class', 'clear' ]
+
+
 def directives_bang_style_to_percent_style( content )
 
   # for compatibility allow !SLIDE/!STYLE as an alternative to %slide/%style-directive
@@ -18,17 +23,18 @@ def directives_bang_style_to_percent_style( content )
   bang_count = 0
 
   # get unparsed helpers e.g. SLIDE|STYLE  
-  unparsed = config.helper_unparsed.map { |item| item.upcase }.join( '|' )                                                                   
+  unparsed = DIRECTIVES_UNPARSED.map { |item| item.upcase }.join( '|' )                                                                   
   
   content.gsub!(/^!(#{unparsed})(.*)$/) do |match|
     bang_count += 1
     "<%= #{$1.downcase} '#{$2 ? $2 : ''}' %>"
   end
 
-  puts "  Patching !-directives (#{bang_count} #{config.helper_unparsed.join('/')}-directives)..."
+  puts "  Patching !-directives (#{bang_count} #{DIRECTIVES_UNPARSED.join('/')}-directives)..."
 
   content
 end
+
 
 def directives_percent_style( content )
         
@@ -51,11 +57,10 @@ def directives_percent_style( content )
 
       logger.debug "processing %-directive: #{directive}"
 
-      # slide, style
-      if config.helper_unparsed.include?( directive )
+      if DIRECTIVES_UNPARSED.include?( directive )   # e.g. slide, style, etc.
         directive_unparsed += 1
         content2 << "<%= #{directive} '#{params ? params : ''}' %>"
-      elsif config.helper_exprs.include?( directive )
+      elsif DIRECTIVES_EXPRS.include?( directive )   # e.g. class, clear, etc.
         directive_expr += 1
         content2 << "<%= #{directive} #{params ? erb_simple_params(directive,params) : ''} %>"        
       elsif inside_helper && directive == 'end'
@@ -83,15 +88,15 @@ def directives_percent_style( content )
   end  
     
   puts "  Preparing %-directives (" +
-      "#{directive_unparsed} #{config.helper_unparsed.join('/')} directives, " +
-      "#{directive_expr} #{config.helper_exprs.join('/')} expr-directives, " +
+      "#{directive_unparsed} #{DIRECTIVES_UNPARSED.join('/')} directives, " +
+      "#{directive_expr} #{DIRECTIVES_EXPRS.join('/')} expr-directives, " +
       "#{directive_block_beg}/#{directive_block_end} block-directives)..."
 
   content2
 end
 
   ######################
-  # todo: fix move to textutils gem (including helpers and config)
+  # todo: fix move to textutils gem (including helpers and config) - why? why not??
   # 
 
 
@@ -102,14 +107,14 @@ end
     
     # turn renames into something like:
     #   include|class   etc.
-    renames = config.helper_renames.join( '|' )
+    renames = DIRECTIVES_RENAMES.join( '|' )
     
     content.gsub!( /<%=[ \t]*(#{renames})/ ) do |match|
       rename_counter += 1
       "<%= s9_#{$1}" 
     end
 
-    puts "  Patching embedded Ruby (erb) code for aliases (#{rename_counter} #{config.helper_renames.join('/')}-aliases)..."
+    puts "  Patching embedded Ruby (erb) code for aliases (#{rename_counter} #{DIRECTIVES_RENAMES.join('/')}-aliases)..."
 
     content
   end

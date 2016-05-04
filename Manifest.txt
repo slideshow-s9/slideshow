@@ -2,7 +2,6 @@ HISTORY.md
 Manifest.txt
 README.md
 Rakefile
-config/slideshow.builtin.yml
 config/slideshow.index.yml
 config/slideshow.yml
 lib/slideshow/commands/fetch.rb

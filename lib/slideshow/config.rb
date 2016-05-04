@@ -111,12 +111,6 @@ class Config
   def load
     
     # load builtin config file @  <gem>/config/slideshow.yml
-    #
-    # NB: builtin use a different hierachy (not linked to default/home/user/cli props)
-    #     for now builtin has no erb processing
-    #     user cannot override builtin settings (only defaults see below)
-    props_builtin_file  = File.join( Slideshow.root, 'config', 'slideshow.builtin.yml' )
-    @props_builtin = Props.load_file( props_builtin_file )
 
     props_default_file  = File.join( Slideshow.root, 'config', 'slideshow.yml' )
     @props = @props_default = Props.load_file_with_erb( props_default_file, binding() )
@@ -141,9 +135,9 @@ class Config
     load_shortcuts
   end
 
+
   def dump  # dump settings for debugging
     puts "Slideshow settings:"
-    @props_builtin.dump  if @props_builtin
     @props_default.dump  if @props_default
     @props_home.dump     if @props_home
     @props_work.dump     if @props_work
@@ -170,23 +164,6 @@ class Config
     @props.fetch_from_section( 'analytics', 'google', nil )
   end
 
-  def helper_renames
-    ## NB: for now user cannot override/extent renames
-    @props_builtin['helper']['renames']
-  end
-
-  def helper_unparsed
-    ## NB: for now user cannot override/extent unparsed helpers
-    # use unparsed params (passed along a single string)
-    @props_builtin['helper']['unparsed']
-  end
-  
-  def helper_exprs
-    ## NB: for now user cannot override/extent helper exprs
-    # allow expression as directives (no need for %end block)
-    # by default directives are assumed statements (e.g. %mydir  %end)
-    @props_builtin['helper']['exprs']
-  end
 
 private
 

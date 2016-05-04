@@ -1,8 +1,0 @@
-####################
-### builtin configuration (not configurable by user now)
-
-
-helper:
-  unparsed: [ slide, style ]
-  renames: [ include, class ]
-  exprs: [ class, clear ]
