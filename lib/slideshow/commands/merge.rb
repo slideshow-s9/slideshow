@@ -7,8 +7,6 @@ class Merge
 
   include LogUtils::Logging
 
-  include ManifestHelper
-
 
   def initialize( config )
     @config  = config
@@ -21,13 +19,21 @@ class Merge
   attr_reader :usrdir   # original working dir (user called slideshow from)
 
 
-  def merge( deck, outdir, headers, name, basename, content_for ) 
+  def merge( deck, ctx, headers, content_for )
+
+    manifestsrc = ctx[:manifestsrc]
+    name        = ctx[:name]
+    outdir      = ctx[:outdir]
+    
+    ## note:
+    ##   assumes name == basename  (e.g. name without extension and directory)
+    ##    rename name to basename - why? why not??
+    
     ## note: assumes working directory is (default) work directory
     ##         e.g. original working dir (user called slideshow from)
 
-    manifestsrc = find_manifestsrc()
 
-    puts "Merging slideshow '#{basename}'..."
+    puts "Merging slideshow '#{name}'..."
    
 
   #### pak merge
@@ -43,19 +49,15 @@ class Merge
   Dir.chdir( @pakdir )
 
 
-  pakpath     = outdir
+  logger.debug( "manifestsrc >#{manifestsrc}<, outdir >#{outdir}<" )
 
-  logger.debug( "manifestsrc >#{manifestsrc}<, pakpath >#{pakpath}<" )
 
   ###########################################
-  ## fix: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ## todo: setup hash for binding
-  ctx = { 'name'    => name,
-          'headers' => HeadersDrop.new( headers ), 
-          'content' => deck.content,
-          'slides'  => deck.slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
-          ## todo/fix: add content_for hash
-          ## and some more -- ??
+  ## setup hash for binding
+  assigns = { 'name'    => name,
+              'headers' => HeadersDrop.new( headers ), 
+              'content' => deck.content,
+              'slides'  => deck.slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
         }
   
   ## add content_for entries e.g.
@@ -68,16 +70,16 @@ class Merge
   content_for.each do |k,v|
     puts "  (auto-)add content_for >#{k.to_s}< to ctx:"
     puts v
-    ctx[ "more_content_for_#{k}"] = v
-    ctx[ "content_for_#{k}" ] = v
-    ctx[ "extra_#{k}" ] = v
+    assigns[ "more_content_for_#{k}"] = v
+    assigns[ "content_for_#{k}" ] = v
+    assigns[ "extra_#{k}" ] = v
   end
   
-  puts "ctx:"
-  pp ctx
+  puts "assigns:"
+  pp assigns
 
 
-  Pakman::LiquidTemplater.new.merge_pak( manifestsrc, pakpath, ctx, basename )
+  Pakman::LiquidTemplater.new.merge_pak( manifestsrc, outdir, assigns, name )
 
 
   ## pop/restore org (original) working folder/dir
@@ -87,43 +89,6 @@ class Merge
   end
 end # method merge
 
-
-private
-
-  def find_manifestsrc    ## rename - just use find_manifest ??
-    manifest_path_or_name = config.manifest
-    
-    # add .txt file extension if missing (for convenience)
-    if manifest_path_or_name.downcase.ends_with?( '.txt' ) == false
-      manifest_path_or_name << '.txt'
-    end
-  
-    logger.debug "manifest=#{manifest_path_or_name}"
-    
-    # check if file exists (if yes use custom template package!) - allows you to override builtin package with same name 
-    if File.exists?( manifest_path_or_name )
-      manifestsrc = manifest_path_or_name
-    else
-      # check for builtin manifests
-      manifests = installed_template_manifests
-      matches = manifests.select { |m| m[0] == manifest_path_or_name } 
-
-      if matches.empty?
-        puts "*** error: unknown template manifest '#{manifest_path_or_name}'"
-        # todo: list installed manifests
-        exit 2
-      end
-        
-      manifestsrc = matches[0][1]
-    end
-
-    ### todo: use File.expand_path( xx, relative_to ) always with second arg
-    ##   do NOT default to cwd (because cwd will change!)
-    
-    # Reference src with absolute path, because this can be used with different pwd
-    manifestsrc = File.expand_path( manifestsrc, usrdir )
-    manifestsrc
-  end
 
 
 end # class Merge

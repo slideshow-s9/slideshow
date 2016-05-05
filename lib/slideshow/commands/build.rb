@@ -36,6 +36,10 @@ class Build
   
   def create_slideshow( fn )
 
+    ## first check if manifest exists / available / valid
+    manifestsrc = ManifestFinder.new( config ).find_manifestsrc( config.manifest )
+
+
     # expand output path in current dir and make sure output path exists
     @outdir = File.expand_path( config.output_path, usrdir )
     logger.debug "setting outdir to >#{outdir}<"
@@ -85,7 +89,7 @@ class Build
 
   ####################
   ## todo/fix: move ctx to Gen.initialize - why? why not?
-  ctx = {
+  gen_ctx = {
     name:    @name,
     extname: @extname,
     usrdir:  @usrdir,
@@ -93,7 +97,7 @@ class Build
     srcdir:  @srcdir,
   }
 
-  content = gen.render( content, ctx )
+  content = gen.render( content, gen_ctx )
   
 
   # post-processing (all-in-one HTML with directive as HTML comments)
@@ -108,14 +112,20 @@ class Build
     Dir.chdir( usrdir )
   end
 
+
   ## note: merge for now requires resetting to
   ##         original working dir (user called slideshow from)
   merge = Merge.new( config )
+    
+  merge_ctx = {
+    manifestsrc: manifestsrc,
+    outdir:      outdir,
+    name:        @name,
+  }
+  
   merge.merge( deck,
-               outdir,
+               merge_ctx,
                headers,
-               @name,
-               basename,
                @content_for )
 
 

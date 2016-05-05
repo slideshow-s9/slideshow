@@ -46,6 +46,7 @@ require 'slideshow/models/deck'
 require 'slideshow/markdown'
 require 'slideshow/drops'
 
+require 'slideshow/commands/manifest_finder'
 require 'slideshow/commands/fetch'
 require 'slideshow/commands/update'
 require 'slideshow/commands/gen'

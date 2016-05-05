@@ -8,6 +8,7 @@ lib/slideshow/commands/build.rb
 lib/slideshow/commands/fetch.rb
 lib/slideshow/commands/gen.rb
 lib/slideshow/commands/list.rb
+lib/slideshow/commands/manifest_finder.rb
 lib/slideshow/commands/merge.rb
 lib/slideshow/commands/plugins.rb
 lib/slideshow/commands/quick.rb
