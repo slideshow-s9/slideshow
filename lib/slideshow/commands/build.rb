@@ -21,9 +21,7 @@ class Build
 
 
   attr_reader :config, :headers
-  attr_reader :session      # give helpers/plugins a session-like hash
-
- 
+   
  
   ##
   ##  todo/fix/add:
@@ -33,8 +31,57 @@ class Build
   ##   check file extension - if css or js than move "verbatim e.g. as-is" to content_for (js,css,etc.)
   ##
   ##
+
+
   
-  def create_slideshow( fn )
+  def process_files( args )
+
+     ###
+     #  returns a hash of merged buffers e.g.
+     #  { text: '...',
+     #     js:   '...',
+     #     css:  '...',
+     #  }
+     #  
+    
+    buffers = {}   
+    
+    args.each do |fn|
+
+      dirname  = File.dirname( fn )
+      basename = File.basename( fn, '.*' )
+      extname  = File.extname( fn )
+      
+      logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
+
+      content = File.read_utf8( fn )
+
+      if extname.downcase == 'css'
+        key = :css    # buffer key
+      elsif extname.downcase == 'js'
+        key = :js
+      else  ## assume main text/content
+        ##
+        ##  todo/check:  process text files with gen(erator) one-by-one later? why? why not?
+        #     for now process as one block all together (use sourcedir of first text file)
+        key = :text
+      end
+      
+      if buffers[ key ].nil?   ## first entry
+        h = { content: content, files: [fn] }
+        buffers[ key ] = h
+      else                    ## second, third, etc. entry
+        h = buffers[ key ]
+        h[:content] <<= "\n\n" + content    ## add with (extra) newline
+        h[:files]   << fn
+      end
+    end
+  
+    buffers
+  end # process files
+
+  
+  def create_slideshow( arg )
 
     ## first check if manifest exists / available / valid
     manifestsrc = ManifestFinder.new( config ).find_manifestsrc( config.manifest )
@@ -44,6 +91,18 @@ class Build
     @outdir = File.expand_path( config.output_path, usrdir )
     logger.debug "setting outdir to >#{outdir}<"
     FileUtils.makedirs( outdir ) unless File.directory? outdir
+
+    args = [arg]    ## for now for testing always assume array
+
+    buffers = process_files( args )
+
+    puts "buffers:"
+    pp buffers
+
+    ## for now use first text file for (auto-)caluclation name and source folder
+    fn      = buffers[:text][:files][0]
+    content = buffers[:text][:content]
+
 
     dirname  = File.dirname( fn )
     basename = File.basename( fn, '.*' )
@@ -69,16 +128,22 @@ class Build
      
   # shared variables for templates (binding)
   @content_for = {}  # reset content_for hash
+  # give helpers/plugins a session-like hash
   @session     = {}  # reset session hash for plugins/helpers
 
   @name        = basename
   @extname     = extname
 
-  inname  =  "#{basename}#{extname}"
 
-  logger.debug "inname=#{inname}"
-    
-  content = File.read_utf8( inname )
+  ## check for css and js buffers
+  ##    todo/fix: check if content_for key is a symbol or just a string !!!!!!
+  if buffers[:css]
+    @content_for[:css] = buffers[:css][:content].dup    ## add a copy; might get added some more later in-place
+  end
+
+  if buffers[:js]
+    @content_for[:js] = buffers[:js][:content].dup    ## add a copy; might get added some more later in-place
+  end
 
 
   gen     = Gen.new( @config,
@@ -91,7 +156,7 @@ class Build
   ## todo/fix: move ctx to Gen.initialize - why? why not?
   gen_ctx = {
     name:    @name,
-    extname: @extname,
+    extname: @extname,     ### todo/fix: check where is extname used??  why needed? try to remove!!!
     usrdir:  @usrdir,
     outdir:  @outdir,
     srcdir:  @srcdir,
