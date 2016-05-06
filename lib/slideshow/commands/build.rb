@@ -36,15 +36,15 @@ class Build
 
       dirname  = File.dirname( fn )
       basename = File.basename( fn, '.*' )
-      extname  = File.extname( fn )
+      extname  = File.extname( fn )    ## note: returns ext with dot (e.g. .css or .js etc.)
       
       logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
 
       content = File.read_utf8( fn )
 
-      if extname.downcase == 'css'
+      if extname.downcase == '.css'
         key = :css    # buffer key
-      elsif extname.downcase == 'js'
+      elsif extname.downcase == '.js'
         key = :js
       else  ## assume main text/content
         ##
