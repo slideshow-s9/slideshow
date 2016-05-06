@@ -17,23 +17,9 @@ class Build
   end
 
   attr_reader :usrdir   # original working dir (user called slideshow from)
-  attr_reader :srcdir, :outdir    # NB: "initalized" in create_slideshow
-
-
   attr_reader :config, :headers
    
- 
-  ##
-  ##  todo/fix/add:
-  ##    allow multiple files
-  ##    files get merged together - why? why not? (or processed one-by-one?)
-  ##
-  ##   check file extension - if css or js than move "verbatim e.g. as-is" to content_for (js,css,etc.)
-  ##
-  ##
-
-
-  
+   
   def process_files( args )
 
      ###
@@ -68,12 +54,14 @@ class Build
       end
       
       if buffers[ key ].nil?   ## first entry
-        h = { content: content, files: [fn] }
+        h = { contents: [content],
+              files:    [fn],
+            }
         buffers[ key ] = h
       else                    ## second, third, etc. entry
         h = buffers[ key ]
-        h[:content] <<= "\n\n" + content    ## add with (extra) newline
-        h[:files]   << fn
+        h[:contents] << content
+        h[:files]    << fn
       end
     end
   
@@ -81,101 +69,119 @@ class Build
   end # process files
 
   
-  def create_slideshow( arg )
+  def create_slideshow( args )
 
     ## first check if manifest exists / available / valid
     manifestsrc = ManifestFinder.new( config ).find_manifestsrc( config.manifest )
 
 
     # expand output path in current dir and make sure output path exists
-    @outdir = File.expand_path( config.output_path, usrdir )
+    outdir = File.expand_path( config.output_path, usrdir )
     logger.debug "setting outdir to >#{outdir}<"
+    
     FileUtils.makedirs( outdir ) unless File.directory? outdir
 
-    args = [arg]    ## for now for testing always assume array
 
+    if args.is_a? String
+      args = [args]    ## for now for testing always assume array
+    end      
+    
     buffers = process_files( args )
 
     puts "buffers:"
     pp buffers
 
-    ## for now use first text file for (auto-)caluclation name and source folder
-    fn      = buffers[:text][:files][0]
-    content = buffers[:text][:content]
 
+    ###  todo/fix:
+    ##  reset headers too - why? why not?
+     
+    # shared variables for templates (binding)
+    content_for = {}  # reset content_for hash
+    # give helpers/plugins a session-like hash
+    session     = {}  # reset session hash for plugins/helpers
 
-    dirname  = File.dirname( fn )
-    basename = File.basename( fn, '.*' )
-    extname  = File.extname( fn )
-    logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
+    name = 'untitled'     ## default name (auto-detect from first file e.g. rest.txt => rest etc.)
 
-    # change working dir to sourcefile dir
-    # todo: add a -c option to commandline? to let you set cwd?
+    content = ''
 
-    @srcdir = File.expand_path( dirname, usrdir )
-    logger.debug "setting srcdir to >#{srcdir}<"
-
-    unless usrdir == srcdir    ## use unless cwd/pwd insteadof usrdir - why? why not?
-      logger.debug "changing cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
-      Dir.chdir srcdir
+    ## check for css and js buffers
+    ##    todo/fix: check if content_for key is a symbol or just a string !!!!!!
+    if buffers[:css]
+      ## concat files (separate with newlines)
+      content_for[:css] = buffers[:css][:contents].join( "\n\n" )
     end
 
-    puts "Preparing slideshow '#{basename}'..."
-
-  
-  ###  todo/fix:
-  ##  reset headers too - why? why not?
-     
-  # shared variables for templates (binding)
-  @content_for = {}  # reset content_for hash
-  # give helpers/plugins a session-like hash
-  @session     = {}  # reset session hash for plugins/helpers
-
-  @name        = basename
-  @extname     = extname
+    if buffers[:js]
+      ## concat files (separate with newlines)
+      content_for[:js] = buffers[:js][:contents].join( "\n\n" )
+    end
 
 
-  ## check for css and js buffers
-  ##    todo/fix: check if content_for key is a symbol or just a string !!!!!!
-  if buffers[:css]
-    @content_for[:css] = buffers[:css][:content].dup    ## add a copy; might get added some more later in-place
-  end
+    gen = Gen.new( @config,
+                   @headers,
+                   session,
+                   content_for )
 
-  if buffers[:js]
-    @content_for[:js] = buffers[:js][:content].dup    ## add a copy; might get added some more later in-place
-  end
+    chunk_size = buffers[:text] ? buffers[:text][:contents].size : 0
+    
+    (0...chunk_size).each do |i|
+      
+      chunk   = buffers[:text][:contents][i]
+      fn      = buffers[:text][:files][i]
 
+      dirname  = File.dirname( fn )
+      basename = File.basename( fn, '.*' )
+      extname  = File.extname( fn )
+      logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
 
-  gen     = Gen.new( @config,
-                     @headers,
-                     @session,
-                     @content_for )
+      ## for now use first text file for (auto-)caluclation name and source folder
+      if i==0
+        name = basename
+        puts "Preparing slideshow '#{basename}'..."
+      end
 
-
-  ####################
-  ## todo/fix: move ctx to Gen.initialize - why? why not?
-  gen_ctx = {
-    name:    @name,
-    extname: @extname,     ### todo/fix: check where is extname used??  why needed? try to remove!!!
-    usrdir:  @usrdir,
-    outdir:  @outdir,
-    srcdir:  @srcdir,
-  }
-
-  content = gen.render( content, gen_ctx )
-  
-
-  # post-processing (all-in-one HTML with directive as HTML comments)
-  deck = Deck.new( content, header_level: config.header_level,
-                            use_slide:    config.slide? )
+      puts "  [#{i+1}/#{chunk_size}] Generating '#{basename}' (#{dirname})..."
 
 
+      # change working dir to sourcefile dir
+      # todo: add a -c option to commandline? to let you set cwd?
 
-  ## pop/restore org (original) working folder/dir
-  unless usrdir == srcdir
+      srcdir = File.expand_path( dirname, usrdir )
+      logger.debug "setting srcdir to >#{srcdir}<"
+    
+      logger.debug "changing cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
+      Dir.chdir srcdir
+
+
+      ####################
+      ## todo/fix: move ctx to Gen.initialize - why? why not?
+      #    move outdir, usrdir, name to Gen.initialize ??
+      #    add basename, dirname ?
+      gen_ctx = {
+        name:    name,
+        srcdir:  srcdir,
+        outdir:  outdir,
+        usrdir:  usrdir,
+      }
+
+      chunk = gen.render( chunk, gen_ctx )
+
+      if i==0   ## first chunk
+        content << chunk
+      else      ## follow-up chunk (start off with two newlines)
+        content << "\n\n"
+        content << chunk
+      end
+    end   # each buffer.text.contents
+
+
     logger.debug "restoring cwd to usr - new >#{usrdir}<, old >#{Dir.pwd}<"
     Dir.chdir( usrdir )
-  end
+
+
+    # post-processing (all-in-one HTML with directive as HTML comments)
+    deck = Deck.new( content, header_level: config.header_level,
+                              use_slide:    config.slide? )
 
 
   ## note: merge for now requires resetting to
@@ -185,13 +191,13 @@ class Build
   merge_ctx = {
     manifestsrc: manifestsrc,
     outdir:      outdir,
-    name:        @name,
+    name:        name,
   }
   
   merge.merge( deck,
                merge_ctx,
                headers,
-               @content_for )
+               content_for )
 
 
   puts 'Done.'

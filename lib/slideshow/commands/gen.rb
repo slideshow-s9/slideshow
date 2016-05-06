@@ -31,7 +31,6 @@ class Gen       ## rename to GenCtx  (Context) - why? why not?
     ####################
     ## todo/fix: move ctx to Gen.initialize - why? why not?
     @name     = ctx[:name]
-    @extname  = ctx[:extname]
 
     @outdir   = ctx[:outdir]
     @srcdir   = ctx[:srcdir]
