@@ -204,6 +204,90 @@ class Build
 end # method create_slideshow
 
 
+
+  def create_deck_from_string( buf )
+    
+    ##
+    ## todo/fix: cleanup how to handle files/folders
+    ##   e.g. do we need outdir,srcdir,usrdir ??
+    ##   does srcdir make any sense for "inline" buffer??
+    ##   use srcdir==usrdir  - and what is usrdir default ?? etc.
+    
+
+    ##  use a tmp folder for output - why? why not?
+    #    - no "real" output other than debug files
+    
+    # expand output path in current dir and make sure output path exists
+    outdir = File.expand_path( config.output_path, usrdir )
+    logger.debug "setting outdir to >#{outdir}<"
+    
+    FileUtils.makedirs( outdir ) unless File.directory? outdir
+
+
+    ###  todo/fix:
+    ##  reset headers too - why? why not?
+     
+    # shared variables for templates (binding)
+    content_for = {}  # reset content_for hash
+    # give helpers/plugins a session-like hash
+    session     = {}  # reset session hash for plugins/helpers
+
+    name = 'untitled'     ## default name (auto-detect from first file e.g. rest.txt => rest etc.)
+
+    content = ''
+
+    gen = Gen.new( @config,
+                   @headers,
+                   session,
+                   content_for )
+
+      ## use a "fake" filename for now  - why? why not?
+      fn      = 'index.txt'
+
+      dirname  = File.dirname( fn )
+      basename = File.basename( fn, '.*' )
+      extname  = File.extname( fn )
+      logger.debug "dirname=#{dirname}, basename=#{basename}, extname=#{extname}"
+
+      name = basename
+      puts "Preparing slideshow '#{basename}'..."
+
+
+      # change working dir to sourcefile dir
+      # todo: add a -c option to commandline? to let you set cwd?
+
+      srcdir = File.expand_path( dirname, usrdir )
+      logger.debug "setting srcdir to >#{srcdir}<"
+    
+      logger.debug "changing cwd to src - new >#{srcdir}<, old >#{Dir.pwd}<"
+      Dir.chdir srcdir
+
+
+      ####################
+      ## todo/fix: move ctx to Gen.initialize - why? why not?
+      #    move outdir, usrdir, name to Gen.initialize ??
+      #    add basename, dirname ?
+      gen_ctx = {
+        name:    name,
+        srcdir:  srcdir,
+        outdir:  outdir,
+        usrdir:  usrdir,
+      }
+
+      content = gen.render( buf, gen_ctx )
+
+      logger.debug "restoring cwd to usr - new >#{usrdir}<, old >#{Dir.pwd}<"
+      Dir.chdir( usrdir )
+
+      # post-processing (all-in-one HTML with directive as HTML comments)
+      deck = Deck.new( content, header_level: config.header_level,
+                                use_slide:    config.slide? )
+
+      deck
+ end # method create_deck_from_string
+
+
+
 end # class Build
 
 end # class Slideshow
