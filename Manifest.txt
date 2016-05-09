@@ -44,6 +44,7 @@ test/templates/test/test.html
 test/templates/test/test.txt
 test/test_build.rb
 test/test_build_deck.rb
+test/test_filter.rb
 test/test_kramdown.rb
 test/test_slide.rb
 test/test_version.rb

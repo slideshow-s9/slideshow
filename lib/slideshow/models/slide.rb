@@ -17,7 +17,7 @@ module Slideshow
      
     ### def to_drop() SlideDrop.new( self ); end  -- add - why? why not??
   
-    def initialize( content, header_level: 1 )
+    def initialize( content, header_level: 2 )
       ## options
       @header_level = header_level
       
@@ -66,16 +66,17 @@ module Slideshow
       # tip test regex online at rubular.com
       #  note/fix: needs to get improved to also handle case for h1 wrapped into div
 
-      if @header_level == 2
-        pattern = /^(.*?)(<h2.*?>.*?<\/h2>)(.*)/m
-      else # assume header level 1
+      if @header_level == 1
         pattern = /^(.*?)(<h1.*?>.*?<\/h1>)(.*)/m
+      else # assume header level 2
+        ## note: header_level 2 also incl. header_level 1 slides
+        pattern = /^(.*?)(<(?:h1|h2).*?>.*?<\/(?:h1|h2)>)(.*)/m
       end
 
       if @content =~ pattern
         @header  = $2
         @content_without_header = ($1 ? $1 : '') + ($3 ? $3 : '')
-        logger.debug "  adding slide with header (h1):\n#{@header}"
+        logger.debug "  adding slide with header:\n#{@header}"
       else
         @header = nil    # todo: set to '' empty string? why not?
         @content_without_header = @content

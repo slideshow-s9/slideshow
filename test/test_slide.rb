@@ -37,7 +37,37 @@ EOS
   assert_equal nil, slide.classes
   assert_equal nil, slide.data_attributes
   
-end  # method test_slide
+end  # method test_slide1
+
+
+def test_slide2
+  
+  content =<<EOS
+<h2 id="test-header-2">test header 2</h2>
+
+<p>test content 2</p>
+EOS
+  
+  slide = Slideshow::Slide.new( content, header_level: 2 )
+  
+  puts "header:"
+  pp slide.header
+  puts "content:"
+  pp slide.content
+  puts "content_without_header:"
+  pp slide.content_without_header
+  puts "classes:"
+  pp slide.classes
+  puts "data_attributes:"
+  pp slide.data_attributes
+  
+  assert_equal %Q{<h2 id="test-header-2">test header 2</h2>}, slide.header
+  assert_equal content, slide.content
+  assert_equal nil, slide.classes
+  assert_equal nil, slide.data_attributes
+  
+end  # method test_slide2
+
 
 
 end # class TestSlide

@@ -11,7 +11,7 @@ class Opts
   
   def header_level
     ## todo: check   0 is not nil?
-    @header_level || 1
+    @header_level || 2        ## note: (new) default is 2  -- note: 2 also breaks on 1 
   end
 
   def slide=(boolean)

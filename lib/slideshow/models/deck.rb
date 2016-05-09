@@ -5,6 +5,14 @@ module Slideshow
 
 module DeckFilter
 
+
+##
+## note/todo: more alternatives/options for slide breaks
+##
+##  add a simple slide break rule for two or more blank lines
+
+
+
 # add slide directive before h1 (tells slideshow gem where to break slides)
 #
 # e.g. changes:
@@ -45,31 +53,23 @@ def add_slide_directive_before_h2( content )
 end
 
 
-
-# add slide directive before div h1 (for pandoc-generated html)
-#
-# e.g. changes:
-# <div id='header'>
-# <h1 id='optional' class='optional'>
-#  to
-#  html comment -> _S9SLIDE_ 
-# <div id='header'>
-# <h1 id='optional' class='optional'>
-
-
-def add_slide_directive_before_div_h1( content )
+def add_slide_directive_for_hr( content )
 
   slide_count = 0
 
-  content = content.gsub( /<div[^>]*>\s*<h1/ ) do |match|
+  ##  replace <hr> or <hr /> with slide directive/comment
+  ##  note: hr gets **replaced/removed**
+
+  content = content.gsub( /<hr(\s*\/)?>/ ) do |match|
     slide_count += 1
-    "\n<!-- _S9SLIDE_ -->\n#{Regexp.last_match(0)}" 
+    "\n<!-- _S9SLIDE_ -->\n"
   end
-
-  puts "  Adding #{slide_count} slide breaks (using div_h1 rule)..."
-
+  
+  puts "  Adding #{slide_count} slide breaks (using hr rule)..."
+  
   content
 end
+
     
 end # module DeckFilter
 
@@ -85,7 +85,7 @@ class Deck
   attr_accessor :slides
   
 
-  def initialize( source, header_level: 1, use_slide: false )
+  def initialize( source, header_level: 2, use_slide: false )
     @source = source  ## keep a copy of the original source (input)
 
     @header_level = header_level   # e.g. 1 or 2   -- todo/fix: allow more options e.g. 1..2 etc.
@@ -107,10 +107,17 @@ class Deck
     if @use_slide  # only allow !SLIDE directives fo slide breaks?
        # do nothing (no extra automagic slide breaks wanted)
     else  
-      if @header_level == 2
-        @content = add_slide_directive_before_h2( @content )
-      else # assume level 1
+
+      ## default rule for horizontal line/rule <hr> - gets replaced by slide directive
+      ##  - for now alway on/used  (use !SLIDE only if not wanted for now)
+      @content = add_slide_directive_for_hr( @content )
+
+      if @header_level == 1
         @content = add_slide_directive_before_h1( @content )
+      else # assume level 2
+        ## note: level 2 also turns level 1 into slide breaks
+        @content = add_slide_directive_before_h1( @content )
+        @content = add_slide_directive_before_h2( @content )
       end
     end
 
