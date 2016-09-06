@@ -3,7 +3,7 @@
 module Slideshow
 
   MAJOR = 3
-  MINOR = 2
+  MINOR = 3
   PATCH = 0
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 
@@ -14,7 +14,7 @@ module Slideshow
   def self.root
     "#{File.expand_path( File.dirname(File.dirname(File.dirname(__FILE__))) )}"
   end
-  
+
   # version string for generator meta tag (includes ruby version)
   def self.generator
     "Slide Show (S9) v#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
@@ -25,4 +25,3 @@ module Slideshow
   end
 
 end # module Slideshow
-

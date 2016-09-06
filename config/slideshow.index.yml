@@ -8,11 +8,11 @@
 
 
 #############
-# shortcuts for fetching template packs (w/ optional quick starter samples) 
+# shortcuts for fetching template packs (w/ optional quick starter samples)
 #   maps shortcut to URI
 
 
-s6blank: https://raw.github.com/slideshow-templates/slideshow-s6-blank/gh-pages/s6blank.txt
+s6blank: https://raw.github.com/slideshow-templates/slideshow-s6-blank/master/s6blank.txt
 
 s6syntax: https://raw.github.com/slideshow-templates/slideshow-s6-syntax-highlighter/master/s6syntax.txt
 
@@ -31,21 +31,23 @@ csss:
 - https://raw.github.com/slideshow-templates/slideshow-csss/master/csss.txt.quick
 
 deck.js:
-- https://raw.github.com/slideshow-templates/slideshow-deck.js/gh-pages/deck.js.txt
-- https://raw.github.com/slideshow-templates/slideshow-deck.js/gh-pages/deck.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-deck.js/master/deck.js.txt.quick
 
 impress.js:
-- https://raw.github.com/slideshow-templates/slideshow-impress.js/gh-pages/impress.js.txt
-- https://raw.github.com/slideshow-templates/slideshow-impress.js/gh-pages/impress.js.txt.quick
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt
+- https://raw.github.com/slideshow-templates/slideshow-impress.js/master/impress.js.txt.quick
 
 shower: https://raw.github.com/slideshow-templates/slideshow-shower/master/shower.txt
 
 
+reveal.js: https://raw.github.com/slideshow-templates/slideshow-reveal.js/master/reveal.js.txt
 
-reveal.js: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
-
+## "old" reveal.js by avillafiorita  - no longer updated (not using new liquid templates)
+## reveal.js: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
+##
 # alias - rename manifest to reveal.js.txt -- possible?
-reveal: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
+## reveal: https://raw.github.com/avillafiorita/slideshow-reveal.js/master/reveal.txt
 
 
 ##############
@@ -61,9 +63,3 @@ plugins:
 - https://raw.github.com/slideshow-s9/slideshow-plugins/master/analytics/analytics.txt.plugin
 - https://raw.github.com/slideshow-s9/slideshow-plugins/master/tables/tables.txt.plugin
 - https://raw.github.com/slideshow-s9/slideshow-plugins/master/snippets/snippets.txt.plugin
-
-
-#############################
-# Quick Starter Stamples
-
-formatting: https://raw.github.com/slideshow-s9/formatting/master/formatting.txt.quick

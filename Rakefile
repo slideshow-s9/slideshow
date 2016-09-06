@@ -18,7 +18,7 @@ Hoe.spec 'slideshow-models' do
     ['logutils',  '>= 0.6.1'],
     ['kramdown',  '>= 1.10.0'],
     ['textutils', '>= 0.10.0'],
-    ['pakman',    '>= 0.6.0'],
+    ['pakman',    '>= 0.7.0'],
     ['activesupport'],
   ]
 
