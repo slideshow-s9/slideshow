@@ -7,6 +7,11 @@ Gem Family:
 - [slideshow-templates](slideshow-templates) - bundles builtin slide show (S9) templates 'n' snippets
 
 
+## Slide Show (S9) Templates / Themes
+
+For slideshow templates / themes, see the [/slideshow-templates org](https://github.com/slideshow-templates). Packs include: reveal.js, impress.js, deck.js, s6 blank, s6 syntax highlighter, s5 blank, s5 themes, slidy and more.
+
+
 
 ## License
 
