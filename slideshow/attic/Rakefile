@@ -1,0 +1,5 @@
+
+    ## ['wikicloth', '>= 0.8.0']  make it a soft dependency   # mediawiki markup engine
+    ## ['RedCloth','>= 4.2.9']    make it a soft dependency   # textile markup engine
+
+

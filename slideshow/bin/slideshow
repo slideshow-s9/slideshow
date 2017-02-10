@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'slideshow'
+
+Slideshow.main
+

@@ -1,0 +1,10 @@
+HISTORY.md
+Manifest.txt
+README.md
+Rakefile
+bin/slideshow
+lib/slideshow.rb
+lib/slideshow/cli/main.rb
+lib/slideshow/cli/main_utils.rb
+lib/slideshow/cli/opts.rb
+lib/slideshow/cli/version.rb
