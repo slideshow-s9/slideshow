@@ -1,0 +1,56 @@
+---
+---
+
+{% capture style_css %}{{ name }}.css{% endcapture %}
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="content-type" content="text/html;charset=utf-8"> 
+   <title>{{ headers['title'] }}</title>
+
+<meta name="generator" content="{{ headers['generator'] }}">
+<meta name="author"    content="{{ headers['author'] }}" >
+
+
+<!-- S6 style sheet links -->
+<link rel="stylesheet" href="{{ style_css }}"  media="projection" id="styleProjection">
+<link rel="stylesheet" href="s6/screen.css"    media="screen"     id="styleScreen">
+<link rel="stylesheet" href="s6/print.css"     media="print">
+
+<!-- S6 JS -->
+<script src="s6/jquery.js"></script>
+<script src="s6/jquery.slideshow.js"></script>
+<script>
+  $(document).ready( function() {
+    Slideshow.init();
+  } );
+
+  {{ more_content_for_js }}
+</script>
+
+<!-- Better Browser Banner for Microsoft Internet Explorer (IE) -->
+<!--[if IE]>
+<script src="s6/jquery.microsoft.js"></script>
+<![endif]-->
+
+{{ more_content_for_head }}
+
+</head>
+<body>
+
+<div class="layout"> 
+  <div id="header"></div>
+  <div id="footer">
+    <h1>{{ headers['footer'] }}</h1>
+    <h2>{{ headers['subfooter'] }}</h2>
+  </div>
+</div>
+
+<div class="presentation">
+   
+{{ content }}
+
+</div><!-- presentation -->
+</body>
+</html>

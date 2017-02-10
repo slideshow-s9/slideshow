@@ -1,0 +1,19 @@
+# S6 manifest to generate sample template package from builtin templates
+
+s6.txt
+
+slides.html.erb
+slides.pdf.html.erb
+style.css.erb
+
+# styles
+
+s6/projection.css
+s6/print.css
+s6/screen.css
+
+# javascript machinery
+
+s6/jquery.js
+s6/jquery.microsoft.js
+s6/jquery.slideshow.js

@@ -4,6 +4,7 @@ Gem Family:
 
 - [**slideshow**](slideshow) - command line tool for slide show (s9) - lets you build presentations / talks from plain text
 - [slideshow-models](slideshow-models) - slide show (S9) models 'n' machinery for easy (re)use
+- [slideshow-templates](slideshow-templates) - bundles builtin slide show (S9) templates 'n' snippets
 
 
 
