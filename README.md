@@ -1,24 +1,20 @@
-# slideshow-models gem - slide show (S9) models 'n' machinery for easy (re)use 
+# slideshow -  write your slides / talks / presentations in plain text with markdown formatting conventions
 
-* home   :: [github.com/slideshow-s9/slideshow-models](https://github.com/slideshow-s9/slideshow-models)
-* bugs   :: [github.com/slideshow-s9/slideshow-models/issues](https://github.com/slideshow-s9/slideshow-models/issues)
-* gem    :: [rubygems.org/gems/slideshow-models](https://rubygems.org/gems/slideshow-models)
-* rdoc   :: [rubydoc.info/gems/slideshow-models](http://rubydoc.info/gems/slideshow-models)
-* forum  :: [groups.google.com/group/wwwmake](http://groups.google.com/group/wwwmake)
+Gem Family:
 
-## USAGE
-
-To be done
+- [**slideshow**](slideshow) - command line tool for slide show (s9) - lets you build presentations / talks from plain text
+- [slideshow-models](slideshow-models) - slide show (S9) models 'n' machinery for easy (re)use
 
 
 
-## LICENSE
+## License
 
-The `slideshow-models` scripts and templates are dedicated to the public domain.
+![](https://publicdomainworks.github.io/buttons/zero88x31.png)
+
+The `slideshow` scripts and templates are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
 
-## QUESTION? COMMENTS?
+## Questions? Comments?
 
 Send them along to the [wwwmake forum/mailing list](http://groups.google.com/group/wwwmake).
 Thanks!
-
