@@ -8,17 +8,18 @@ Hoe.spec 'slideshow-models' do
   self.summary = "slideshow-models - slide show (S9) models 'n' machinery for easy (re)use"
   self.description = summary
 
-  self.urls     = ['https://github.com/slideshow-s9/slideshow-models']
+  self.urls     = ['https://github.com/slideshow-s9/slideshow']
 
   self.author  = 'Gerald Bauer'
   self.email   = 'wwwmake@googlegroups.com'
 
   self.extra_deps = [
-    ['props',     '>= 1.1.2'],
+    ['props',     '>= 1.2.0'],
     ['logutils',  '>= 0.6.1'],
-    ['kramdown',  '>= 1.10.0'],
-    ['textutils', '>= 0.10.0'],
+    ['kramdown',  '>= 1.15.0'],
+    ['textutils', '>= 1.4.0'],
     ['pakman',    '>= 0.7.0'],
+    ['liquid',    '>= 4.0.0'],    ## note: make liquid 4+ a dependency (now requires/uses liquid_method_missing in drops (was before_method))
     ['activesupport'],
   ]
 
@@ -29,7 +30,7 @@ Hoe.spec 'slideshow-models' do
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-    required_ruby_version: '>= 1.9.2'
+    required_ruby_version: '>= 2.3'
   }
 
 end

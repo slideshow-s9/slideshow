@@ -8,7 +8,8 @@ class HeadersDrop < Liquid::Drop
     @headers = headers
   end
 
-  def before_method( method )
+  def liquid_method_missing( method )
+    ## note: was before_method before 4+ in liquid (that is, only works in liquid 4+)
     ## note: assume returned value is always a string or nil (if key not found)
     puts "  call HeadersDrop#before_method >#{method}< : #{method.class}"
     value = @headers[ method ]
@@ -16,6 +17,7 @@ class HeadersDrop < Liquid::Drop
   end
 
 end # class HeadersDrop
+
 
 
 class SlideDrop < Liquid::Drop
