@@ -1,13 +1,7 @@
 ###########################################################################################
 # Slide Show (S9) Update Index for Template Packs, Quick Starter Samples 'n' Plugins
-
-# find the latest version online at
-#  - https://github.com/slideshow-s9/registry
 #
-#  use  $ slideshow update     -- for automatic update e.g. download the latest slideshow.index.yml file
-
-
-#############
+#
 # shortcuts for fetching template packs (w/ optional quick starter samples)
 #   maps shortcut to URI
 

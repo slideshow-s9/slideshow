@@ -12,7 +12,6 @@ lib/slideshow/commands/manifest_finder.rb
 lib/slideshow/commands/merge.rb
 lib/slideshow/commands/plugins.rb
 lib/slideshow/commands/quick.rb
-lib/slideshow/commands/update.rb
 lib/slideshow/config.rb
 lib/slideshow/drops.rb
 lib/slideshow/filters/debug_filter.rb
@@ -37,6 +36,8 @@ lib/slideshow/models/slide.rb
 lib/slideshow/opts.rb
 lib/slideshow/plugin_helpers.rb
 lib/slideshow/version.rb
+templates/welcome.text
+templates/welcome.txt.quick
 test/helper.rb
 test/samples/test.md
 test/samples/test_content_for.md

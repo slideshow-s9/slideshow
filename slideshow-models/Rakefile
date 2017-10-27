@@ -18,8 +18,7 @@ Hoe.spec 'slideshow-models' do
     ['logutils',  '>= 0.6.1'],
     ['kramdown',  '>= 1.15.0'],
     ['textutils', '>= 1.4.0'],
-    ['pakman',    '>= 0.7.0'],
-    ['liquid',    '>= 4.0.0'],    ## note: make liquid 4+ a dependency (now requires/uses liquid_method_missing in drops (was before_method))
+    ['pakman',    '>= 1.0.0'],
     ['activesupport'],
   ]
 

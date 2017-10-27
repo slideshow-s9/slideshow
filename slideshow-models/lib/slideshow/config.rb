@@ -10,7 +10,7 @@ class Config
     @opts   = opts
   end
 
-  ## -- todo: allow (direct) access to opts - why? why not? 
+  ## -- todo: allow (direct) access to opts - why? why not?
   ## attr_reader :opts
 
   def manifest()        @opts.manifest;       end
@@ -25,7 +25,7 @@ class Config
 
   # todo/fix: fix references after this move to here, that is, Config class
   # - used in syntax/uv_helper (use config.cache_dir to access?)
-  
+
   def cache_dir
     File.join( Env.home, '.slideshow' )
   end
@@ -33,11 +33,11 @@ class Config
   def config_dir
     unless @config_dir  # first time? calculate config_dir value to "cache"
       @config_dir = @opts.config_path
-    
+
       # make sure path exists
       FileUtils.makedirs( @config_dir ) unless File.directory? @config_dir
     end
-    
+
     @config_dir
   end
 
@@ -60,7 +60,7 @@ class Config
       puts "Loading shortcut index from '#{props_shortcuts_home_file}'..."
       @props_shortcuts = @props_shortcuts_home = Props.load_file( props_shortcuts_home_file, @props_shortcuts )
     end
-    
+
     # todo: add props from (optional) fetch section from 'standard' props (e.g. props[:fetch])
     #  - allows user to add own shortcuts in slideshow.yml settings
   end
@@ -69,7 +69,7 @@ class Config
   def map_fetch_shortcut( key )
     # NB: always returns an array!!!  0,1 or more entries
     # - no value - return empty ary
-    
+
     ## todo: normalize key???
     value = @props.fetch_from_section( 'fetch', key, @props_shortcuts.fetch( key, nil ))
 
@@ -84,7 +84,7 @@ class Config
 
 
   def default_fetch_shortcuts
-    ## NB: used by install --all
+    ## Note: used by install --all
 
     ['s6blank',
      's6syntax',
@@ -96,7 +96,7 @@ class Config
      'impress.js',
      'analytics'
     ]
-    
+
     ## todo: use @props_shortcuts keys
     #  and use
     #
@@ -109,28 +109,28 @@ class Config
 
 
   def load
-    
+
     # load builtin config file @  <gem>/config/slideshow.yml
 
     props_default_file  = File.join( Slideshow.root, 'config', 'slideshow.yml' )
     @props = @props_default = Props.load_file_with_erb( props_default_file, binding() )
 
     # check for user settings (slideshow.yml) in home folder
-    
+
     props_home_file = File.join( Env.home, 'slideshow.yml' )
     if File.exists?( props_home_file )
       puts "Loading settings from '#{props_home_file}'..."
       @props = @props_home = Props.load_file_with_erb( props_home_file, binding(), @props )
     end
-      
+
     # check for user settings (slideshow.yml) in working folder
-    
+
     props_work_file = File.join( '.', 'slideshow.yml' )
     if File.exists?( props_work_file )
       puts "Loading settings from '#{props_work_file}'..."
       @props = @props_work = Props.load_file_with_erb( props_work_file, binding(), @props )
     end
-    
+
     # load shortcuts
     load_shortcuts
   end
@@ -141,12 +141,12 @@ class Config
     @props_default.dump  if @props_default
     @props_home.dump     if @props_home
     @props_work.dump     if @props_work
-    
+
     puts "Slideshow shortcuts:"
     @props_shortcuts_default.dump  if @props_shortcuts_default
     @props_shortcuts_home.dump     if @props_shortcuts_home
     ## todo: add props from 'standard' props via fetch key
-    
+
     ## todo: add more config settings?
   end
 
@@ -155,11 +155,11 @@ class Config
     @props.fetch_from_section( 'headers', normalize_key( key ), nil )
   end
 
-  
+
   def text_filters
     @props.fetch( 'filters', [] )
   end
-  
+
   def google_analytics_code
     @props.fetch_from_section( 'analytics', 'google', nil )
   end
@@ -172,7 +172,7 @@ private
     #  replace _ with -                 (e.g. gradient_color => gradient-color)
     #  todo: replace space(s) with -  ??
     #  todo: strip leading and trailing spaces - possible use case ??
-    
+
     key.to_s.downcase.tr( '_', '-' )
   end
 

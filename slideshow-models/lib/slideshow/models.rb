@@ -48,7 +48,6 @@ require 'slideshow/drops'
 
 require 'slideshow/commands/manifest_finder'
 require 'slideshow/commands/fetch'
-require 'slideshow/commands/update'
 require 'slideshow/commands/gen'
 require 'slideshow/commands/merge'
 require 'slideshow/commands/build'
@@ -85,7 +84,7 @@ BUILTIN_OPT_HELPERS = [
   'slideshow/helpers/syntax/coderay_helper.rb',
 ]
 
-BUILTIN_OPT_HELPERS.each do |helper| 
+BUILTIN_OPT_HELPERS.each do |helper|
   begin
     require(helper)
   rescue Exception => e

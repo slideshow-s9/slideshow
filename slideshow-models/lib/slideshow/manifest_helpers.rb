@@ -19,7 +19,7 @@ module ManifestHelper
       "plugins/*.{txt.plugin,plugin.txt}",
       "plugins/*/*.{txt.plugin,plugin.txt}"
     ]
-    
+
     patterns = []
     patterns += current_patterns
     patterns += config_patterns
@@ -34,10 +34,6 @@ module ManifestHelper
     # 1) search ./templates
     # 2) search config_dir/templates
     # 3) search gem/templates
-
-    # Note: only include builtin patterns if slideshow-templates gem included/required (it's optional)
-    builtin_patterns = []
-    builtin_patterns << "#{SlideshowTemplates.root}/templates/*.txt"  if defined?( SlideshowTemplates )
 
     test_patterns = []
     test_patterns << "#{Slideshow.root}/test/templates/*/*.txt"
@@ -56,34 +52,33 @@ module ManifestHelper
     patterns += current_patterns
     patterns += test_patterns      if config.test?    ## (auto-)add test templates in test mode
     patterns += config_patterns
-    patterns += builtin_patterns
   end
 
   def installed_template_manifests
     ## note: code moved to its own gem, that is, pakman
     ## see https://github.com/geraldb/pakman
-  
+
     ## exclude manifest.txt/i  (avoid confusion w/ ruby gem manifest; not a specific name anyway)
     ##  also exclude patterns for quickstarter templates
-    
+
     excludes = [
       'manifest.txt',
       '*/manifest.txt',
       '*.{txt.quick,quick.txt}',
       '*/*.{txt.quick,quick.txt}'
     ]
-  
+
     Pakman::Finder.new.find_manifests( installed_template_manifest_patterns, excludes )
   end
 
 
   def installed_quick_manifest_patterns
     # 1) search config_dir/templates
-    # 2) search gem/templates 
+    # 2) search gem/templates
 
     # Note: only include builtin patterns if slideshow-templates gem included/required (it's optional)
     builtin_patterns = []
-    builtin_patterns << "#{SlideshowTemplates.root}/templates/*.{txt.quick,quick.txt}"  if defined?( SlideshowTemplates )
+    builtin_patterns << "#{Slideshow.root}/templates/*.{txt.quick,quick.txt}"
 
     config_patterns  = [
       "#{config.config_dir}/templates/*.{txt.quick,quick.txt}",
