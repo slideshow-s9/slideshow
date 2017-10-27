@@ -5,7 +5,7 @@ Hoe.spec 'slideshow' do
 
   self.version = SlideshowCli::VERSION
 
-  self.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and Keynote in Ruby'
+  self.summary = 'Slide Show (S9) - Write Your Slides in Plain Text w/ Formatting Conventions - A Free Web Alternative to PowerPoint and Keynote'
   self.description = summary
 
   self.urls     = ['https://github.com/slideshow-s9/slideshow']
@@ -15,7 +15,6 @@ Hoe.spec 'slideshow' do
 
   self.extra_deps = [
     ['slideshow-models',   '>= 3.1.0'],   ## Note: pull in all deps via slideshow-models (e.g. props, textutils, etc.)
-    ['slideshow-templates','>= 3.0.0'],
     ['gli', '>= 2.13.4']
   ]
 
@@ -26,7 +25,7 @@ Hoe.spec 'slideshow' do
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-    required_ruby_version: '>= 1.9.2'
+    required_ruby_version: '>= 2.3'
   }
 
 
@@ -36,21 +35,21 @@ Hoe.spec 'slideshow' do
 Tip: Try some new template packs. Example:
 
   $ slideshow install impress.js
-  
+
 or
-  
+
   $ slideshow install deck.js
-  
+
 and use like
-  
+
   $ slideshow build welcome.text -t impress.js
-  
+
 or
-  
+
   $ slideshow build welcome.text -t deck.js
- 
+
 or add some extra (plugins) helpers (left, right, etc). Example:
-  
+
   $ slideshow install plugins
 
 Questions? Comments? Send them along to the mailing list.
@@ -60,4 +59,3 @@ https://groups.google.com/group/wwwmake
 EOS
 
 end
-

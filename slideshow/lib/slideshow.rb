@@ -5,7 +5,6 @@ $RUBYLIBS_DEBUG = true
 
 require 'slideshow/models'
 
-require 'slideshow/templates'   ## for now add builtin templates (remove later? why? why not?)
 
 ## todo/fix: check slideshow-models - remove Env.slideshowopt here or in models?
 #
@@ -33,15 +32,15 @@ module Slideshow
 
 =begin
   def self.main_old
-    
+
     # allow env variable to set RUBYOPT-style default command line options
     #   e.g. -o slides -t <your_template_manifest_here>
     slideshowopt = Env.slideshowopt
-    
+
     args = []
     args += slideshowopt.split if slideshowopt
     args += ARGV.dup
-    
+
     Runner.new.run(args)
   end
 =end

@@ -8,7 +8,7 @@ module Slideshow
 
   class Tool
      def initialize
-       LogUtils::Logger.root.level = :info   # set logging level to info 
+       LogUtils::Logger.root.level = :info   # set logging level to info
      end
 
      def run( args )
@@ -32,16 +32,16 @@ module Slideshow
    def self.config()        @@config; end
 
 
-## some setup code 
+## some setup code
 logger  = LogUtils::Logger.root
-opts    = Slideshow::Opts.new 
+opts    = Slideshow::Opts.new
 config  = Slideshow::Config.new( opts )
 
 config.load
 
 
 
-program_desc 'Slide Show (S9) - a free web alternative to PowerPoint and Keynote in Ruby'
+program_desc 'Slide Show (S9) - a free web alternative to PowerPoint and Keynote'
 
 version SlideshowCli::VERSION
 
@@ -49,8 +49,8 @@ version SlideshowCli::VERSION
 =begin
 ## gets all merged in one paragraph - does not honor whitespace
 xxx_program_long_desc = <<EOS
-         
-Slide Show (S9) is a free web alternative to PowerPoint or Keynote in Ruby
+
+Slide Show (S9) is a free web alternative to PowerPoint or Keynote
 
 Examples:
   slideshow microformats.text
@@ -83,7 +83,7 @@ switch [:q, :quiet], negatable: false
 desc 'Configuration Path'
 arg_name 'PATH'
 default_value opts.config_path
-flag [:c, :config] 
+flag [:c, :config]
 
 
 desc 'Build slideshow'
@@ -96,13 +96,13 @@ command [:build, :b] do |c|
 
 
   # ?? opts.on( "-s", "--style STYLE", "Select Stylesheet" ) { |s| $options[:style]=s }
-        
+
   # ?? cmd.on( '-i', '--include PATH', 'Load Path' ) { |s| opts.put( 'include', s ) }
 
 
   c.desc 'Set Header Level to 1 (default)'
   c.switch [:h1], negatable: false  # todo: add :1 if it works e.g. -1 why? why not??
-  
+
   c.desc 'Set Header Level to 2'
   c.switch [:h2], negatable: false
 
@@ -126,11 +126,11 @@ command [:build, :b] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from build command'
-    
+
     PluginLoader.new( config ).load_plugins  # check for optional plugins/extension in ./lib folder
-    
+
     ## pass in args array (allow/supports multi files)
-    Slideshow::Build.new( config ).create_slideshow( args ) 
+    Slideshow::Build.new( config ).create_slideshow( args )
   end
 end
 
@@ -140,7 +140,7 @@ command [:list,:ls,:l] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from list command'
-    
+
     Slideshow::List.new( config ).run   ### todo: remove opts (merge access into config)
   end
 end
@@ -155,27 +155,17 @@ command [:install,:i] do |c|
 
   c.action do |g,o,args|
     logger.debug 'hello from install command'
-    
+
     if opts.fetch_all?
       Slideshow::Fetch.new( config ).fetch_all  ## todo: remove opts merge into config
     end
-    
+
     args.each do |arg|
       Slideshow::Fetch.new( config ).fetch( arg )  ## todo: remove opts merge into config
     end
   end
 end
 
-
-desc "Update shortcut index for template packs 'n' plugins"
-command [:update,:u] do |c|
-
-  c.action do |g,o,args|
-    logger.debug 'hello from update command'
-    
-    Slideshow::Update.new( config ).update
-  end
-end
 
 
 desc 'Generate quick starter sample'
