@@ -1,5 +1,10 @@
 # Todos
 
+## change template default to s6blank from s6
+
+- note: s6 no longer ships with gem; fix!!! default theme manifest - use s6blank
+-  if manifest not found -- provide better error!!!! e.g. manifest not found; use $ slideshow install s6blank or something
+
 
 ## move templated merged out of gen command
 
