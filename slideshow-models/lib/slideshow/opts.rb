@@ -8,10 +8,10 @@ class Opts
   def header_level=(value)
     @header_level = value.to_i
   end
-  
+
   def header_level
     ## todo: check   0 is not nil?
-    @header_level || 2        ## note: (new) default is 2  -- note: 2 also breaks on 1 
+    @header_level || 2        ## note: (new) default is 2  -- note: 2 also breaks on 1
   end
 
   def slide=(boolean)
@@ -35,7 +35,7 @@ class Opts
   def verbose=(boolean)   # add: alias for debug ??
     @verbose = boolean
   end
-  
+
   def verbose?
     return false if @verbose.nil?   # default verbose/debug flag is false
     @verbose == true
@@ -55,7 +55,7 @@ class Opts
   def quick_manifest=(value)
     @quick_manifest = value
   end
-  
+
   def quick_manifest
     @quick_manifest || 'welcome'
   end
@@ -81,7 +81,7 @@ class Opts
     # fix: use os-agnostic delimiter (use : for Mac/Unix?)
     @includes.nil? ? [] : @includes.split( ';' )
   end
-  
+
   def has_includes?
     @includes.nil? ? false : true
   end
@@ -90,16 +90,16 @@ class Opts
   def manifest=(value)
     @manifest = value
   end
-    
+
   def manifest
-    @manifest || 's6'
+    @manifest || 's6blank'
   end
 
 
   def config_path=(value)
     @config_path = value
   end
-    
+
   def config_path
     @config_path || File.join( Env.home, '.slideshow' )
   end
