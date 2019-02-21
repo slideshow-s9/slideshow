@@ -14,13 +14,13 @@ Hoe.spec 'slideshow' do
   self.email   = 'wwwmake@googlegroups.com'
 
   self.extra_deps = [
-    ['slideshow-models',   '>= 4.0.0'],   ## Note: pull in all deps via slideshow-models (e.g. props, textutils, etc.)
-    ['gli', '>= 2.13.4']
+    ['slideshow-models',   '>= 4.1.0'],   ## Note: pull in all deps via slideshow-models (e.g. props, textutils, etc.)
+    ['gli',                '>= 2.13.4']
   ]
 
-  # switch extension to .markdown for gihub formatting
-  # self.readme_file  = 'README.md'
-  # self.history_file = 'HISTORY.md'
+  ## switch extension to .markdown for gihub formatting
+  self.readme_file  = 'README.md'
+  self.history_file = 'CHANGELOG.md'
 
   self.licenses = ['Public Domain']
 
