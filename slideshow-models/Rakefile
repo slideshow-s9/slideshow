@@ -14,17 +14,18 @@ Hoe.spec 'slideshow-models' do
   self.email   = 'wwwmake@googlegroups.com'
 
   self.extra_deps = [
-    ['props',     '>= 1.2.0'],
-    ['logutils',  '>= 0.6.1'],
-    ['kramdown',  '>= 1.15.0'],
-    ['textutils', '>= 1.4.0'],
-    ['pakman',    '>= 1.0.0'],
+    ['props',               '>= 1.2.0'],
+    ['logutils',            '>= 0.6.1'],
+    ['kramdown',            '>= 2.1.0'],
+    ['kramdown-parser-gfm', '>= 1.0.1'],
+    ['textutils',           '>= 1.4.0'],
+    ['pakman',              '>= 1.1.0'],
     ['activesupport'],
   ]
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
-  self.history_file = 'HISTORY.md'
+  self.history_file = 'CHANGELOG.md'
 
   self.licenses = ['Public Domain']
 

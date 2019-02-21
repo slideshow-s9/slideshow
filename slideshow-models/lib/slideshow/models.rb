@@ -31,7 +31,8 @@ end # class Env
 require 'textutils'     # text filters and helpers
 require 'pakman'        # template pack manager
 
-require 'kramdown'          # default markdown library
+require 'kramdown'               # default markdown library
+require 'kramdown-parser-gfm'    # add GFM (github flavord markdown addon/extension/parser)
 
 
 # our own code
